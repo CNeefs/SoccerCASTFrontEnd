@@ -29,7 +29,7 @@ export class AuthComponent implements OnInit, OnDestroy {
   }
 
   navigateSignUp() {
-    //navigate to signup page
+    this.router.navigate(['/signup']);
   }
 
   ngOnDestroy() {
