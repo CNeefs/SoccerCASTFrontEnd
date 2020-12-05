@@ -20,10 +20,10 @@
                 <a class="nav-link" routerLink="/login" routerLinkActive="active">Login</a>
             </li>
 
-            <!--<li ngbDropdown class="nav-item dropdown pr-5 mr-5" *ngIf="loggedIn">
-          <a class="nav-link dropdown-toggle" id="dropdownBasic1" ngbDropdownToggle>{{ user.username | titlecase }}</a>
+        <li ngbDropdown class="nav-item dropdown pr-5 mr-5" *ngIf="loggedIn">
+          <a class="nav-link dropdown-toggle" id="dropdownBasic1" ngbDropdownToggle>{{ currentUser.firstName | titlecase }}</a>
           <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-            <div *ngIf=" user.role.roleID == 2 || user.role.roleID == 3">
+            <!-- <div *ngIf=" user.role.roleID == 2 || user.role.roleID == 3">
               <a ngbDropdownItem class="nav-link" routerLink="/manage-articles" routerLinkActive="active"><i class="far fa-newspaper"></i> My articles</a>
               <hr class="m-0">
             </div>
@@ -32,12 +32,12 @@
               <a ngbDropdownItem class="nav-link" routerLink="/manage-tags" routerLinkActive="active"><i class="fas fa-tags"></i> Tags</a>
               <a ngbDropdownItem class="nav-link" routerLink="/manage-users" routerLinkActive="active"><i class="fas fa-users-cog"></i> User</a>
               <hr class="m-0">
-            </div>
+            </div> -->
             <div>
-              <a ngbDropdownItem class="nav-link" (click)="onLogout()" routerLinkActive="active"><i class="fas fa-sign-out-alt"></i> Logout</a>
+              <a ngbDropdownItem class="nav-link" (click)="onLogout()" routerLinkActive="active">Logout</a>
             </div>
           </div>
-        </li>-->
+        </li>
 
         </ul>
     </div>

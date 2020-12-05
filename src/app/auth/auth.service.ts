@@ -31,6 +31,18 @@ export class AuthService {
         }));
     }
 
+    autoLogin() {
+        const userData: User = JSON.parse(localStorage.getItem('userData'));
+
+        if (!userData){
+            return;
+        }
+
+        if (userData.token) {
+            this.user.next(userData);  
+        }
+    }
+
     logout() {
         this.user.next(null);
         localStorage.removeItem('userData');
