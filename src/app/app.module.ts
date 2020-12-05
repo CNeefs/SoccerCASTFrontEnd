@@ -9,6 +9,7 @@ import { NavigationComponent } from './navigation/navigation.component';
 import { AuthModule } from './auth/auth.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HomeModule } from './home/home.module'
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { HomeModule } from './home/home.module'
     BrowserAnimationsModule,
     AuthModule,
     HomeModule,
+    HttpClientModule,
     MatIconModule,
     NgbModule
   ],
