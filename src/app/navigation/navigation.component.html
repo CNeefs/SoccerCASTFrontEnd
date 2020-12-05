@@ -1,0 +1,44 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand">
+        <img src="" width="40" height="40" class="d-inline-block align-top" alt="Logo">
+    </a>
+    <a class="navbar-brand">News</a>
+    <button class="navbar-toggler" type="button" (click)="collapsed = !collapsed">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" [ngbCollapse]="collapsed">
+        <ul class="navbar-nav">
+
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/home" routerLinkActive="active">Home</a>
+            </li>
+
+        </ul>
+        <ul class="navbar-nav ml-auto" *ngIf="userLoaded">
+
+            <li class="nav-item pr-5 mr-5" *ngIf="!loggedIn">
+                <a class="nav-link" routerLink="/login" routerLinkActive="active">Login</a>
+            </li>
+
+        <li ngbDropdown class="nav-item dropdown pr-5 mr-5" *ngIf="loggedIn">
+          <a class="nav-link dropdown-toggle" id="dropdownBasic1" ngbDropdownToggle>{{ currentUser.firstName | titlecase }}</a>
+          <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+            <!-- <div *ngIf=" user.role.roleID == 2 || user.role.roleID == 3">
+              <a ngbDropdownItem class="nav-link" routerLink="/manage-articles" routerLinkActive="active"><i class="far fa-newspaper"></i> My articles</a>
+              <hr class="m-0">
+            </div>
+            <div *ngIf="user.role.roleID == 3">
+              <a ngbDropdownItem class="nav-link" routerLink="/review-articles" routerLinkActive="active"><i class="fas fa-calendar-check"></i> Review</a>
+              <a ngbDropdownItem class="nav-link" routerLink="/manage-tags" routerLinkActive="active"><i class="fas fa-tags"></i> Tags</a>
+              <a ngbDropdownItem class="nav-link" routerLink="/manage-users" routerLinkActive="active"><i class="fas fa-users-cog"></i> User</a>
+              <hr class="m-0">
+            </div> -->
+            <div>
+              <a ngbDropdownItem class="nav-link" (click)="onLogout()" routerLinkActive="active">Logout</a>
+            </div>
+          </div>
+        </li>
+
+        </ul>
+    </div>
+</nav>
