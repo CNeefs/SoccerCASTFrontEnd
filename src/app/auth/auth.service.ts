@@ -6,12 +6,33 @@ import { tap } from 'rxjs/operators';
 import { Role } from '../models/role.model';
 import { User } from '../models/user.model';
 import { UserLogin } from './models/user-login.model';
+import { UserSignup } from './models/user-signup.model';
 
-@Injectable({ providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class AuthService {
     user = new BehaviorSubject(null);
 
-    constructor(private http: HttpClient, private router: Router) {}
+    constructor(private http: HttpClient, private router: Router) { }
+
+    signup(newUser: UserSignup) {
+        console.log('new user: ' + newUser)
+        return this.http.post<User>("https://localhost:44388/api/User", newUser)
+            .pipe(tap(userData => {
+                this.authenticationHandler(
+                    userData.userID,
+                    userData.firstName,
+                    userData.lastName,
+                    userData.email,
+                    userData.password,
+                    userData.token,
+                    userData.birthDate,
+                    userData.timesWon,
+                    userData.timesLost,
+                    userData.roleID,
+                    userData.role
+                );
+            }));
+    }
 
     login(userLogin: UserLogin): Observable<User> {
         return this.http.post<User>("https://localhost:44388/api/User/authenticate", userLogin).pipe(tap(userData => {
@@ -34,12 +55,12 @@ export class AuthService {
     autoLogin() {
         const userData: User = JSON.parse(localStorage.getItem('userData'));
 
-        if (!userData){
+        if (!userData) {
             return;
         }
 
         if (userData.token) {
-            this.user.next(userData);  
+            this.user.next(userData);
         }
     }
 
@@ -49,7 +70,7 @@ export class AuthService {
         this.router.navigate(['/login']);
     }
 
-    private authenticationHandler(userId: number, firstName: string, lastName: string, email: string, password: string, token: string, birthDate: Date, timesWon: number, timesLost: number, roleID: number, role: Role){
+    private authenticationHandler(userId: number, firstName: string, lastName: string, email: string, password: string, token: string, birthDate: Date, timesWon: number, timesLost: number, roleID: number, role: Role) {
         const user = new User(
             userId,
             firstName,

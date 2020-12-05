@@ -5,8 +5,7 @@ import { AuthService } from '../auth.service';
 
 import { UserSignup } from '../models/user-signup.model';
 
-import {NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
-
+import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-signup',
@@ -30,12 +29,13 @@ export class SignupComponent implements OnInit, OnDestroy {
     const month = +value.birthdate.month;
     const day = +value.birthdate.day;
 
-    console.log(year);
-    console.log(month);
-    console.log(day);
+    // console.log(year);
+    // console.log(month);
+    // console.log(day);
 
     // Date month is zero based --> min 1 
-    const convertedBirthdate = new Date(year, month -1, day, 0, 0, 0, 0)
+    const convertedBirthdate = new Date(year, month-1, day+1, 0, 0, 0, 0)
+    // const convertedBirthdate: string = year+'-'+month+'-'+day+'T00:00:00'
 
     const userSignup = new UserSignup(
       value.firstname,
@@ -45,10 +45,12 @@ export class SignupComponent implements OnInit, OnDestroy {
       convertedBirthdate
     )
     console.log(userSignup);
-    // this.userSignupSub = this.authService
+    this.userSignupSub = this.authService.signup(userSignup).subscribe();
   }
 
   ngOnDestroy(): void {
-
+    if(this.userSignupSub) {
+      this.userSignupSub.unsubscribe();
+    }
   }
 }
