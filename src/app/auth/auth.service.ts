@@ -7,6 +7,7 @@ import { Role } from '../models/role.model';
 import { User } from '../models/user.model';
 import { UserLogin } from './models/user-login.model';
 import { UserSignup } from './models/user-signup.model';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -53,20 +54,37 @@ export class AuthService {
     }
 
     autoLogin() {
-        const userData: User = JSON.parse(localStorage.getItem('userData'));
-
-        if (!userData) {
+        const userToken: string = JSON.parse(localStorage.getItem('userToken'));
+        
+        if (!userToken) {
             return;
         }
 
-        if (userData.token) {
-            this.user.next(userData);
+        if (userToken) {
+            //if userToken exists => decode token and make user object (behaviorSubject)
+            const helper = new JwtHelperService();
+            const decodedToken = helper.decodeToken(userToken);
+            console.log(decodedToken);
+            const user: User = new User(
+                decodedToken.UserID,
+                decodedToken.FirstName,
+                decodedToken.LastName,
+                decodedToken.Email,
+                null,
+                userToken,
+                decodedToken.BirthDay,
+                decodedToken.TimesWon,
+                decodedToken.TimesLost,
+                decodedToken.RoleID,
+                null
+            );
+            this.user.next(user);
         }
     }
 
     logout() {
         this.user.next(null);
-        localStorage.removeItem('userData');
+        localStorage.removeItem('userToken');
         this.router.navigate(['/login']);
     }
 
@@ -85,7 +103,7 @@ export class AuthService {
             role
         )
         this.user.next(user);
-        localStorage.setItem("userData", JSON.stringify(user));
+        localStorage.setItem("userToken", JSON.stringify(user.token));
         this.router.navigate(['/home']);
     }
 }

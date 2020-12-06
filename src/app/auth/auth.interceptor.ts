@@ -12,12 +12,12 @@ export class AuthInterceptor implements HttpInterceptor {
     constructor(private _router: Router, private authService: AuthService) { }
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         // console.log('in Interceptor');
-        let userData: User = JSON.parse(localStorage.getItem("userData"));
+        let userToken: string = JSON.parse(localStorage.getItem("userToken"));
         const helper = new JwtHelperService();
-        if (userData) {
+        if (userToken) {
             //wanneer token lastig doet en in console _token staat ==> localstorage clearen (leegmaken) en terug opnieuw inloggen
-            console.log(userData);
-            const decodedToken = helper.decodeToken(userData.token);
+            console.log(userToken);
+            const decodedToken = helper.decodeToken(userToken);
             const expirationTime = decodedToken.exp * 1000;
 
             console.log(decodedToken);
@@ -36,7 +36,7 @@ export class AuthInterceptor implements HttpInterceptor {
             else{
                 request = request.clone({
                     setHeaders: {
-                        Authorization: 'Bearer ' + userData.token
+                        Authorization: 'Bearer ' + userToken
                     }
                 });
             }
