@@ -10,11 +10,13 @@ import { AuthInterceptor } from './auth/auth.interceptor';
 import { HomeModule } from './home/home.module'
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { SharedModule } from './shared/shared.module';
+import { ErrorPageComponent } from './error-page/error-page.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavigationComponent,
+    ErrorPageComponent,
   ],
   imports: [
     BrowserModule,
