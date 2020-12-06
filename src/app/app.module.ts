@@ -11,6 +11,7 @@ import { HomeModule } from './home/home.module'
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { SharedModule } from './shared/shared.module';
 import { ErrorPageComponent } from './error-page/error-page.component';
+import { ManageUsersModule } from './manage-users/manage-users.module';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { ErrorPageComponent } from './error-page/error-page.component';
     HttpClientModule,
     AuthModule,
     HomeModule,
+    ManageUsersModule,
     SharedModule
   ],
   providers: [{
