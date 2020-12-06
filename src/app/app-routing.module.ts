@@ -5,6 +5,8 @@ import { AuthComponent } from '../app/auth/auth.component';
 import { SignupComponent } from './auth/signup/signup.component';
 import { ErrorPageComponent } from './error-page/error-page.component';
 
+import { AdminGuard } from './auth/guards/admin.guard';
+import { UserGuard } from './auth/guards/user.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full'},

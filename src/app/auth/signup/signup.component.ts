@@ -3,7 +3,7 @@ import { NgModel } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../auth.service';
 
-import { UserSignup } from '../models/user-signup.model';
+import { User } from '../../models/user.model';
 
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 
@@ -12,7 +12,7 @@ import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.scss']
 })
-export class SignupComponent implements OnInit, OnDestroy {
+export class SignupComponent implements OnInit {
   model: NgbDateStruct;
 
   userSignupSub: Subscription;
@@ -37,15 +37,10 @@ export class SignupComponent implements OnInit, OnDestroy {
     const convertedBirthdate = new Date(year, month-1, day+1, 0, 0, 0, 0)
     // const convertedBirthdate: string = year+'-'+month+'-'+day+'T00:00:00'
 
-    const userSignup = new UserSignup(
-      value.firstname,
-      value.lastname,
-      value.email,
-      value.password,
-      convertedBirthdate
-    )
-    console.log(userSignup);
-    this.userSignupSub = this.authService.signup(userSignup).subscribe();
+    const user = new User(0, value.firstname, value.lastname, value.email, value.password, null, convertedBirthdate, 0, 0, 1, null)
+    console.log(user);
+    //Unsubscribe nodig?
+    this.userSignupSub = this.authService.signup(user).subscribe();
   }
 
   ngOnDestroy(): void {
