@@ -35,6 +35,7 @@ export class AuthorizationService {
         this.permissions.push('TOURNAMENT_CREATE');
         this.permissions.push('TOURNAMENT_EDIT');
         this.permissions.push('TOURNAMENT_VIEW');
+        this.permissions.push('PROFILE_VIEW');
     }
 
     // This method is called once and a list of permissions is stored in the permissions property
