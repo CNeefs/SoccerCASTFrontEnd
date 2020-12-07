@@ -3,8 +3,11 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { AuthComponent } from '../app/auth/auth.component';
 import { SignupComponent } from './auth/signup/signup.component';
-import { ManageUsersComponent } from './manage-users/manage-users.component';
 import { ErrorPageComponent } from './error-page/error-page.component';
+
+import { ManageUsersComponent } from './manage-users/manage-users.component';
+import { UserCreateComponent } from './manage-users/user-create/user-create.component';
+import { UserEditComponent } from './manage-users/user-edit/user-edit.component';
 
 import { ManageTablesComponent } from './manage-tables/manage-tables.component';
 import { TableEditComponent } from './manage-tables/table-edit/table-edit.component';
@@ -20,8 +23,8 @@ const routes: Routes = [
   { path: 'signup', component: SignupComponent},
   
   { path: 'admin/users', component: ManageUsersComponent },
-  { path: 'admin/users/create', component: ManageUsersComponent },
-  { path: 'admin/users/edit', component: ManageUsersComponent },
+  { path: 'admin/users/create', component: UserCreateComponent },
+  { path: 'admin/users/edit', component: UserEditComponent },
 
   { path: 'admin/tables', component: ManageTablesComponent},
   { path: 'admin/tables/create', component: TableCreateComponent},
