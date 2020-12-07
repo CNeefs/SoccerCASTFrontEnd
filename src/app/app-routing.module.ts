@@ -13,6 +13,10 @@ import { ManageTablesComponent } from './manage-tables/manage-tables.component';
 import { TableEditComponent } from './manage-tables/table-edit/table-edit.component';
 import { TableCreateComponent } from './manage-tables/table-create/table-create.component';
 
+import { ManageCompetitionsComponent } from './manage-competitions/manage-competitions.component';
+import { CompetitionEditComponent } from './manage-competitions/competition-edit/competition-edit.component';
+import { CompetitionCreateComponent } from './manage-competitions/competition-create/competition-create.component';
+
 import { AdminGuard } from './auth/guards/admin.guard';
 import { UserGuard } from './auth/guards/user.guard';
 
@@ -29,6 +33,10 @@ const routes: Routes = [
   { path: 'admin/tables', component: ManageTablesComponent},
   { path: 'admin/tables/create', component: TableCreateComponent},
   { path: 'admin/tables/edit', component: TableEditComponent},
+  
+  { path: 'admin/competitions', component: ManageCompetitionsComponent},
+  { path: 'admin/competitions/create', component: CompetitionCreateComponent},
+  { path: 'admin/competitions/edit', component: CompetitionEditComponent},
 
   { path: 'not-found', component: ErrorPageComponent, data: {message: 'Page not found!', text: 'This page does not exist! Keep searching...'} },
   { path: 'not-authorized', component: ErrorPageComponent, data: {message: 'Not allowed!', text: 'You are not allowed to view this page!'} },

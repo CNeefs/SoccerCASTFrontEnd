@@ -10,7 +10,7 @@ import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
-  styleUrls: ['./signup.component.scss']
+  styleUrls: ['./signup.component.scss', '../../styles/validation_style.scss']
 })
 export class SignupComponent implements OnInit {
   model: NgbDateStruct;

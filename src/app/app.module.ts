@@ -13,6 +13,7 @@ import { SharedModule } from './shared/shared.module';
 import { ErrorPageComponent } from './error-page/error-page.component';
 import { ManageUsersModule } from './manage-users/manage-users.module';
 import { ManageTablesModule } from './manage-tables/manage-tables.module';
+import { ManageCompetitionsModule } from './manage-competitions/manage-competitions.module';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { ManageTablesModule } from './manage-tables/manage-tables.module';
     HomeModule,
     ManageUsersModule,
     ManageTablesModule,
+    ManageCompetitionsModule,
     SharedModule
   ],
   providers: [{

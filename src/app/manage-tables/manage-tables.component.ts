@@ -4,13 +4,12 @@ import { Table } from '../models/table.model';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { map } from 'rxjs/operators';
-import { Subscription } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-manage-tables',
   templateUrl: './manage-tables.component.html',
-  styleUrls: ['./manage-tables.component.scss']
+  styleUrls: ['./manage-tables.component.scss', '../styles/table_style.scss']
 })
 export class ManageTablesComponent implements OnInit {
 
@@ -18,8 +17,6 @@ export class ManageTablesComponent implements OnInit {
   currentTable: Table;
 
   pageLoaded: boolean = false;
-
-  tableSub: Subscription;
 
   constructor(private _tableService: TableService, private router: Router, private _modalService: NgbModal) { }
   
@@ -46,6 +43,6 @@ export class ManageTablesComponent implements OnInit {
 
   ngOnInit(): void {
     this.tables = this._tableService.getTables();
-    this.tableSub = this.tables.subscribe(result => this.pageLoaded = true)
+    this.tables.subscribe(result => this.pageLoaded = true)
   }
 }

@@ -11,7 +11,7 @@ import { Observable } from 'rxjs';
 @Component({
   selector: 'app-table-create',
   templateUrl: './table-create.component.html',
-  styleUrls: ['./table-create.component.scss']
+  styleUrls: ['./table-create.component.scss', '../../styles/validation_style.scss']
 })
 export class TableCreateComponent implements OnInit {
 
