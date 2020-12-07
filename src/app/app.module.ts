@@ -4,7 +4,6 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NavigationComponent } from './navigation/navigation.component';
 import { AuthModule } from './auth/auth.module';
 import { AuthInterceptor } from './auth/auth.interceptor';
 import { HomeModule } from './home/home.module'
@@ -15,13 +14,14 @@ import { ManageUsersModule } from './manage-users/manage-users.module';
 import { ManageTablesModule } from './manage-tables/manage-tables.module';
 import { ManageCompetitionsModule } from './manage-competitions/manage-competitions.module';
 import { ManageTournamentsModule } from './manage-tournaments/manage-tournaments.module';
+import { DirectivesModule } from './directives/directives.module';
+import { NavigationModule } from './navigation/navigation.module';
 import { ManageTeamsModule } from './manage-teams/manage-teams.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavigationComponent,
-    ErrorPageComponent,
+    ErrorPageComponent
   ],
   imports: [
     BrowserModule,
@@ -34,6 +34,8 @@ import { ManageTeamsModule } from './manage-teams/manage-teams.module';
     ManageTablesModule,
     ManageCompetitionsModule,
     ManageTournamentsModule,
+    DirectivesModule,
+    NavigationModule,
     ManageTeamsModule,
     SharedModule
   ],
