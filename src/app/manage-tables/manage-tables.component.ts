@@ -19,8 +19,6 @@ export class ManageTablesComponent implements OnInit {
 
   pageLoaded: boolean = false;
 
-  tableSub: Subscription;
-
   constructor(private _tableService: TableService, private router: Router, private _modalService: NgbModal) { }
   
   goToCreate() {
@@ -46,6 +44,6 @@ export class ManageTablesComponent implements OnInit {
 
   ngOnInit(): void {
     this.tables = this._tableService.getTables();
-    this.tableSub = this.tables.subscribe(result => this.pageLoaded = true)
+    this.tables.subscribe(result => this.pageLoaded = true)
   }
 }
