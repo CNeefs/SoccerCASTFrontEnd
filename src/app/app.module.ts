@@ -15,6 +15,7 @@ import { ManageUsersModule } from './manage-users/manage-users.module';
 import { ManageTablesModule } from './manage-tables/manage-tables.module';
 import { ManageCompetitionsModule } from './manage-competitions/manage-competitions.module';
 import { ManageTournamentsModule } from './manage-tournaments/manage-tournaments.module';
+import { ManageTeamsModule } from './manage-teams/manage-teams.module';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { ManageTournamentsModule } from './manage-tournaments/manage-tournaments
     ManageTablesModule,
     ManageCompetitionsModule,
     ManageTournamentsModule,
+    ManageTeamsModule,
     SharedModule
   ],
   providers: [{
