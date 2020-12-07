@@ -30,6 +30,10 @@ export class UserService implements OnDestroy {
         return this.http.put<User>(this.baseUrl + "user/" + id, user);
     }
 
+    deleteUserById(userID: number) {
+        return this.http.delete<User>(this.baseUrl + 'user/' + userID);
+    }
+
     ngOnDestroy(): void {
 
     }
