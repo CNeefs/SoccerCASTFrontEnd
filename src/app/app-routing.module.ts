@@ -24,6 +24,8 @@ import { TournamentCreateComponent } from './manage-tournaments/tournament-creat
 import { AdminGuard } from './auth/guards/admin.guard';
 import { UserGuard } from './auth/guards/user.guard';
 import { ManageTeamsComponent } from './manage-teams/manage-teams.component';
+import { TeamCreateComponent } from './manage-teams/team-create/team-create.component';
+import { TeamEditComponent } from './manage-teams/team-edit/team-edit.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -48,8 +50,8 @@ const routes: Routes = [
   { path: 'admin/tournaments/edit', component: TournamentEditComponent},
 
   { path: 'admin/teams', component: ManageTeamsComponent},
-  // { path: 'admin/teams/create', component: },
-  // { path: 'admin/teams/edit', component: },
+  { path: 'admin/teams/create', component: TeamCreateComponent},
+  { path: 'admin/teams/edit', component: TeamEditComponent},
 
   { path: 'not-found', component: ErrorPageComponent, data: {message: 'Page not found!', text: 'This page does not exist! Keep searching...'} },
   { path: 'not-authorized', component: ErrorPageComponent, data: {message: 'Not allowed!', text: 'You are not allowed to view this page!'} },
