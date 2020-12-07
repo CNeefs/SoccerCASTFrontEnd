@@ -12,6 +12,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { SharedModule } from './shared/shared.module';
 import { ErrorPageComponent } from './error-page/error-page.component';
 import { ManageUsersModule } from './manage-users/manage-users.module';
+import { ManageTablesModule } from './manage-tables/manage-tables.module';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { ManageUsersModule } from './manage-users/manage-users.module';
     AuthModule,
     HomeModule,
     ManageUsersModule,
+    ManageTablesModule,
     SharedModule
   ],
   providers: [{
