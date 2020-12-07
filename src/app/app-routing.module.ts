@@ -17,6 +17,10 @@ import { ManageCompetitionsComponent } from './manage-competitions/manage-compet
 import { CompetitionEditComponent } from './manage-competitions/competition-edit/competition-edit.component';
 import { CompetitionCreateComponent } from './manage-competitions/competition-create/competition-create.component';
 
+import { ManageTournamentsComponent } from './manage-tournaments/manage-tournaments.component';
+import { TournamentEditComponent } from './manage-tournaments/tournament-edit/tournament-edit.component';
+import { TournamentCreateComponent } from './manage-tournaments/tournament-create/tournament-create.component';
+
 import { AdminGuard } from './auth/guards/admin.guard';
 import { UserGuard } from './auth/guards/user.guard';
 
@@ -37,6 +41,10 @@ const routes: Routes = [
   { path: 'admin/competitions', component: ManageCompetitionsComponent},
   { path: 'admin/competitions/create', component: CompetitionCreateComponent},
   { path: 'admin/competitions/edit', component: CompetitionEditComponent},
+  
+  { path: 'admin/tournaments', component: ManageTournamentsComponent},
+  { path: 'admin/tournaments/create', component: TournamentCreateComponent},
+  { path: 'admin/tournaments/edit', component: TournamentEditComponent},
 
   { path: 'not-found', component: ErrorPageComponent, data: {message: 'Page not found!', text: 'This page does not exist! Keep searching...'} },
   { path: 'not-authorized', component: ErrorPageComponent, data: {message: 'Not allowed!', text: 'You are not allowed to view this page!'} },
