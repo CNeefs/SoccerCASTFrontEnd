@@ -41,12 +41,27 @@ export class TeamEditComponent implements OnInit {
     this.router.navigate(['admin/teams']);
   }
 
+  addUserToTeam(user: User) {
+    const newUserTeam = new UserTeam(0,user.userID, null, this.selectedTeam.teamID, null);
+    console.log(newUserTeam);
+    this._userTeamService.addUserTeam(newUserTeam).subscribe();
+    this.router.navigate(['admin/teams']);
+  }
+
+  removeUserFromTeam(user: User) {
+    this._userTeamService.deleteUserTeamByUserIdAndTeamId(user.userID, this.selectedTeam.teamID).subscribe();
+    this.router.navigate(['admin/teams']);
+    // this._userTeamService.deleteUserTeamById();
+  }
+
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       this.selectedTeamID = params['id'];
       console.log(this.selectedTeamID);
       this.usersTeam = this._userTeamService.getUsersTeamByTeamId(this.selectedTeamID);
     });
+
+    this.users = this._userService.getUsers();
 
     this._teamService.getTeamById(this.selectedTeamID).subscribe(team => {
       this.selectedTeam = team;

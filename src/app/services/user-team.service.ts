@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { UserTeam } from '../models/user-team.model';
 import { User } from '../models/user.model';
+import { Team } from '../models/team.model';
 
 @Injectable({
     providedIn: 'root'
@@ -16,8 +17,8 @@ export class UserTeamService {
         return this.http.get<UserTeam[]>(this.baseUrl + "userteam/");
     }
 
-    getUserTeamsByTeamId(userID: number) {
-        return this.http.get<UserTeam[]>(this.baseUrl + 'userteam/userteams/' + userID);
+    getUserTeamsByUserId(userID: number) {
+        return this.http.get<Team[]>(this.baseUrl + 'userteam/userteams/' + userID);
     }
 
     getUsersTeamByTeamId(userTeamID: number) {
@@ -28,8 +29,12 @@ export class UserTeamService {
         return this.http.delete<UserTeam>(this.baseUrl + 'userteam/' + userTeamID);
     }
 
+    deleteUserTeamByUserIdAndTeamId(userID: number, teamID: number) {
+        return this.http.delete<UserTeam>(this.baseUrl + 'userteam/user/' + userID + '/team/' + teamID);
+    }
+
     addUserTeam(userTeam: UserTeam) {
-        return this.http.post<UserTeam>(this.baseUrl + "userteam/", userTeam, { reportProgress: true, observe: 'events' });
+        return this.http.post<UserTeam>(this.baseUrl + 'userteam', userTeam, { reportProgress: true, observe: 'events' });
     }
 
     editUserTeam(id: number, userTeam: UserTeam) {

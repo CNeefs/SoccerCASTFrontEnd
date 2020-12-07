@@ -5,7 +5,9 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { Team } from '../models/team.model';
+import { UserTeam } from '../models/user-team.model';
 import { TeamService } from '../services/team.service';
+import { UserTeamService } from '../services/user-team.service';
 
 @Component({
   selector: 'app-manage-teams',
@@ -15,6 +17,7 @@ import { TeamService } from '../services/team.service';
 export class ManageTeamsComponent implements OnInit {
 
   teams: Observable<Team[]>;
+  userTeams: UserTeam[];
   currentTeam: Team;
 
   pageLoaded: boolean = false;
@@ -22,7 +25,8 @@ export class ManageTeamsComponent implements OnInit {
   constructor(
     private router: Router,
     private _modalService: NgbModal,
-    private _teamService: TeamService
+    private _teamService: TeamService,
+    private _userTeamService: UserTeamService
   ) { }
 
   goToCreate() {
@@ -39,11 +43,19 @@ export class ManageTeamsComponent implements OnInit {
   }
 
   deleteTeam(team: Team) {
-    this._teamService.deleteTeamById(team.teamID).subscribe();
-    this.teams = this.teams.pipe(
-      map(res => res.filter(t => t.teamID != team.teamID))
-    );
-    this._modalService.dismissAll();
+    this._userTeamService.getUserTeams().subscribe((userTeams: UserTeam[]) => {
+      this.userTeams = userTeams;
+      for(let userTeam of this.userTeams) {
+        if (userTeam.teamID == team.teamID) {
+          this._userTeamService.deleteUserTeamById(userTeam.userTeamID).subscribe();
+        }
+      }
+      this._teamService.deleteTeamById(team.teamID).subscribe();
+      this.teams = this.teams.pipe(
+        map(res => res.filter(t => t.teamID != team.teamID))
+      );
+      this._modalService.dismissAll();
+    })
   }
 
   ngOnInit(): void {

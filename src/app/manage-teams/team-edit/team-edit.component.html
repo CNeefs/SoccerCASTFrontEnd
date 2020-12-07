@@ -26,5 +26,22 @@
         <button type="submit" class="btn btn-primary" [disabled]="!editForm.valid">Submit</button>
     </form>
 </div>
+<div *ngIf="selectedTeam" class="container shadow-lg p-3 mb-5 bg-white rounded">
+    <div *ngFor="let u of (usersTeam | async)" class="card p-2 m-3">
+        <div class="row">
+            <div class="col m-auto">{{ u.firstName }} {{u.lastName}}</div>
+            <div class="col"><button class="btn btn-danger float-right" (click)="removeUserFromTeam(u)">Remove</button></div>
+        </div>
+    </div>
+</div>
 
+<div *ngIf="selectedTeam" class="container shadow-lg p-3 mb-5 bg-white rounded">
+    <!-- array users moet array van users die request hebben gedaan worden -->
+    <div *ngFor="let u of (users | async)" class="card p-2 m-3">
+        <div class="row">
+            <div class="col m-auto">{{ u.firstName }} {{u.lastName}}</div>
+            <div class="col"><button class="btn btn-success float-right" (click)="addUserToTeam(u)">Add user to team</button></div>
+        </div>
+    </div>
+</div>
 
