@@ -14,6 +14,7 @@ import { ErrorPageComponent } from './error-page/error-page.component';
 import { ManageUsersModule } from './manage-users/manage-users.module';
 import { ManageTablesModule } from './manage-tables/manage-tables.module';
 import { ManageCompetitionsModule } from './manage-competitions/manage-competitions.module';
+import { ManageTournamentsModule } from './manage-tournaments/manage-tournaments.module';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { ManageCompetitionsModule } from './manage-competitions/manage-competiti
     ManageUsersModule,
     ManageTablesModule,
     ManageCompetitionsModule,
+    ManageTournamentsModule,
     SharedModule
   ],
   providers: [{
