@@ -4,7 +4,6 @@ import { Competition } from '../models/competition.model';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { map } from 'rxjs/operators';
-import { Subscription } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -29,12 +28,12 @@ export class ManageCompetitionsComponent implements OnInit {
     this.router.navigate(['admin/competitions/edit'], { queryParams: { id: competition.competitionID }});
   }
 
-  openDeleteTable(competition: Competition, contentDeleteModel) {
+  openDeleteCompetition(competition: Competition, contentDeleteModel) {
     this.currentCompetition = competition;
     this._modalService.open(contentDeleteModel)
   }
 
-  deleteTable(competition: Competition) {
+  deleteCompetition(competition: Competition) {
     this._competitionService.deleteCompetitionById(competition.competitionID).subscribe();
     this.competitions = this.competitions.pipe(
       map(res => res.filter(c => c.competitionID != competition.competitionID))

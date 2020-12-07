@@ -44,7 +44,7 @@
                       </a>
                       <div ngbDropdownMenu class="dropdown-menu dropdown-menu-left">
                         <a ngbDropdownItem class="dropdown-item" (click)="goToEdit(c)" style="cursor: pointer;">Edit competition</a>
-                        <a ngbDropdownItem class="dropdown-item" (click)="openDeleteTable(c, contentDeleteModel)" style="cursor: pointer;">Delete competition</a>
+                        <a ngbDropdownItem class="dropdown-item" (click)="openDeleteCompetition(c, contentDeleteModel)" style="cursor: pointer;">Delete competition</a>
                         <a *ngIf="!c.isActive" class="dropdown-item" (click)="setActive(c)" style="cursor: pointer;">Set active</a>
                       </div>
                     </div>
