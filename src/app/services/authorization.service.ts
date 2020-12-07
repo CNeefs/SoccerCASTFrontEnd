@@ -35,6 +35,10 @@ export class AuthorizationService {
         this.permissions.push('TOURNAMENT_CREATE');
         this.permissions.push('TOURNAMENT_EDIT');
         this.permissions.push('TOURNAMENT_VIEW');
+        this.permissions.push('TEAM_MANAGE');
+        this.permissions.push('TEAM_CREATE');
+        this.permissions.push('TEAM_EDIT');
+        this.permissions.push('TEAM_VIEW');
         this.permissions.push('PROFILE_VIEW');
     }
 

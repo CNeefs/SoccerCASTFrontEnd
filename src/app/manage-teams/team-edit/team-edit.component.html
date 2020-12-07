@@ -1,0 +1,47 @@
+<br>
+<div class="container shadow-lg p-3 mb-5 bg-white rounded">
+    <form *ngIf="selectedTeam" [formGroup]="editForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label for="tableName">Name</label>
+            <input type="text" class="form-control" id="teamName" placeholder="Name" formControlName="teamName">
+            <small class="pl-1" *ngIf="!editForm.get('teamName').valid && editForm.get('teamName').touched">This team name is invalid!</small>
+        </div>
+        <div class="form-group">
+            <label for="companyName">Company name</label>
+            <input type="text" class="form-control" id="companyName" placeholder="Company Name" formControlName="companyName">
+            <small class="pl-1" *ngIf="!editForm.get('companyName').valid && editForm.get('companyName').touched">This company name is invalid!</small>
+        </div>
+        <div class="form-group">
+          <label for="location">Location</label>
+          <input type="text" class="form-control" id="location" placeholder="Location" formControlName="location">
+          <small class="pl-1" *ngIf="!editForm.get('location').valid && editForm.get('location').touched">This location is invalid!</small>
+        </div>
+        <div class="form-group">
+            <label for="captainID">Captain <span class="text-secondary">(a captain can only be a user from the selected team)</span></label>
+            <select class="form-control" id="captainID" formControlName="captainID">
+                <option *ngFor="let u of (usersTeam | async)" [value]="u.userID">{{u.firstName}} {{u.lastName}}</option>
+            </select>
+            <small class="pl-1" *ngIf="!editForm.get('captainID').valid && editForm.get('captainID').touched">This captain is invalid!</small>
+        </div>
+        <button type="submit" class="btn btn-primary" [disabled]="!editForm.valid">Submit</button>
+    </form>
+</div>
+<div *ngIf="selectedTeam" class="container shadow-lg p-3 mb-5 bg-white rounded">
+    <div *ngFor="let u of (usersTeam | async)" class="card p-2 m-3">
+        <div class="row">
+            <div class="col m-auto">{{ u.firstName }} {{u.lastName}}</div>
+            <div class="col"><button class="btn btn-danger float-right" (click)="removeUserFromTeam(u)">Remove</button></div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="selectedTeam" class="container shadow-lg p-3 mb-5 bg-white rounded">
+    <!-- array users moet array van users die request hebben gedaan worden -->
+    <div *ngFor="let u of (users | async)" class="card p-2 m-3">
+        <div class="row">
+            <div class="col m-auto">{{ u.firstName }} {{u.lastName}}</div>
+            <div class="col"><button class="btn btn-success float-right" (click)="addUserToTeam(u)">Add user to team</button></div>
+        </div>
+    </div>
+</div>
+

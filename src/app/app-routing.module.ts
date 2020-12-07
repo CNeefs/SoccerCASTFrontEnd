@@ -23,6 +23,8 @@ import { TournamentCreateComponent } from './manage-tournaments/tournament-creat
 
 import { AuthGuardService } from './auth/guards/auth-guard.service';
 import { ManageTeamsComponent } from './manage-teams/manage-teams.component';
+import { TeamCreateComponent } from './manage-teams/team-create/team-create.component';
+import { TeamEditComponent } from './manage-teams/team-edit/team-edit.component';
 import { MyProfileComponent } from './my-profile/my-profile.component';
 
 const routes: Routes = [
@@ -151,13 +153,36 @@ const routes: Routes = [
             data: { auth: 'TOURNAMENT_EDIT' },
           }
         ]
-      }
+      },
+      {
+        path: 'teams',
+        children: [
+          {
+            path: '',
+            component: ManageTeamsComponent,
+            canActivate: [AuthGuardService],
+            data: { auth: 'TEAM_VIEW' },
+          },
+          {
+            path: 'create',
+            component: TeamCreateComponent,
+            canActivate: [AuthGuardService],
+            data: { auth: 'TEAM_CREATE' },
+          },
+          {
+            path: 'edit',
+            component: TeamEditComponent,
+            canActivate: [AuthGuardService],
+            data: { auth: 'TEAM_EDIT' },
+          }
+        ]
+      },
     ]
   },
 
-  { path: 'admin/teams', component: ManageTeamsComponent},
-  // { path: 'admin/teams/create', component: },
-  // { path: 'admin/teams/edit', component: },
+  // { path: 'admin/teams', component: ManageTeamsComponent},
+  // { path: 'admin/teams/create', component: TeamCreateComponent},
+  // { path: 'admin/teams/edit', component: TeamEditComponent},
 
   { path: 'not-found', component: ErrorPageComponent, data: {message: 'Page not found!', text: 'This page does not exist! Keep searching...'} },
   { path: 'not-authorized', component: ErrorPageComponent, data: {message: 'Not allowed!', text: 'You are not allowed to view this page!'} },

@@ -3,12 +3,16 @@ import { CommonModule } from '@angular/common';
 import { ManageTeamsComponent } from './manage-teams.component';
 import { SharedModule } from '../shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { TeamCreateComponent } from './team-create/team-create.component';
+import { TeamEditComponent } from './team-edit/team-edit.component';
 
 
 
 @NgModule({
   declarations: [
-    ManageTeamsComponent
+    ManageTeamsComponent,
+    TeamCreateComponent,
+    TeamEditComponent
   ],
   imports: [
     CommonModule,
