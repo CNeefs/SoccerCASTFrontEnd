@@ -11,7 +11,7 @@ import { UserService } from 'src/app/services/user.service';
 @Component({
   selector: 'app-team-create',
   templateUrl: './team-create.component.html',
-  styleUrls: ['./team-create.component.scss', '../../styles/table_style.scss']
+  styleUrls: ['./team-create.component.scss', '../../styles/validation_style.scss']
 })
 export class TeamCreateComponent implements OnInit {
   
