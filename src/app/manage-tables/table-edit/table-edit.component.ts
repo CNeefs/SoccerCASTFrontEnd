@@ -6,12 +6,11 @@ import { UserService } from '../../services/user.service';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { HttpEventType } from '@angular/common/http';
 
 @Component({
   selector: 'app-table-edit',
   templateUrl: './table-edit.component.html',
-  styleUrls: ['./table-edit.component.scss']
+  styleUrls: ['./table-edit.component.scss', '../../styles/validation_style.scss']
 })
 export class TableEditComponent implements OnInit {
 
@@ -36,22 +35,18 @@ export class TableEditComponent implements OnInit {
       this.selectedTableID = params['id'];
     });
 
+    this.users = this._userService.getUsers();
+
     this._tableService.getTableById(this.selectedTableID).subscribe(res => {
       this.selectedTable = res;
-      this.editForm.controls['tableName'].setValue(res.tableName);
-      this.editForm.controls['companyName'].setValue(res.companyName);
-      this.editForm.controls['adres'].setValue(res.adres);
-      this.editForm.controls['contactUserID'].setValue(res.contactUserID);
+      this.editForm = this.fb.group({
+        tableName: [res.tableName, Validators.required],
+        companyName: [res.companyName, Validators.required],
+        adres: [res.adres, Validators.required],
+        contactUserID: [res.contactUserID, Validators.required]
+      });
     }, error => {
       this.router.navigate(['admin/tables']);
-    });
-
-    this.users = this._userService.getUsers();
-    this.editForm = this.fb.group({
-      tableName: ['', Validators.required],
-      companyName: ['', Validators.required],
-      adres: ['', Validators.required],
-      contactUserID: ['', Validators.required]
     });
   }
 }

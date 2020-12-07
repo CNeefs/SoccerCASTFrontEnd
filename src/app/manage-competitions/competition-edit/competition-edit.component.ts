@@ -3,12 +3,11 @@ import { Competition } from '../../models/competition.model';
 import { CompetitionService } from '../../services/competition.service';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-competition-edit',
   templateUrl: './competition-edit.component.html',
-  styleUrls: ['./competition-edit.component.scss']
+  styleUrls: ['./competition-edit.component.scss', '../../styles/validation_style.scss']
 })
 export class CompetitionEditComponent implements OnInit {
 
