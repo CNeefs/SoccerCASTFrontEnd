@@ -17,6 +17,7 @@ import { ManageTournamentsModule } from './manage-tournaments/manage-tournaments
 import { DirectivesModule } from './directives/directives.module';
 import { NavigationModule } from './navigation/navigation.module';
 import { ManageTeamsModule } from './manage-teams/manage-teams.module';
+import { MyProfileModule } from './my-profile/my-profile.module';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { ManageTeamsModule } from './manage-teams/manage-teams.module';
     DirectivesModule,
     NavigationModule,
     ManageTeamsModule,
+    MyProfileModule,
     SharedModule
   ],
   providers: [{

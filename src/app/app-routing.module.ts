@@ -25,6 +25,7 @@ import { AuthGuardService } from './auth/guards/auth-guard.service';
 import { ManageTeamsComponent } from './manage-teams/manage-teams.component';
 import { TeamCreateComponent } from './manage-teams/team-create/team-create.component';
 import { TeamEditComponent } from './manage-teams/team-edit/team-edit.component';
+import { MyProfileComponent } from './my-profile/my-profile.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -32,6 +33,27 @@ const routes: Routes = [
   { path: 'login', component: AuthComponent},
   { path: 'signup', component: SignupComponent},
 
+  {
+    path: 'user',
+    children: [
+      {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'profile'
+      },
+      {
+        path: 'profile',
+        children: [
+          {
+            path: '',
+            component: MyProfileComponent,
+            canActivate: [AuthGuardService],
+            data: { auth: 'PROFILE_VIEW' },
+          }
+        ]
+      }
+    ]
+  },
   { 
     path: 'admin',
     children: [
