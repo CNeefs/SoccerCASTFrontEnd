@@ -23,19 +23,18 @@
         <a class="nav-link dropdown-toggle" id="dropdownBasic1"
           ngbDropdownToggle>{{ currentUser.firstName | titlecase }}</a>
         <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-          <!-- <div *ngIf=" currentUser.role.roleID == 2 || user.role.roleID == 3">
-              <a ngbDropdownItem class="nav-link" routerLink="/manage-articles" routerLinkActive="active"><i class="far fa-newspaper"></i> My articles</a>
-              <hr class="m-0">
-            </div>-->
-          <div *ngIf="currentUser.roleID == 2">
-            <a ngbDropdownItem class="nav-link" routerLink="/admin/tables" routerLinkActive="active">
+          <div>
+            <a ngbDropdownItem class="nav-link" routerLink="/admin/users" routerLinkActive="active" [appHideIfUnauthorized]="'USER_MANAGE'">
+              <mat-icon>group</mat-icon> Users
+            </a>
+            <a ngbDropdownItem class="nav-link" routerLink="/admin/tables" routerLinkActive="active" [appHideIfUnauthorized]="'TABLE_MANAGE'">
               <mat-icon>deck</mat-icon> Tables
             </a>
-            <a ngbDropdownItem class="nav-link" routerLink="/admin/competitions" routerLinkActive="active">
+            <a ngbDropdownItem class="nav-link" routerLink="/admin/competitions" routerLinkActive="active" [appHideIfUnauthorized]="'COMPETITION_MANAGE'">
               <mat-icon>people_outline</mat-icon> Competitions
             </a>
-            <a ngbDropdownItem class="nav-link" routerLink="/admin/users" routerLinkActive="active">
-              <mat-icon>group</mat-icon> Users
+            <a ngbDropdownItem class="nav-link" routerLink="/admin/tournaments" routerLinkActive="active" [appHideIfUnauthorized]="'TOURNAMENT_MANAGE'">
+              <mat-icon>emoji_events</mat-icon> Tournament
             </a>
             <hr class="m-0">
           </div>
@@ -46,7 +45,6 @@
           </div>
         </div>
       </li>
-
     </ul>
   </div>
 </nav>
