@@ -4,13 +4,12 @@ import { Table } from '../models/table.model';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { map } from 'rxjs/operators';
-import { Subscription } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-manage-tables',
   templateUrl: './manage-tables.component.html',
-  styleUrls: ['./manage-tables.component.scss']
+  styleUrls: ['./manage-tables.component.scss', '../styles/table_style.scss']
 })
 export class ManageTablesComponent implements OnInit {
 

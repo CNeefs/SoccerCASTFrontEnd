@@ -9,7 +9,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-manage-competitions',
   templateUrl: './manage-competitions.component.html',
-  styleUrls: ['./manage-competitions.component.scss']
+  styleUrls: ['./manage-competitions.component.scss', '../styles/table_style.scss']
 })
 export class ManageCompetitionsComponent implements OnInit {
 

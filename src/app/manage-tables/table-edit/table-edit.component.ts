@@ -10,7 +10,7 @@ import { Observable } from 'rxjs';
 @Component({
   selector: 'app-table-edit',
   templateUrl: './table-edit.component.html',
-  styleUrls: ['./table-edit.component.scss']
+  styleUrls: ['./table-edit.component.scss', '../../styles/validation_style.scss']
 })
 export class TableEditComponent implements OnInit {
 

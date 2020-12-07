@@ -4,12 +4,11 @@ import { CompetitionService } from '../../services/competition.service';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpEventType } from '@angular/common/http';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-competition-create',
   templateUrl: './competition-create.component.html',
-  styleUrls: ['./competition-create.component.scss']
+  styleUrls: ['./competition-create.component.scss', '../../styles/validation_style.scss']
 })
 export class CompetitionCreateComponent implements OnInit {
 
