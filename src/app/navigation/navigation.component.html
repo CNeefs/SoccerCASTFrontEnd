@@ -30,7 +30,7 @@
             <a ngbDropdownItem class="nav-link" routerLink="/admin/tables" routerLinkActive="active" [appHideIfUnauthorized]="'TABLE_MANAGE'">
               <mat-icon>deck</mat-icon> Tables
             </a>
-            <a ngbDropdownItem class="nav-link" routerLink="/admin/teams" routerLinkActive="active">
+            <a ngbDropdownItem class="nav-link" routerLink="/admin/teams" routerLinkActive="active" [appHideIfUnauthorized]="'TEAM_MANAGE'">
               <mat-icon>group</mat-icon> Teams
             </a>
             <a ngbDropdownItem class="nav-link" routerLink="/admin/competitions" routerLinkActive="active" [appHideIfUnauthorized]="'COMPETITION_MANAGE'">

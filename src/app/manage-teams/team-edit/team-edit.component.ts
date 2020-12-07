@@ -8,6 +8,7 @@ import { TeamService } from 'src/app/services/team.service';
 import { UserService } from 'src/app/services/user.service';
 import { UserTeamService } from 'src/app/services/user-team.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { map, finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-team-edit',
@@ -45,12 +46,15 @@ export class TeamEditComponent implements OnInit {
     const newUserTeam = new UserTeam(0,user.userID, null, this.selectedTeam.teamID, null);
     console.log(newUserTeam);
     this._userTeamService.addUserTeam(newUserTeam).subscribe();
-    this.router.navigate(['admin/teams']);
+    this.usersTeam = this.usersTeam.pipe(map(res => res.map((user, i) => {
+      if (res.length == i) res.push(user);
+      return user;
+    })));
   }
 
   removeUserFromTeam(user: User) {
     this._userTeamService.deleteUserTeamByUserIdAndTeamId(user.userID, this.selectedTeam.teamID).subscribe();
-    this.router.navigate(['admin/teams']);
+    this.usersTeam = this.usersTeam.pipe(map(res => res.filter(u => u.userID != user.userID)));
     // this._userTeamService.deleteUserTeamById();
   }
 

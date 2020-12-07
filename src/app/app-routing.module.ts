@@ -131,13 +131,36 @@ const routes: Routes = [
             data: { auth: 'TOURNAMENT_EDIT' },
           }
         ]
-      }
+      },
+      {
+        path: 'teams',
+        children: [
+          {
+            path: '',
+            component: ManageTeamsComponent,
+            canActivate: [AuthGuardService],
+            data: { auth: 'TEAM_VIEW' },
+          },
+          {
+            path: 'create',
+            component: TeamCreateComponent,
+            canActivate: [AuthGuardService],
+            data: { auth: 'TEAM_CREATE' },
+          },
+          {
+            path: 'edit',
+            component: TeamEditComponent,
+            canActivate: [AuthGuardService],
+            data: { auth: 'TEAM_EDIT' },
+          }
+        ]
+      },
     ]
   },
 
-  { path: 'admin/teams', component: ManageTeamsComponent},
-  { path: 'admin/teams/create', component: TeamCreateComponent},
-  { path: 'admin/teams/edit', component: TeamEditComponent},
+  // { path: 'admin/teams', component: ManageTeamsComponent},
+  // { path: 'admin/teams/create', component: TeamCreateComponent},
+  // { path: 'admin/teams/edit', component: TeamEditComponent},
 
   { path: 'not-found', component: ErrorPageComponent, data: {message: 'Page not found!', text: 'This page does not exist! Keep searching...'} },
   { path: 'not-authorized', component: ErrorPageComponent, data: {message: 'Not allowed!', text: 'You are not allowed to view this page!'} },
