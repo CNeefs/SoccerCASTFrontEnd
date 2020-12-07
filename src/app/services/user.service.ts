@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Subject, Subscription } from 'rxjs';
 
 import { User } from '../models/user.model';
+import { tap } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
@@ -20,6 +21,11 @@ export class UserService implements OnDestroy {
     getUserById(userID: number) {
         return this.http.get<User>(this.baseUrl + 'User/' + userID);
     }
+
+    addUser(newUser: User) {
+        return this.http.post<User>(this.baseUrl + "User", newUser, { reportProgress: true, observe: 'events' });
+    }
+
 
     ngOnDestroy(): void {
 

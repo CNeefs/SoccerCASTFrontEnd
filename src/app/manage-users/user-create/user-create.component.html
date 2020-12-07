@@ -24,13 +24,19 @@
         <div class="form-group">
             <label for="email">Date of birth</label>
             <div class="input-group">
-                <input class="form-control" placeholder="yyyy-mm-dd" [(ngModel)]="model" ngbDatepicker
+                <input class="form-control" placeholder="yyyy-mm-dd" ngbDatepicker
                     #d="ngbDatepicker" formControlName="birthDate">
                 <div class="input-group-append">
                     <button class="btn btn-outline-secondary calendar pb-0" (click)="d.toggle()" type="button"><mat-icon>event</mat-icon></button>
                 </div>
             </div>
             <small class="pl-1" *ngIf="!createForm.get('birthDate').valid && createForm.get('birthDate').touched">This birthdate is invalid!</small>
+        </div>
+
+        <div class="form-group">
+            <label for="email">Password</label>
+            <input type="password" class="form-control" id="password" placeholder="Password" formControlName="password">
+            <small class="pl-1" *ngIf="!createForm.get('password').valid && createForm.get('password').touched">This password is invalid!</small>
         </div>
 
         <div class="form-group">
