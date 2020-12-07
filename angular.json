@@ -128,5 +128,8 @@
       }
     }
   },
-  "defaultProject": "SoccerCast"
+  "defaultProject": "SoccerCast",
+  "cli": {
+    "analytics": "18fadbe6-d4d7-47e8-bc0a-a752f184f8c0"
+  }
 }

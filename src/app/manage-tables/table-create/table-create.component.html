@@ -1,0 +1,28 @@
+<br>
+<div class="container shadow-lg p-3 mb-5 bg-white rounded">
+    <form [formGroup]="createForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label for="tableName">Name</label>
+            <input type="text" class="form-control" id="tableName" placeholder="Name" formControlName="tableName">
+            <small class="pl-1" *ngIf="!createForm.get('tableName').valid && createForm.get('tableName').touched">This table name is invalid!</small>
+        </div>
+        <div class="form-group">
+            <label for="companyName">Company name</label>
+            <input type="text" class="form-control" id="companyName" placeholder="Company Name" formControlName="companyName">
+            <small class="pl-1" *ngIf="!createForm.get('companyName').valid && createForm.get('companyName').touched">This company name is invalid!</small>
+        </div>
+        <div class="form-group">
+          <label for="adres">Adres</label>
+          <input type="text" class="form-control" id="adres" placeholder="Adres" formControlName="adres">
+          <small class="pl-1" *ngIf="!createForm.get('adres').valid && createForm.get('adres').touched">This adres is invalid!</small>
+        </div>
+        <div class="form-group">
+            <label for="contactUserID">Contact user</label>
+            <select class="form-control" id="contactUserID" formControlName="contactUserID">
+                <option *ngFor="let u of (users | async)" [value]="u.userID">{{u.firstName}} {{u.lastName}}</option>
+            </select>
+            <small class="pl-1" *ngIf="!createForm.get('contactUserID').valid && createForm.get('contactUserID').touched">This contact user is invalid!</small>
+        </div>
+        <button type="submit" class="btn btn-primary" [disabled]="!createForm.valid">Submit</button>
+    </form>
+</div>
