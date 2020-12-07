@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { User } from '../models/user.model';
 import { UserService } from '../services/user.service';
 
@@ -34,12 +35,12 @@ export class ManageUsersComponent implements OnInit {
     this._modalService.open(contentDeleteModel)
   }
 
-  deleteTable(user: User) {
-    // this._userService.deleteUserById(user.userID).subscribe();
-    // this.users = this.users.pipe(
-    //   map(res => res.filter(u => u.userID != user.userID))
-    // );
-    // this._modalService.dismissAll();
+  deleteUser(user: User) {
+    this._userService.deleteUserById(user.userID).subscribe();
+    this.users = this.users.pipe(
+      map(res => res.filter(u => u.userID != user.userID))
+    );
+    this._modalService.dismissAll();
   }
 
   ngOnInit(): void {
