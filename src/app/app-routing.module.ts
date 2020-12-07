@@ -5,7 +5,6 @@ import { AuthComponent } from '../app/auth/auth.component';
 import { SignupComponent } from './auth/signup/signup.component';
 import { ManageUsersComponent } from './manage-users/manage-users.component';
 import { ErrorPageComponent } from './error-page/error-page.component';
-import { ManageUsersDetailComponent } from './manage-users/manage-users-detail/manage-users-detail.component';
 
 import { ManageTablesComponent } from './manage-tables/manage-tables.component';
 import { TableEditComponent } from './manage-tables/table-edit/table-edit.component';
@@ -20,11 +19,10 @@ const routes: Routes = [
   { path: 'login', component: AuthComponent},
   { path: 'signup', component: SignupComponent},
   
-  { path: 'manage-users', component: ManageUsersComponent, children: [
-    // { path: 'new', component: ManageUsersEditComponent },
-    { path: ':id', component: ManageUsersDetailComponent },
-    // { path: ':id/edit', component: ManageUsersEditComponent }
-  ]},
+  { path: 'admin/users', component: ManageUsersComponent },
+  { path: 'admin/users/create', component: ManageUsersComponent },
+  { path: 'admin/users/edit', component: ManageUsersComponent },
+
   { path: 'admin/tables', component: ManageTablesComponent},
   { path: 'admin/tables/create', component: TableCreateComponent},
   { path: 'admin/tables/edit', component: TableEditComponent},
