@@ -21,8 +21,7 @@ import { ManageTournamentsComponent } from './manage-tournaments/manage-tourname
 import { TournamentEditComponent } from './manage-tournaments/tournament-edit/tournament-edit.component';
 import { TournamentCreateComponent } from './manage-tournaments/tournament-create/tournament-create.component';
 
-import { AdminGuard } from './auth/guards/admin.guard';
-import { UserGuard } from './auth/guards/user.guard';
+import { AuthGuardService } from './auth/guards/auth-guard.service';
 import { ManageTeamsComponent } from './manage-teams/manage-teams.component';
 import { TeamCreateComponent } from './manage-teams/team-create/team-create.component';
 import { TeamEditComponent } from './manage-teams/team-edit/team-edit.component';
@@ -32,22 +31,109 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent},
   { path: 'login', component: AuthComponent},
   { path: 'signup', component: SignupComponent},
-  
-  { path: 'admin/users', component: ManageUsersComponent },
-  { path: 'admin/users/create', component: UserCreateComponent },
-  { path: 'admin/users/edit', component: UserEditComponent },
 
-  { path: 'admin/tables', component: ManageTablesComponent},
-  { path: 'admin/tables/create', component: TableCreateComponent},
-  { path: 'admin/tables/edit', component: TableEditComponent},
-  
-  { path: 'admin/competitions', component: ManageCompetitionsComponent},
-  { path: 'admin/competitions/create', component: CompetitionCreateComponent},
-  { path: 'admin/competitions/edit', component: CompetitionEditComponent},
-  
-  { path: 'admin/tournaments', component: ManageTournamentsComponent},
-  { path: 'admin/tournaments/create', component: TournamentCreateComponent},
-  { path: 'admin/tournaments/edit', component: TournamentEditComponent},
+  { 
+    path: 'admin',
+    children: [
+      {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'users'
+      },
+      {
+        path: 'users',
+        children: [
+          {
+            path: '',
+            component: ManageUsersComponent,
+            canActivate: [AuthGuardService],
+            data: { auth: 'USER_VIEW' },
+          },
+          {
+            path: 'create',
+            component: UserCreateComponent,
+            canActivate: [AuthGuardService],
+            data: { auth: 'USER_CREATE' },
+          },
+          {
+            path: 'edit',
+            component: UserEditComponent,
+            canActivate: [AuthGuardService],
+            data: { auth: 'USER_EDIT' },
+          }
+        ]
+      },
+      {
+        path: 'tables',
+        children: [
+          {
+            path: '',
+            component: ManageTablesComponent,
+            canActivate: [AuthGuardService],
+            data: { auth: 'TABLE_VIEW' },
+          },
+          {
+            path: 'create',
+            component: TableCreateComponent,
+            canActivate: [AuthGuardService],
+            data: { auth: 'TABLE_CREATE' },
+          },
+          {
+            path: 'edit',
+            component: TableEditComponent,
+            canActivate: [AuthGuardService],
+            data: { auth: 'TABLE_EDIT' },
+          }
+        ]
+      },
+      {
+        path: 'competitions',
+        children: [
+          {
+            path: '',
+            component: ManageCompetitionsComponent,
+            canActivate: [AuthGuardService],
+            data: { auth: 'COMPETITION_VIEW' },
+          },
+          {
+            path: 'create',
+            component: CompetitionCreateComponent,
+            canActivate: [AuthGuardService],
+            data: { auth: 'COMPETITION_CREATE' },
+          },
+          {
+            path: 'edit',
+            component: CompetitionEditComponent,
+            canActivate: [AuthGuardService],
+            data: { auth: 'COMPETITION_EDIT' },
+          }
+        ]
+      },
+      {
+        path: 'tournaments',
+        children: [
+          {
+            path: '',
+            component: ManageTournamentsComponent,
+            canActivate: [AuthGuardService],
+            data: { auth: 'TOURNAMENT_VIEW' },
+          },
+          {
+            path: 'create',
+            component: TournamentCreateComponent,
+            canActivate: [AuthGuardService],
+            data: { auth: 'TOURNAMENT_CREATE' },
+          },
+          {
+            path: 'edit',
+            component: TournamentEditComponent,
+            canActivate: [AuthGuardService],
+            data: { auth: 'TOURNAMENT_EDIT' },
+          }
+        ]
+      }
+    ]
+  },
 
   { path: 'admin/teams', component: ManageTeamsComponent},
   { path: 'admin/teams/create', component: TeamCreateComponent},
@@ -59,7 +145,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { useHash: true })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
