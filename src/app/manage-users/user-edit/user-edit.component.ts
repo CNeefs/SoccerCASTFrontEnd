@@ -46,7 +46,7 @@ export class UserEditComponent implements OnInit {
         email: [user.email, [Validators.required, Validators.email]],
         birthDate: [convertedBirthDate, [Validators.required]],
         // password: [user.password, [Validators.required]],
-        roleID: [user.roleID, [Validators.required]],
+        //roleID: [user.roleID, [Validators.required]],
       });
     }, error => {
       this.router.navigate(['admin/users']);
@@ -66,7 +66,7 @@ export class UserEditComponent implements OnInit {
     this.selectedUser.lastName = this.editForm.controls['lastName'].value;
     this.selectedUser.email = this.editForm.controls['email'].value;
     this.selectedUser.birthDate = convertedBirthdate;
-    this.selectedUser.roleID = +this.editForm.controls['roleID'].value;
+    //this.selectedUser.roleID = +this.editForm.controls['roleID'].value;
     
     console.log("selectedUser:", this.selectedUser);
 
