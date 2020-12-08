@@ -1,0 +1,66 @@
+// Styling for the header
+header.masthead {
+    padding-top: 6rem + 4.5rem;
+    padding-bottom: 6rem;
+    text-align: center;
+    color: white;
+    //background-image: url("../assets/img/mastheadbackground.jpg");
+    background-image: linear-gradient(rgba(0, 0, 0, .4), rgba(0, 0, 0, .9)), url("../../assets/footballtable.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center center;
+    background-size: cover;
+    .masthead-subheading {
+        font-size: 1.5rem;
+        font-style: italic;
+        line-height: 1.5rem;
+        margin-bottom: 20px;
+    }
+    .masthead-heading {
+        font-size: 3.0rem;
+        font-weight: 700;
+        line-height: 3.0rem;
+        margin-bottom: 2rem;
+    }
+}
+
+// Styling for the page-section
+.homepage {
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
+p {
+    line-height: 1.75;
+}
+
+.page-section {
+    padding: 4rem 0;
+    h2.section-heading {
+        font-size: 2.5rem;
+        margin-top: 0;
+        margin-bottom: 1rem;
+    }
+    h3.section-subheading {
+        font-size: 1rem;
+        font-weight: 400;
+        font-style: italic;
+        margin-bottom: 4rem;
+    }
+}
+
+// Styling for the footer
+.footer {
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+.logo-style {
+    border-radius: 50px;
+    padding: 10px;
+    border: 1px solid rgb(109, 109, 109);
+}
+
+.btn-normal {
+    width: 150px;
+}

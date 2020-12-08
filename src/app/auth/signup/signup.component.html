@@ -1,44 +1,49 @@
-<h1>Sign Up</h1>
+<div class="container pt-4">
+    <h1>Sign Up</h1>
 
-<form #signupForm="ngForm" (ngSubmit)="onSubmit(signupForm)">
-    <div class="form-row">
-        <div class="form-group col-md-6">
-            <label for="firstname">Firstname</label>
-            <input type="text" class="form-control" id="firstname" name="firstname" #fisrtname="ngModel" required
-                ngModel>
-            <small class="pl-1" *ngIf="!fisrtname.valid && fisrtname.touched">This firstname is invalid!</small>
-        </div>
-        <div class="form-group col-md-6">
-            <label for="lastname">Lastname</label>
-            <input type="text" class="form-control" id="lastname" name="lastname" #lastname="ngModel" required ngModel>
-            <small class="pl-1" *ngIf="!lastname.valid && lastname.touched">This lastname is invalid!</small>
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label for="email">Email</label>
-        <input type="email" class="form-control" id="email" name="email" #email="ngModel" required email ngModel>
-        <small class="pl-1" *ngIf="!email.valid && email.touched">This email is invalid!</small>
-    </div>
-
-    <div class="form-group">
-        <label for="email">Date of birth</label>
-        <div class="input-group">
-            <input class="form-control" placeholder="yyyy-mm-dd" name="birthdate" [(ngModel)]="model" ngbDatepicker
-                #d="ngbDatepicker" #birthdate="ngModel" required ngModel>
-            <div class="input-group-append">
-                <button class="btn btn-outline-secondary calendar pb-0" (click)="d.toggle()" type="button"><mat-icon>event</mat-icon></button>
+    <form #signupForm="ngForm" (ngSubmit)="onSubmit(signupForm)">
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="firstname">Firstname</label>
+                <input type="text" class="form-control" id="firstname" name="firstname" #fisrtname="ngModel" required
+                    ngModel>
+                <small class="pl-1" *ngIf="!fisrtname.valid && fisrtname.touched">This firstname is invalid!</small>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="lastname">Lastname</label>
+                <input type="text" class="form-control" id="lastname" name="lastname" #lastname="ngModel" required
+                    ngModel>
+                <small class="pl-1" *ngIf="!lastname.valid && lastname.touched">This lastname is invalid!</small>
             </div>
         </div>
-        <small class="pl-1" *ngIf="!birthdate.valid && birthdate.touched">This date of birth is invalid!</small>
-    </div>
 
-    <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" class="form-control" id="password" name="password" #password="ngModel" required
-            minlength="4" ngModel>
-        <small class="pl-1" *ngIf="!password.valid && password.touched">This password is invalid!</small>
-    </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" class="form-control" id="email" name="email" #email="ngModel" required email ngModel>
+            <small class="pl-1" *ngIf="!email.valid && email.touched">This email is invalid!</small>
+        </div>
 
-    <button type="submit" class="btn btn-primary mt-3" [disabled]="!signupForm.valid">Sign Up</button>
-</form>
+        <div class="form-group">
+            <label for="email">Date of birth</label>
+            <div class="input-group">
+                <input class="form-control" placeholder="yyyy-mm-dd" name="birthdate" [(ngModel)]="model" ngbDatepicker
+                    #d="ngbDatepicker" #birthdate="ngModel" required ngModel>
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary calendar pb-0" (click)="d.toggle()" type="button">
+                        <mat-icon>event</mat-icon>
+                    </button>
+                </div>
+            </div>
+            <small class="pl-1" *ngIf="!birthdate.valid && birthdate.touched">This date of birth is invalid!</small>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" id="password" name="password" #password="ngModel" required
+                minlength="4" ngModel>
+            <small class="pl-1" *ngIf="!password.valid && password.touched">This password is invalid!</small>
+        </div>
+
+        <button type="submit" class="btn btn-primary mt-3" [disabled]="!signupForm.valid">Sign Up</button>
+    </form>
+</div>

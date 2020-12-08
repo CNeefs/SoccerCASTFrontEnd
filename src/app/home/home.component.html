@@ -1,3 +1,82 @@
-<p>home works!</p>
+<!-- Masthead-->
+<div class="homepage">
+    <header class="masthead enkelNavDisplay">
+        <div class="container">
+            <div class="masthead-subheading">welcome to SoccerCast!</div>
+            <div class="masthead-heading text-uppercase">A football table for everyone</div>
+            <a class="btn btn-primary btn-xl text-uppercase mb-5" (click)="scroll(target)">More about SoccerCast</a>
+        </div>
+    </header>
 
-<app-loading-spinner></app-loading-spinner>
+    <section class="page-section">
+        <div class="container">
+            <div class="text-center">
+                <h2 class="section-heading text-uppercase">Want to play a game?</h2>
+                <h3 class="section-subheading text-muted">If you want to play a game, you can find info here.</h3>
+            </div>
+
+            <!-- Start playing some table football -->
+            <div class="row">
+                <div class="col-lg-6 text-center">
+                    <img class="shadow img-fluid rounded" src="../../assets/game.jpg"
+                         alt="Table football">
+                </div>
+                <div class="col-lg-6">
+                    <div class="col-lg-12">
+                        <h4 class="section-subheading text-muted pt-4 pt-lg-0">Start playing games right now.</h4>
+                        <p>If you want to game, you need an account, if you have an account, you can start a game, check your statistics and more ...</p>
+                        <p>If you have an account you can login by clicking on the link below. If you don't have an account yet, you can register by clicken the link below.</p>
+                        <a class="btn btn-primary btn text-uppercase btn-normal m-2">Login</a>
+                        <a class="btn btn-primary btn text-uppercase btn-normal m-2">Sign Up</a>
+                     
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="page-section bg-light" #target>
+        <div class="container">
+            <div class="text-center">
+                <h2 class="section-heading text-uppercase">Who are we?</h2>
+                <h3 class="section-subheading text-muted">Here you can find some information about us, SoccerCast.</h3>
+            </div>
+
+            <!-- Who are we-->
+            <div class="row pt-5">
+                <div class="col-lg-6 order-2 order-lg-1">
+                    <div class="col-lg-12">
+                        <h4 class="section-subheading text-muted pt-4 pt-lg-0">Who is SoccerCast?</h4>
+                        <p>SoccerCast is the name of an application of a group of enthusiastic students in their 3rd
+                            year of the IT Factory.</p>
+                        <p>SoccerCast is a Web application that makes it possible for companies to organize soccer table
+                            matches. They can challange each other and view there statistics.</p>
+                        <p>The team of SoccerCast made this project during the application chalange.</p>
+                    </div>
+                </div>
+                <div class="col-lg-6 order-1 order-lg-2 text-center">
+                    <img class="shadow img-fluid rounded" src="../../assets/spinner.png" alt="SoccerCast logo">
+                </div>
+            </div>
+            <app-loading-spinner></app-loading-spinner>
+        </div>
+    </section>
+
+    <!-- Footer-->
+    <footer class="footer py-4 enkelNavDisplay">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-4 text-lg-left">Copyright © RW SoccerCast 2020</div>
+                <div class="col-lg-4 my-3 my-lg-0">
+                    <img src="../../assets/spinner.png" width="60" height="60"
+                        class="d-inline-block align-top bg-light logo-style" alt="Logo SoccerCast">
+                </div>
+                <div class="col-lg-4 text-lg-right">
+                    <!-- <a class="mr-3" href="#!">SoccerCast</a> -->
+                    <a href="http://thomasmore.be">Thomas More</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</div>
