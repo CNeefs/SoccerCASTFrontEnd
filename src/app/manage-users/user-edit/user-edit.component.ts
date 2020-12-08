@@ -20,6 +20,7 @@ export class UserEditComponent implements OnInit {
   selectedUserID: number = 0;
 
   roles: Observable<Role[]>
+  allRoles: Role[] = [];
 
   constructor(
     private route: ActivatedRoute, 
@@ -34,6 +35,10 @@ export class UserEditComponent implements OnInit {
     });
 
     this.roles = this._roleService.getRoles();
+    this.roles.pipe(map(res => res.map(role => {
+      this.allRoles.push(new Role(role.roleID, role.name));
+      return role;
+    }))).subscribe();
 
     //kan zijn dat dit nog unsubscribed moet worden
     this._userService.getUserById(this.selectedUserID).subscribe((user: User) => {
@@ -81,14 +86,12 @@ export class UserEditComponent implements OnInit {
 
     this.selectedUser.roles = [];
     this.editForm.controls['roles'].value.forEach(editRole => {
-      this.roles.pipe(map(res => res.map(role => {
+      this.allRoles.forEach(role => {
         if (+editRole == role.roleID){
-          this.selectedUser.roles.push(role);
+          this.selectedUser.roles.push(new Role(role.roleID, role.name));
         }
-        return role;
-      }))).subscribe();
+      });
     });
-    
     //kan zijn dat dit nog unsubscribed moet worden
     this._userService.editUser(this.selectedUserID, this.selectedUser).subscribe();
     this.router.navigate(['admin/users']);
