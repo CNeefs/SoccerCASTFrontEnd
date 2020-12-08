@@ -6,6 +6,7 @@ import { AuthService } from '../auth.service';
 import { User } from '../../models/user.model';
 
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+import { Role } from 'src/app/models/role.model';
 
 @Component({
   selector: 'app-signup',
@@ -37,7 +38,7 @@ export class SignupComponent implements OnInit {
     const convertedBirthdate = new Date(year, month-1, day+1, 0, 0, 0, 0)
     // const convertedBirthdate: string = year+'-'+month+'-'+day+'T00:00:00'
 
-    const user = new User(0, value.firstname, value.lastname, value.email, value.password, null, convertedBirthdate, 0, 0, 1, null)
+    const user = new User(0, value.firstname, value.lastname, value.email, value.password, null, convertedBirthdate, 0, 0, null, null)
     console.log(user);
     //Unsubscribe nodig?
     this.userSignupSub = this.authService.signup(user).subscribe();
