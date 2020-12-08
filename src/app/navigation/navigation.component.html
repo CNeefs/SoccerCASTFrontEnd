@@ -24,27 +24,22 @@
           ngbDropdownToggle>{{ currentUser.firstName | titlecase }}</a>
         <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
           <div>
-            <a ngbDropdownItem class="nav-link" routerLink="/admin/users" routerLinkActive="active"
-              [appHideIfUnauthorized]="'USER_MANAGE'">
+            <a ngbDropdownItem class="nav-link" routerLink="/admin/users" routerLinkActive="active" [appHideIfUnauthorized]="'USER_MANAGE'">
               <mat-icon>group</mat-icon> Users
             </a>
-            <a ngbDropdownItem class="nav-link" routerLink="/admin/tables" routerLinkActive="active"
-              [appHideIfUnauthorized]="'TABLE_MANAGE'">
+            <a ngbDropdownItem class="nav-link" routerLink="/admin/tables" routerLinkActive="active" [appHideIfUnauthorized]="'TABLE_MANAGE'">
               <mat-icon>deck</mat-icon> Tables
             </a>
             <a ngbDropdownItem class="nav-link" routerLink="/admin/teams" routerLinkActive="active" [appHideIfUnauthorized]="'TEAM_MANAGE'">
               <mat-icon>group</mat-icon> Teams
             </a>
-            <a ngbDropdownItem class="nav-link" routerLink="/admin/competitions" routerLinkActive="active"
-              [appHideIfUnauthorized]="'COMPETITION_MANAGE'">
+            <a ngbDropdownItem class="nav-link" routerLink="/admin/competitions" routerLinkActive="active" [appHideIfUnauthorized]="'COMPETITION_MANAGE'">
               <mat-icon>people_outline</mat-icon> Competitions
             </a>
-            <a ngbDropdownItem class="nav-link" routerLink="/admin/tournaments" routerLinkActive="active"
-              [appHideIfUnauthorized]="'TOURNAMENT_MANAGE'">
+            <a ngbDropdownItem class="nav-link" routerLink="/admin/tournaments" routerLinkActive="active" [appHideIfUnauthorized]="'TOURNAMENT_MANAGE'">
               <mat-icon>emoji_events</mat-icon> Tournament
             </a>
-            <a ngbDropdownItem class="nav-link" routerLink="/user/profile" routerLinkActive="active"
-              [appHideIfUnauthorized]="'PROFILE_VIEW'">
+            <a ngbDropdownItem class="nav-link" routerLink="/user/profile" routerLinkActive="active" [appHideIfUnauthorized]="'PROFILE_VIEW'">
               <mat-icon>account_box</mat-icon> My profile
             </a>
             <hr class="m-0">
