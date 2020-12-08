@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand">
+  <a class="navbar-brand" routerLink="/home">
     <img src="assets/logo.png" width="40" height="45" class="d-inline-block align-top" alt="Logo">
   </a>
   <button class="navbar-toggler" type="button" (click)="collapsed = !collapsed">
@@ -11,7 +11,38 @@
       <li class="nav-item">
         <a class="nav-link" routerLink="/home" routerLinkActive="active">Home</a>
       </li>
-
+    </ul>
+    <ul class="navbar-nav" *ngIf="userLoaded">
+      <li *ngIf="loggedIn">
+        <a class="nav-link" routerLink="/home" routerLinkActive="active">View Tournaments</a>
+      </li>
+      <li ngbDropdown class="nav-item dropdown" *ngIf="loggedIn">
+        <a class="nav-link dropdown-toggle" id="dropdownBasic1" ngbDropdownToggle>Manage items</a>
+        <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="dropdown">
+          <div>
+            <a ngbDropdownItem class="nav-link" routerLink="/admin/users" routerLinkActive="active"
+              [appHideIfUnauthorized]="'USER_MANAGE'">
+              <mat-icon>group</mat-icon> Users
+            </a>
+            <a ngbDropdownItem class="nav-link" routerLink="/admin/tables" routerLinkActive="active"
+              [appHideIfUnauthorized]="'TABLE_MANAGE'">
+              <mat-icon>deck</mat-icon> Tables
+            </a>
+            <a ngbDropdownItem class="nav-link" routerLink="/admin/teams" routerLinkActive="active"
+              [appHideIfUnauthorized]="'TEAM_MANAGE'">
+              <mat-icon>group</mat-icon> Teams
+            </a>
+            <a ngbDropdownItem class="nav-link" routerLink="/admin/competitions" routerLinkActive="active"
+              [appHideIfUnauthorized]="'COMPETITION_MANAGE'">
+              <mat-icon>people_outline</mat-icon> Competitions
+            </a>
+            <a ngbDropdownItem class="nav-link" routerLink="/admin/tournaments" routerLinkActive="active"
+              [appHideIfUnauthorized]="'TOURNAMENT_MANAGE'">
+              <mat-icon>emoji_events</mat-icon> Tournaments
+            </a>
+          </div>
+        </div>
+      </li>
     </ul>
     <ul class="navbar-nav ml-auto" *ngIf="userLoaded">
 
@@ -20,26 +51,12 @@
       </li>
 
       <li ngbDropdown class="nav-item dropdown pr-5 mr-5" *ngIf="loggedIn">
-        <a class="nav-link dropdown-toggle" id="dropdownBasic1"
+        <a class="nav-link dropdown-toggle" id="dropdownBasic2"
           ngbDropdownToggle>{{ currentUser.firstName | titlecase }}</a>
-        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+        <div ngbDropdownMenu aria-labelledby="dropdownBasic2" class="dropdown">
           <div>
-            <a ngbDropdownItem class="nav-link" routerLink="/admin/users" routerLinkActive="active" [appHideIfUnauthorized]="'USER_MANAGE'">
-              <mat-icon>group</mat-icon> Users
-            </a>
-            <a ngbDropdownItem class="nav-link" routerLink="/admin/tables" routerLinkActive="active" [appHideIfUnauthorized]="'TABLE_MANAGE'">
-              <mat-icon>deck</mat-icon> Tables
-            </a>
-            <a ngbDropdownItem class="nav-link" routerLink="/admin/teams" routerLinkActive="active" [appHideIfUnauthorized]="'TEAM_MANAGE'">
-              <mat-icon>group</mat-icon> Teams
-            </a>
-            <a ngbDropdownItem class="nav-link" routerLink="/admin/competitions" routerLinkActive="active" [appHideIfUnauthorized]="'COMPETITION_MANAGE'">
-              <mat-icon>people_outline</mat-icon> Competitions
-            </a>
-            <a ngbDropdownItem class="nav-link" routerLink="/admin/tournaments" routerLinkActive="active" [appHideIfUnauthorized]="'TOURNAMENT_MANAGE'">
-              <mat-icon>emoji_events</mat-icon> Tournament
-            </a>
-            <a ngbDropdownItem class="nav-link" routerLink="/user/profile" routerLinkActive="active" [appHideIfUnauthorized]="'PROFILE_VIEW'">
+            <a ngbDropdownItem class="nav-link" routerLink="/user/profile" routerLinkActive="active"
+              [appHideIfUnauthorized]="'PROFILE_VIEW'">
               <mat-icon>account_box</mat-icon> My profile
             </a>
             <hr class="m-0">
