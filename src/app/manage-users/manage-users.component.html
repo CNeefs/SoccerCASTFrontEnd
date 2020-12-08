@@ -18,7 +18,7 @@
                                     <th scope="col">Lastname</th>
                                     <th scope="col">Email</th>
                                     <th scope="col">Birthdate</th>
-                                    <th scope="col">Role</th>
+                                    <th scope="col">Roles</th>
                                     <th scope="col"></th>
                                 </tr>
                             </thead>
@@ -41,7 +41,10 @@
                                         {{u.birthDate | date}}
                                     </td>
                                     <td>
-                                        {{u.roles[0].name}}
+                                        <span *ngFor="let role of u.roles; let i = index">
+                                            <span *ngIf="i < u.roles.length - 1">{{role.name}}, </span>
+                                            <span *ngIf="i == u.roles.length - 1">{{role.name}}</span>
+                                        </span>
                                     </td>
                                     <td class="text-right">
                                         <div ngbDropdown class="dropdown" style="position:static;overflow: visible;">

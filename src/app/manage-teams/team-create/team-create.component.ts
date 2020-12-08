@@ -1,8 +1,8 @@
 import { HttpEventType } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { Team } from 'src/app/models/team.model';
 import { User } from 'src/app/models/user.model';
 import { TeamService } from 'src/app/services/team.service';
@@ -13,10 +13,12 @@ import { UserService } from 'src/app/services/user.service';
   templateUrl: './team-create.component.html',
   styleUrls: ['./team-create.component.scss', '../../styles/validation_style.scss']
 })
-export class TeamCreateComponent implements OnInit {
+export class TeamCreateComponent implements OnInit, OnDestroy {
   
   createForm: FormGroup;
   users: Observable<User[]>;
+
+  addTeamSub: Subscription;
 
   constructor(
     private _teamService: TeamService, 
@@ -43,6 +45,12 @@ export class TeamCreateComponent implements OnInit {
       location: ['', Validators.required],
       captainID: ['', Validators.required]
     });
+  }
+
+  ngOnDestroy() {
+    if (this.addTeamSub) {
+      this.addTeamSub.unsubscribe();
+    }
   }
 
 
