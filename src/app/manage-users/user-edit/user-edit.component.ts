@@ -40,13 +40,24 @@ export class UserEditComponent implements OnInit {
       // this.editForm.controls['password'].setValue(user.password);
       // this.editForm.controls['roleID'].setValue(user.roleID);
 
+      const roles = user.roles;
+      const roleIDs: string[] = [];
+
+      console.log(roles);
+
+      for(let role of roles){
+        roleIDs.push(role.roleID.toString());
+      }
+
+      console.log('roleIDs:',roleIDs);
+
       this.editForm = this.fb.group({
         firstName: [user.firstName, Validators.required],
         lastName: [user.lastName, Validators.required],
         email: [user.email, [Validators.required, Validators.email]],
         birthDate: [convertedBirthDate, [Validators.required]],
         // password: [user.password, [Validators.required]],
-        //roleID: [user.roleID, [Validators.required]],
+        roleID: [roleIDs, [Validators.required]],
       });
     }, error => {
       this.router.navigate(['admin/users']);
@@ -69,10 +80,11 @@ export class UserEditComponent implements OnInit {
     //this.selectedUser.roleID = +this.editForm.controls['roleID'].value;
     
     console.log("selectedUser:", this.selectedUser);
+    console.log("roles:", this.editForm.controls['roleID'].value)
 
     //kan zijn dat dit nog unsubscribed moet worden
-    this._userService.editUser(this.selectedUserID, this.selectedUser).subscribe();
-    this.router.navigate(['admin/users']);
+    //this._userService.editUser(this.selectedUserID, this.selectedUser).subscribe();
+    //this.router.navigate(['admin/users']);
   }
 
 }

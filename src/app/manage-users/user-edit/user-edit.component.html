@@ -41,7 +41,7 @@
 
         <div class="form-group">
             <label for="roleID">Role user</label>
-            <select class="form-control" id="roleID" formControlName="roleID">
+            <select multiple class="form-control" id="roleID" formControlName="roleID">
                 <!-- <option *ngFor="let u of (users | async)" [value]="u.userID">{{u.firstName}} {{u.lastName}}</option> -->
                 <!--Momenteel hardcoded, moet nog uit roles controller komen-->
                 <option value="1">User</option>
