@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Role } from 'src/app/models/role.model';
 import { User } from 'src/app/models/user.model';
 import { UserService } from 'src/app/services/user.service';
 
@@ -46,7 +47,7 @@ export class UserEditComponent implements OnInit {
         email: [user.email, [Validators.required, Validators.email]],
         birthDate: [convertedBirthDate, [Validators.required]],
         // password: [user.password, [Validators.required]],
-        //roleID: [user.roleID, [Validators.required]],
+        roleID: [1, [Validators.required]],
       });
     }, error => {
       this.router.navigate(['admin/users']);
@@ -66,7 +67,8 @@ export class UserEditComponent implements OnInit {
     this.selectedUser.lastName = this.editForm.controls['lastName'].value;
     this.selectedUser.email = this.editForm.controls['email'].value;
     this.selectedUser.birthDate = convertedBirthdate;
-    //this.selectedUser.roleID = +this.editForm.controls['roleID'].value;
+    this.selectedUser.roles = [];
+    this.selectedUser.roles.push(new Role(+this.editForm.controls['roleID'].value, ""));
     
     console.log("selectedUser:", this.selectedUser);
 

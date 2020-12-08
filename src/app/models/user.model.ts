@@ -12,6 +12,6 @@ export class User {
         public timesWon: number,
         public timesLost: number,
         public roles: Role[],
-        public permissions: String[]
+        public permissions: string[]
     ) {}
 }
