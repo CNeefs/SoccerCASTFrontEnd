@@ -16,7 +16,7 @@ export class AuthInterceptor implements HttpInterceptor {
         const helper = new JwtHelperService();
         if (userToken) {
             //wanneer token lastig doet en in console _token staat ==> localstorage clearen (leegmaken) en terug opnieuw inloggen
-            console.log(userToken);
+            // console.log(userToken);
             const decodedToken = helper.decodeToken(userToken);
             const expirationTime = decodedToken.exp * 1000;
 

@@ -1,7 +1,8 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Role } from 'src/app/models/role.model';
 import { User } from 'src/app/models/user.model';
 import { UserService } from 'src/app/services/user.service';
@@ -45,20 +46,11 @@ export class UserEditComponent implements OnInit {
 
       const convertedBirthDate = {year: birthYear, month: birthMonth, day: birthDay};
 
-      // this.editForm.controls['firstName'].setValue(user.firstName);
-      // this.editForm.controls['lastName'].setValue(user.lastName);
-      // this.editForm.controls['email'].setValue(user.email);
-      // this.editForm.controls['birthDate'].setValue(convertedBirthDate);
-      // this.editForm.controls['password'].setValue(user.password);
-      // this.editForm.controls['roleID'].setValue(user.roleID);
+      const userRoles = user.roles;
+      const roleIds: string[] = []
 
-      const roles = user.roles;
-      const roleIDs: string[] = [];
-
-      console.log(roles);
-
-      for(let role of roles){
-        roleIDs.push(role.roleID.toString());
+      for(let role of userRoles){
+         roleIds.push(role.roleID.toString());
       }
 
       this.editForm = this.fb.group({
@@ -66,8 +58,7 @@ export class UserEditComponent implements OnInit {
         lastName: [user.lastName, Validators.required],
         email: [user.email, [Validators.required, Validators.email]],
         birthDate: [convertedBirthDate, [Validators.required]],
-        // password: [user.password, [Validators.required]],
-        roleID: [roles, [Validators.required]],
+        roles: [roleIds, [Validators.required]]
       });
     }, error => {
       this.router.navigate(['admin/users']);
@@ -87,14 +78,20 @@ export class UserEditComponent implements OnInit {
     this.selectedUser.lastName = this.editForm.controls['lastName'].value;
     this.selectedUser.email = this.editForm.controls['email'].value;
     this.selectedUser.birthDate = convertedBirthdate;
-    //this.selectedUser.roles = +this.editForm.controls['roleID'].value;
-    
-    console.log("selectedUser:", this.selectedUser);
-    console.log("roles:", this.editForm.controls['roleID'].value)
 
+    this.selectedUser.roles = [];
+    this.editForm.controls['roles'].value.forEach(editRole => {
+      this.roles.pipe(map(res => res.map(role => {
+        if (+editRole == role.roleID){
+          this.selectedUser.roles.push(role);
+        }
+        return role;
+      }))).subscribe();
+    });
+    
     //kan zijn dat dit nog unsubscribed moet worden
-    //this._userService.editUser(this.selectedUserID, this.selectedUser).subscribe();
-    //this.router.navigate(['admin/users']);
+    this._userService.editUser(this.selectedUserID, this.selectedUser).subscribe();
+    this.router.navigate(['admin/users']);
   }
 
 }

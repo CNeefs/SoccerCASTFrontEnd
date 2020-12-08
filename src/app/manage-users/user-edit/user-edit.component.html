@@ -33,20 +33,13 @@
             <small class="pl-1" *ngIf="!editForm.get('birthDate').valid && editForm.get('birthDate').touched">This birthdate is invalid!</small>
         </div>
 
-        <!-- <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" class="form-control" id="password" placeholder="Password" formControlName="password">
-            <small class="pl-1" *ngIf="!editForm.get('password').valid && editForm.get('password').touched">This password is invalid!</small>
-        </div> -->
-
         <div class="form-group">
-            <label for="roleID">Role user</label>
-            <select multiple class="form-control" id="roleID" formControlName="roleID">
-                <!-- <option *ngFor="let u of (users | async)" [value]="u.userID">{{u.firstName}} {{u.lastName}}</option> -->
-                <!--Momenteel hardcoded, moet nog uit roles controller komen-->
-                <option *ngFor="let role of (roles | async)" [value]="role">{{ role.name }}</option>
+            <label for="roles">Roles user</label>
+            <select multiple class="form-control" id="roles" formControlName="roles">
+                <option *ngFor="let role of (roles | async)" value="{{role.roleID}}">{{ role.name }}</option>
             </select>
-            <small class="pl-1" *ngIf="!editForm.get('roleID').valid && editForm.get('roleID').touched">This contact user is invalid!</small>
+
+            <small class="pl-1" *ngIf="!editForm.get('roles').valid && editForm.get('roles').touched">A role needs to be applied to a user!</small>
         </div>
         <button type="submit" class="btn btn-primary" [disabled]="!editForm.valid">Submit</button>
     </form>
