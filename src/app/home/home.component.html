@@ -25,10 +25,11 @@
                     <div class="col-lg-12">
                         <h4 class="section-subheading text-muted pt-4 pt-lg-0">Start playing games right now.</h4>
                         <p>If you want to game, you need an account, if you have an account, you can start a game, check your statistics and more ...</p>
-                        <p>If you have an account you can login by clicking on the link below. If you don't have an account yet, you can register by clicken the link below.</p>
-                        <a class="btn btn-primary btn text-uppercase btn-normal m-2">Login</a>
-                        <a class="btn btn-primary btn text-uppercase btn-normal m-2">Sign Up</a>
-                     
+                        <div *ngIf="!loggedIn">
+                            <p>If you have an account you can login by clicking on the link below. If you don't have an account yet, you can register by clicken the link below.</p>
+                            <a class="btn btn-primary btn text-uppercase btn-normal m-2" (click)="navigateLogin()">Login</a>
+                            <a class="btn btn-primary btn text-uppercase btn-normal m-2" (click)="navigateSignUp()">Sign Up</a>
+                        </div>
                     </div>
                 </div>
             </div>
