@@ -6,3 +6,9 @@ a {
 mat-icon {
     vertical-align: middle;
 }
+
+div.dropdown{
+    a.active, a:active{
+        background-color: #f6f9fc;
+    }
+}

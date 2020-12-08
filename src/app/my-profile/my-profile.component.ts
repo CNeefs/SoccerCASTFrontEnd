@@ -1,7 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
+import { Team } from '../models/team.model';
 import { User } from '../models/user.model';
+import { UserTeamService } from '../services/user-team.service';
 
 @Component({
   selector: 'app-my-profile',
@@ -11,24 +13,32 @@ import { User } from '../models/user.model';
 export class MyProfileComponent implements OnInit, OnDestroy {
 
   user: User;
+  userTeams: Team[];
+  userBirthday: string;
   userLoaded: boolean = false;
   statisticsLoaded: boolean = true;
 
   userSub: Subscription;
+  userTeamSub: Subscription;
 
   totalGames: number;
   wonPercent: number;
   lostPercent: number;
   totalPercent: number;
 
-  constructor(private _authService: AuthService) { }
+  constructor(private _authService: AuthService, private _userTeamService: UserTeamService) { }
 
   ngOnInit(): void {
     this.userSub = this._authService.user.subscribe((user: User) => {
       this.user = user
-      console.log(this.user)
+      // console.log(this.user)
+      let StrUserBirtDay = user.birthDate.toString();
+      this.userBirthday = StrUserBirtDay.substr(0, 10)
       this.calculateStatistics()
-      this.userLoaded = true;
+      this.userTeamSub = this._userTeamService.getUserTeamsByUserId(user.userID).subscribe((teams: Team[]) => {
+        this.userTeams = teams;
+        this.userLoaded = true;
+      })
     });
   }
 

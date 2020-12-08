@@ -21,8 +21,8 @@ export class UserTeamService {
         return this.http.get<Team[]>(this.baseUrl + 'userteam/userteams/' + userID);
     }
 
-    getUsersTeamByTeamId(userTeamID: number) {
-        return this.http.get<User[]>(this.baseUrl + 'userteam/teamusers/' + userTeamID);
+    getUsersTeamByTeamId(teamID: number) {
+        return this.http.get<User[]>(this.baseUrl + 'userteam/teamusers/' + teamID);
     }
 
     deleteUserTeamById(userTeamID: number) {

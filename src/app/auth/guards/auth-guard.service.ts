@@ -23,7 +23,9 @@ export class AuthGuardService implements CanActivate {
             }
         } else {
             // Otherwise, must request permissions from the API first
-            const promise = new Promise<boolean>((resolve, reject) => {
+            var test = new Array<string>();
+            this.authorizationService.initializePermissions(test);
+            /*const promise = new Promise<boolean>((resolve, reject) => {
                 this.authorizationService.initializePermissions()
                     .then(() => {
                         if (authGroup) {
@@ -35,7 +37,7 @@ export class AuthGuardService implements CanActivate {
                         resolve(false);
                     });
             });
-            return promise;
+            return promise;*/
         }
     }
 }

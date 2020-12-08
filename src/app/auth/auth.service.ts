@@ -5,6 +5,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { User } from '../models/user.model';
 import { UserLogin } from './models/user-login.model';
+import { AuthorizationService } from '../services/authorization.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable({ providedIn: 'root' })
@@ -12,7 +13,7 @@ export class AuthService {
     user = new BehaviorSubject(null);
     baseUrl: string = "https://localhost:44388/api/";
 
-    constructor(private http: HttpClient, private router: Router) { }
+    constructor(private _authorizationService: AuthorizationService, private http: HttpClient, private router: Router) { }
 
     signup(newUser: User) {
         console.log('new user: ' + newUser)
@@ -37,6 +38,8 @@ export class AuthService {
             const helper = new JwtHelperService();
             const decodedToken = helper.decodeToken(userToken);
             console.log(decodedToken);
+            var permissions = decodedToken.Permissions.split(';');
+            permissions.pop();
             const user: User = new User(
                 decodedToken.UserID,
                 decodedToken.FirstName,
@@ -48,8 +51,9 @@ export class AuthService {
                 decodedToken.TimesWon,
                 decodedToken.TimesLost,
                 decodedToken.RoleID,
-                null
+                permissions
             );
+            this._authorizationService.initializePermissions(user.permissions);
             this.user.next(user);
         }
         return null;
@@ -59,10 +63,12 @@ export class AuthService {
         this.user.next(null);
         localStorage.removeItem('userToken');
         this.router.navigate(['/login']);
+        this._authorizationService.initializePermissions(null);
     }
 
     private authenticationHandler(currentUser: User) {
         const user = currentUser;
+        this._authorizationService.initializePermissions(user.permissions);
         this.user.next(user);
         localStorage.setItem("userToken", JSON.stringify(user.token));
         this.router.navigate(['/home']);
