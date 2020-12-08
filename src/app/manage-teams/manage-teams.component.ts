@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { Team } from '../models/team.model';
@@ -14,11 +14,16 @@ import { UserTeamService } from '../services/user-team.service';
   templateUrl: './manage-teams.component.html',
   styleUrls: ['./manage-teams.component.scss', '../styles/table_style.scss']
 })
-export class ManageTeamsComponent implements OnInit {
+export class ManageTeamsComponent implements OnInit, OnDestroy {
 
   teams: Observable<Team[]>;
   userTeams: UserTeam[];
   currentTeam: Team;
+
+  getUserTeamsSub: Subscription;
+  deleteUserTeamSub: Subscription;
+  deleteTeamSub: Subscription;
+  getTeamsSub: Subscription;
 
   pageLoaded: boolean = false;
 
@@ -43,14 +48,14 @@ export class ManageTeamsComponent implements OnInit {
   }
 
   deleteTeam(team: Team) {
-    this._userTeamService.getUserTeams().subscribe((userTeams: UserTeam[]) => {
+    this.getUserTeamsSub = this._userTeamService.getUserTeams().subscribe((userTeams: UserTeam[]) => {
       this.userTeams = userTeams;
       for(let userTeam of this.userTeams) {
         if (userTeam.teamID == team.teamID) {
-          this._userTeamService.deleteUserTeamById(userTeam.userTeamID).subscribe();
+          this.deleteUserTeamSub = this._userTeamService.deleteUserTeamById(userTeam.userTeamID).subscribe();
         }
       }
-      this._teamService.deleteTeamById(team.teamID).subscribe();
+      this.deleteTeamSub = this._teamService.deleteTeamById(team.teamID).subscribe();
       this.teams = this.teams.pipe(
         map(res => res.filter(t => t.teamID != team.teamID))
       );
@@ -60,7 +65,23 @@ export class ManageTeamsComponent implements OnInit {
 
   ngOnInit(): void {
     this.teams = this._teamService.getTeams();
-    this.teams.subscribe(result => this.pageLoaded = true)
+    this.getTeamsSub = this.teams.subscribe(result => this.pageLoaded = true)
+  }
+  
+  ngOnDestroy() {
+    this.getTeamsSub.unsubscribe();
+    
+    if (this.getUserTeamsSub) {
+      this.getUserTeamsSub.unsubscribe();
+    }
+
+    if (this.deleteTeamSub) {
+      this.deleteTeamSub.unsubscribe();
+    }
+
+    if(this.deleteUserTeamSub) {
+      this.deleteUserTeamSub.unsubscribe();
+    }
   }
 
 }

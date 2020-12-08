@@ -1,8 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { Role } from 'src/app/models/role.model';
 import { User } from 'src/app/models/user.model';
 import { UserService } from 'src/app/services/user.service';
+import { RoleService } from '../../services/role.service';
 
 @Component({
   selector: 'app-user-edit',
@@ -15,12 +18,21 @@ export class UserEditComponent implements OnInit {
   selectedUser: User = null;
   selectedUserID: number = 0;
 
-  constructor(private route: ActivatedRoute, private _userService: UserService, private fb: FormBuilder, private router: Router) { }
+  roles: Observable<Role[]>
+
+  constructor(
+    private route: ActivatedRoute, 
+    private _userService: UserService, 
+    private fb: FormBuilder, 
+    private router: Router,
+    private _roleService: RoleService) { }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       this.selectedUserID = params['id'];
     });
+
+    this.roles = this._roleService.getRoles();
 
     //kan zijn dat dit nog unsubscribed moet worden
     this._userService.getUserById(this.selectedUserID).subscribe((user: User) => {
@@ -49,15 +61,13 @@ export class UserEditComponent implements OnInit {
         roleIDs.push(role.roleID.toString());
       }
 
-      console.log('roleIDs:',roleIDs);
-
       this.editForm = this.fb.group({
         firstName: [user.firstName, Validators.required],
         lastName: [user.lastName, Validators.required],
         email: [user.email, [Validators.required, Validators.email]],
         birthDate: [convertedBirthDate, [Validators.required]],
         // password: [user.password, [Validators.required]],
-        roleID: [roleIDs, [Validators.required]],
+        roleID: [roles, [Validators.required]],
       });
     }, error => {
       this.router.navigate(['admin/users']);
@@ -77,7 +87,7 @@ export class UserEditComponent implements OnInit {
     this.selectedUser.lastName = this.editForm.controls['lastName'].value;
     this.selectedUser.email = this.editForm.controls['email'].value;
     this.selectedUser.birthDate = convertedBirthdate;
-    //this.selectedUser.roleID = +this.editForm.controls['roleID'].value;
+    //this.selectedUser.roles = +this.editForm.controls['roleID'].value;
     
     console.log("selectedUser:", this.selectedUser);
     console.log("roles:", this.editForm.controls['roleID'].value)

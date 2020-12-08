@@ -44,8 +44,7 @@
             <select multiple class="form-control" id="roleID" formControlName="roleID">
                 <!-- <option *ngFor="let u of (users | async)" [value]="u.userID">{{u.firstName}} {{u.lastName}}</option> -->
                 <!--Momenteel hardcoded, moet nog uit roles controller komen-->
-                <option value="1">User</option>
-                <option value="2">Admin</option>
+                <option *ngFor="let role of (roles | async)" [value]="role">{{ role.name }}</option>
             </select>
             <small class="pl-1" *ngIf="!editForm.get('roleID').valid && editForm.get('roleID').touched">This contact user is invalid!</small>
         </div>

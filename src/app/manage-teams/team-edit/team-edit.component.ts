@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Observable, Subscribable, Subscription } from 'rxjs';
 import { Team } from 'src/app/models/team.model';
 import { User } from 'src/app/models/user.model';
 import { UserTeam } from 'src/app/models/user-team.model';
@@ -15,7 +15,7 @@ import { map, finalize } from 'rxjs/operators';
   templateUrl: './team-edit.component.html',
   styleUrls: ['./team-edit.component.scss']
 })
-export class TeamEditComponent implements OnInit {
+export class TeamEditComponent implements OnInit, OnDestroy {
 
   editForm: FormGroup;
   selectedTeamID: number = 0;
@@ -24,6 +24,11 @@ export class TeamEditComponent implements OnInit {
   //future: only show users of selected team
   users: Observable<User[]>;
   usersTeam: Observable<User[]>
+
+  editTeamSub: Subscription;
+  addUserTeamSub: Subscription;
+  deleteUserTeamSub: Subscription;
+  getTeamSub: Subscription;
 
   constructor(
     private _teamService: TeamService, 
@@ -38,14 +43,14 @@ export class TeamEditComponent implements OnInit {
     this.selectedTeam.companyName = this.editForm.controls['companyName'].value;
     this.selectedTeam.location = this.editForm.controls['location'].value;
     this.selectedTeam.captainID = Number(this.editForm.controls['captainID'].value);
-    this._teamService.editTeam(this.selectedTeamID, this.selectedTeam).subscribe();
+    this.editTeamSub = this._teamService.editTeam(this.selectedTeamID, this.selectedTeam).subscribe();
     this.router.navigate(['admin/teams']);
   }
 
   addUserToTeam(user: User) {
     const newUserTeam = new UserTeam(0,user.userID, null, this.selectedTeam.teamID, null);
     console.log(newUserTeam);
-    this._userTeamService.addUserTeam(newUserTeam).subscribe();
+    this.addUserTeamSub = this._userTeamService.addUserTeam(newUserTeam).subscribe();
     this.usersTeam = this.usersTeam.pipe(map(res => res.map((user, i) => {
       if (res.length == i) res.push(user);
       return user;
@@ -53,7 +58,7 @@ export class TeamEditComponent implements OnInit {
   }
 
   removeUserFromTeam(user: User) {
-    this._userTeamService.deleteUserTeamByUserIdAndTeamId(user.userID, this.selectedTeam.teamID).subscribe();
+    this.deleteUserTeamSub = this._userTeamService.deleteUserTeamByUserIdAndTeamId(user.userID, this.selectedTeam.teamID).subscribe();
     this.usersTeam = this.usersTeam.pipe(map(res => res.filter(u => u.userID != user.userID)));
     // this._userTeamService.deleteUserTeamById();
   }
@@ -67,7 +72,7 @@ export class TeamEditComponent implements OnInit {
 
     this.users = this._userService.getUsers();
 
-    this._teamService.getTeamById(this.selectedTeamID).subscribe(team => {
+    this.getTeamSub = this._teamService.getTeamById(this.selectedTeamID).subscribe(team => {
       this.selectedTeam = team;
       this.editForm = this.fb.group({
         teamName: [team.teamName, Validators.required],
@@ -76,6 +81,22 @@ export class TeamEditComponent implements OnInit {
         captainID: [team.captainID, Validators.required]
       });
     })
+  }
+
+  ngOnDestroy() {
+    if (this.editTeamSub) {
+      this.editTeamSub.unsubscribe();
+    }
+
+    if (this.addUserTeamSub) {
+      this.addUserTeamSub.unsubscribe();
+    }
+
+    if (this.deleteUserTeamSub) {
+      this.deleteUserTeamSub.unsubscribe();
+    }
+
+    this.getTeamSub.unsubscribe();
   }
 
 }
