@@ -18,6 +18,7 @@ export class UserCreateComponent implements OnInit {
 
   createForm: FormGroup;
   roles: Observable<Role[]>
+  allRoles: Role[] = [];
 
   constructor(
     private _userService: UserService,
@@ -39,12 +40,11 @@ export class UserCreateComponent implements OnInit {
 
     const userRoles = [];
     this.createForm.controls['roles'].value.forEach(editRole => {
-      this.roles.pipe(map(res => res.map(role => {
+      this.allRoles.forEach(role => {
         if (+editRole == role.roleID){
           userRoles.push(role);
         }
-        return role;
-      }))).subscribe();
+      });
     });
 
     var user = new User(
@@ -71,6 +71,10 @@ export class UserCreateComponent implements OnInit {
   ngOnInit(): void {
 
     this.roles = this._roleService.getRoles();
+    this.roles.pipe(map(res => res.map(role => {
+      this.allRoles.push(new Role(role.roleID, role.name));
+      return role;
+    }))).subscribe();
 
     this.createForm = this.fb.group({
       firstName: ['', Validators.required],
