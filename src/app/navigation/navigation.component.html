@@ -14,7 +14,10 @@
     </ul>
     <ul class="navbar-nav" *ngIf="userLoaded">
       <li *ngIf="loggedIn">
-        <a class="nav-link" routerLink="/home" routerLinkActive="active">View Tournaments</a>
+        <a class="nav-link" routerLink="/home" routerLinkActive="active">Tournaments</a>
+      </li>
+      <li [appHideIfUnauthorized]="'TEAM_VIEW'">
+        <a class="nav-link" routerLink="user/teams" routerLinkActive="active">Teams</a>
       </li>
       <li ngbDropdown class="nav-item dropdown" *ngIf="loggedIn">
         <a class="nav-link dropdown-toggle" id="dropdownBasic1" ngbDropdownToggle>Manage items</a>

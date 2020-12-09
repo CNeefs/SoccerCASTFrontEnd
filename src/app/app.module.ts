@@ -18,6 +18,7 @@ import { DirectivesModule } from './directives/directives.module';
 import { NavigationModule } from './navigation/navigation.module';
 import { ManageTeamsModule } from './manage-teams/manage-teams.module';
 import { MyProfileModule } from './my-profile/my-profile.module';
+import { ViewTeamsModule } from './view-teams/view-teams.module';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { MyProfileModule } from './my-profile/my-profile.module';
     NavigationModule,
     ManageTeamsModule,
     MyProfileModule,
+    ViewTeamsModule,
     SharedModule
   ],
   providers: [{
