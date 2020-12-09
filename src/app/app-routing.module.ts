@@ -64,116 +64,96 @@ const routes: Routes = [
       },
       {
         path: 'users',
+        canActivate: [AuthGuardService],
+        data: { auth: 'USER_MANAGE' },
         children: [
           {
             path: '',
-            component: ManageUsersComponent,
-            canActivate: [AuthGuardService],
-            data: { auth: 'USER_VIEW' },
+            component: ManageUsersComponent
           },
           {
             path: 'create',
-            component: UserCreateComponent,
-            canActivate: [AuthGuardService],
-            data: { auth: 'USER_CREATE' },
+            component: UserCreateComponent
           },
           {
             path: 'edit',
-            component: UserEditComponent,
-            canActivate: [AuthGuardService],
-            data: { auth: 'USER_EDIT' },
+            component: UserEditComponent
           }
         ]
       },
       {
         path: 'tables',
+        canActivate: [AuthGuardService],
+        data: { auth: 'TABLE_MANAGE' },
         children: [
           {
             path: '',
-            component: ManageTablesComponent,
-            canActivate: [AuthGuardService],
-            data: { auth: 'TABLE_VIEW' },
+            component: ManageTablesComponent
           },
           {
             path: 'create',
-            component: TableCreateComponent,
-            canActivate: [AuthGuardService],
-            data: { auth: 'TABLE_CREATE' },
+            component: TableCreateComponent
           },
           {
             path: 'edit',
-            component: TableEditComponent,
-            canActivate: [AuthGuardService],
-            data: { auth: 'TABLE_EDIT' },
+            component: TableEditComponent
           }
         ]
       },
       {
         path: 'competitions',
+        canActivate: [AuthGuardService],
+        data: { auth: 'COMPETITION_MANAGE' },
         children: [
           {
             path: '',
-            component: ManageCompetitionsComponent,
-            canActivate: [AuthGuardService],
-            data: { auth: 'COMPETITION_VIEW' },
+            component: ManageCompetitionsComponent
           },
           {
             path: 'create',
-            component: CompetitionCreateComponent,
-            canActivate: [AuthGuardService],
-            data: { auth: 'COMPETITION_CREATE' },
+            component: CompetitionCreateComponent
           },
           {
             path: 'edit',
-            component: CompetitionEditComponent,
-            canActivate: [AuthGuardService],
-            data: { auth: 'COMPETITION_EDIT' },
+            component: CompetitionEditComponent
           }
         ]
       },
       {
         path: 'tournaments',
+        canActivate: [AuthGuardService],
+        data: { auth: 'TOURNAMENT_MANAGE' },
         children: [
           {
             path: '',
-            component: ManageTournamentsComponent,
-            canActivate: [AuthGuardService],
-            data: { auth: 'TOURNAMENT_VIEW' },
+            component: ManageTournamentsComponent
           },
           {
             path: 'create',
-            component: TournamentCreateComponent,
-            canActivate: [AuthGuardService],
-            data: { auth: 'TOURNAMENT_CREATE' },
+            component: TournamentCreateComponent
           },
           {
             path: 'edit',
-            component: TournamentEditComponent,
-            canActivate: [AuthGuardService],
-            data: { auth: 'TOURNAMENT_EDIT' },
+            component: TournamentEditComponent
           }
         ]
       },
       {
         path: 'teams',
+        canActivate: [AuthGuardService],
+        data: { auth: 'TEAM_MANAGE' },
         children: [
           {
             path: '',
-            component: ManageTeamsComponent,
-            canActivate: [AuthGuardService],
-            data: { auth: 'TEAM_VIEW' },
+            component: ManageTeamsComponent
           },
           {
             path: 'create',
-            component: TeamCreateComponent,
-            canActivate: [AuthGuardService],
-            data: { auth: 'TEAM_CREATE' },
+            component: TeamCreateComponent
           },
           {
             path: 'edit',
-            component: TeamEditComponent,
-            canActivate: [AuthGuardService],
-            data: { auth: 'TEAM_EDIT' },
+            component: TeamEditComponent
           }
         ]
       },

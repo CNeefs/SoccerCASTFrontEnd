@@ -16,7 +16,7 @@ export class AuthService {
     constructor(private _authorizationService: AuthorizationService, private http: HttpClient, private router: Router) { }
 
     signup(newUser: User) {
-        console.log('new user: ' + newUser)
+        //console.log('new user: ' + newUser)
         return this.http.post<User>(this.baseUrl + "user", newUser)
             .pipe(tap(userData => {
                 this.authenticationHandler(userData);
@@ -37,7 +37,7 @@ export class AuthService {
             //if userToken exists => decode token and make user object (behaviorSubject)
             const helper = new JwtHelperService();
             const decodedToken = helper.decodeToken(userToken);
-            console.log(decodedToken);
+            //console.log(decodedToken);
             var permissions = decodedToken.Permissions.split(';');
             permissions.pop();
             const user: User = new User(

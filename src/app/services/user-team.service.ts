@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { UserTeam } from '../models/user-team.model';
 import { User } from '../models/user.model';
 import { Team } from '../models/team.model';
+import { map } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
@@ -22,7 +23,11 @@ export class UserTeamService {
     }
 
     getUsersTeamByTeamId(teamID: number) {
-        return this.http.get<User[]>(this.baseUrl + 'userteam/teamusers/' + teamID);
+        return this.http.get<User[]>(this.baseUrl + 'userteam/teamusers/' + teamID + "/" + 1);
+    }
+
+    getUsersTeamInReview(teamID: number) {
+        return this.http.get<User[]>(this.baseUrl + 'userteam/teamusers/' + teamID + "/" + 2);
     }
 
     deleteUserTeamById(userTeamID: number) {
@@ -34,7 +39,7 @@ export class UserTeamService {
     }
 
     addUserTeam(userTeam: UserTeam) {
-        return this.http.post<UserTeam>(this.baseUrl + 'userteam', userTeam, { reportProgress: true, observe: 'events' });
+        return this.http.post<UserTeam>(this.baseUrl + 'userteam/aprove/', userTeam, { reportProgress: true, observe: 'events' });
     }
 
     editUserTeam(id: number, userTeam: UserTeam) {
