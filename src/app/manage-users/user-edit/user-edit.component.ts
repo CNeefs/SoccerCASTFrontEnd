@@ -14,20 +14,19 @@ import { RoleService } from '../../services/role.service';
   styleUrls: ['./user-edit.component.scss', '../../styles/validation_style.scss']
 })
 export class UserEditComponent implements OnInit {
-  
+
   editForm: FormGroup;
   selectedUser: User = null;
   selectedUserID: number = 0;
 
   roles: Observable<Role[]>
-  allRoles: Role[] = [];
+  roleList = [];
+  selectedItems = [];
 
-  constructor(
-    private route: ActivatedRoute, 
-    private _userService: UserService, 
-    private fb: FormBuilder, 
-    private router: Router,
-    private _roleService: RoleService) { }
+  roleSettings = { dataIdProperty: "idValue", dataNameProperty: "nameValue", headerText: "Roles", noneSelectedBtnText: "No roles selected", btnWidth: "200px", 
+    showDeselectAllBtn: true, showSelectAllBtn: true, deselectAllBtnText: 'Deselect', selectAllBtnText: 'Select', btnClasses: 'btn btn-primary btn-sm dropdown-toggle', };
+
+  constructor(private route: ActivatedRoute, private _userService: UserService, private fb: FormBuilder, private router: Router, private _roleService: RoleService) { }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
@@ -36,26 +35,22 @@ export class UserEditComponent implements OnInit {
 
     this.roles = this._roleService.getRoles();
     this.roles.pipe(map(res => res.map(role => {
-      this.allRoles.push(new Role(role.roleID, role.name));
+      this.roleList.push({ "idValue": role.roleID, "nameValue": role.name});
       return role;
     }))).subscribe();
 
-    //kan zijn dat dit nog unsubscribed moet worden
     this._userService.getUserById(this.selectedUserID).subscribe((user: User) => {
       this.selectedUser = user;
 
-      const birthDateSubstr = user.birthDate.toString().substring(0,10);
-      const birthYear = +birthDateSubstr.substring(0,4);
-      const birthMonth = +birthDateSubstr.substring(5,7);
-      const birthDay = +birthDateSubstr.substring(8,10);
+      const birthDateSubstr = user.birthDate.toString().substring(0, 10);
+      const birthYear = +birthDateSubstr.substring(0, 4);
+      const birthMonth = +birthDateSubstr.substring(5, 7);
+      const birthDay = +birthDateSubstr.substring(8, 10);
 
-      const convertedBirthDate = {year: birthYear, month: birthMonth, day: birthDay};
+      const convertedBirthDate = { year: birthYear, month: birthMonth, day: birthDay };
 
-      const userRoles = user.roles;
-      const roleIds: string[] = []
-
-      for(let role of userRoles){
-         roleIds.push(role.roleID.toString());
+      for (let role of user.roles) {
+        this.selectedItems.push({ "idValue": role.roleID, "nameValue": role.name});
       }
 
       this.editForm = this.fb.group({
@@ -63,7 +58,7 @@ export class UserEditComponent implements OnInit {
         lastName: [user.lastName, Validators.required],
         email: [user.email, [Validators.required, Validators.email]],
         birthDate: [convertedBirthDate, [Validators.required]],
-        roles: [roleIds, [Validators.required]]
+        roles: [this.selectedItems, [Validators.required]]
       });
     }, error => {
       this.router.navigate(['admin/users']);
@@ -77,7 +72,7 @@ export class UserEditComponent implements OnInit {
     const month = +birthdate.month;
     const day = +birthdate.day;
 
-    const convertedBirthdate = new Date(year, month-1, day+1, 0, 0, 0, 0)
+    const convertedBirthdate = new Date(year, month - 1, day + 1, 0, 0, 0, 0)
 
     this.selectedUser.firstName = this.editForm.controls['firstName'].value;
     this.selectedUser.lastName = this.editForm.controls['lastName'].value;
@@ -86,12 +81,9 @@ export class UserEditComponent implements OnInit {
 
     this.selectedUser.roles = [];
     this.editForm.controls['roles'].value.forEach(editRole => {
-      this.allRoles.forEach(role => {
-        if (+editRole == role.roleID){
-          this.selectedUser.roles.push(new Role(role.roleID, role.name));
-        }
-      });
+      this.selectedUser.roles.push(new Role(editRole.idValue, editRole.nameValue));
     });
+
     //kan zijn dat dit nog unsubscribed moet worden
     this._userService.editUser(this.selectedUserID, this.selectedUser).subscribe();
     this.router.navigate(['admin/users']);

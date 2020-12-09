@@ -40,23 +40,13 @@
         </div>
 
         <div class="form-group">
-            <label for="roles">Roles user (</label>
-            <select multiple class="form-control" id="roles" formControlName="roles">
-                <option *ngFor="let role of (roles | async)" value="{{role.roleID}}">{{ role.name }}</option>
-            </select>
+            <label for="roles">Roles user</label>
+            <ngx-bootstrap-multiselect name="selectedItems" formControlName="roles" [items]="roleList"
+                [settings]="roleSettings">
+            </ngx-bootstrap-multiselect>
             <small class="pl-1" *ngIf="!createForm.get('roles').valid && createForm.get('roles').touched">A role needs to be applied to a user!</small>
         </div>
 
-        <!-- <div class="form-group">
-            <label for="roleID">Role user</label>
-            <select class="form-control" id="roleID" formControlName="roleID"> -->
-                <!-- <option *ngFor="let u of (users | async)" [value]="u.userID">{{u.firstName}} {{u.lastName}}</option> -->
-                <!--Momenteel hardcoded, moet nog uit roles controller komen-->
-                <!-- <option value="1">User</option>
-                <option value="2">Admin</option>
-            </select>
-            <small class="pl-1" *ngIf="!createForm.get('roleID').valid && createForm.get('roleID').touched">This contact user is invalid!</small>
-        </div> -->
         <button type="submit" class="btn btn-primary" [disabled]="!createForm.valid">Submit</button>
     </form>
 </div>

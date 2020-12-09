@@ -18,18 +18,15 @@ export class UserCreateComponent implements OnInit {
 
   createForm: FormGroup;
   roles: Observable<Role[]>
-  allRoles: Role[] = [];
+  roleList = [];
+  selectedItems = [];
 
-  constructor(
-    private _userService: UserService,
-    private fb: FormBuilder,
-    private route: ActivatedRoute,
-    private router: Router,
-    private _roleService: RoleService
-  ) { }
+  roleSettings = { dataIdProperty: "idValue", dataNameProperty: "nameValue", headerText: "Roles", noneSelectedBtnText: "No roles selected", btnWidth: "200px", 
+    showDeselectAllBtn: true, showSelectAllBtn: true, deselectAllBtnText: 'Deselect', selectAllBtnText: 'Select', btnClasses: 'btn btn-primary btn-sm dropdown-toggle', };
+
+  constructor(private _userService: UserService, private fb: FormBuilder, private route: ActivatedRoute, private router: Router, private _roleService: RoleService) { }
 
   onSubmit() {
-
     const birthdate = this.createForm.controls['birthDate'].value;
 
     const year = +birthdate.year;
@@ -38,29 +35,13 @@ export class UserCreateComponent implements OnInit {
 
     const convertedBirthdate = new Date(year, month-1, day+1, 0, 0, 0, 0)
 
-    const userRoles = [];
+    var userRoles = [];
     this.createForm.controls['roles'].value.forEach(editRole => {
-      this.allRoles.forEach(role => {
-        if (+editRole == role.roleID){
-          userRoles.push(role);
-        }
-      });
+      userRoles.push(new Role(editRole.idValue, editRole.nameValue));
     });
 
-    var user = new User(
-      0,
-      this.createForm.controls['firstName'].value,
-      this.createForm.controls['lastName'].value,
-      this.createForm.controls['email'].value,
-      this.createForm.controls['password'].value,
-      null,
-      convertedBirthdate,
-      0,
-      0,
-      userRoles,
-      null
-    );
-    // console.log("user create"+ JSON.stringify(user));
+    var user = new User(0, this.createForm.controls['firstName'].value, this.createForm.controls['lastName'].value, this.createForm.controls['email'].value,
+      this.createForm.controls['password'].value, null, convertedBirthdate, 0, 0, userRoles, null);
     this._userService.addUser(user).subscribe(event => {
       if(event.type === HttpEventType.Response) {
         this.router.navigate(['admin/users']);
@@ -69,10 +50,9 @@ export class UserCreateComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
     this.roles = this._roleService.getRoles();
     this.roles.pipe(map(res => res.map(role => {
-      this.allRoles.push(new Role(role.roleID, role.name));
+      this.roleList.push({ "idValue": role.roleID, "nameValue": role.name});
       return role;
     }))).subscribe();
 

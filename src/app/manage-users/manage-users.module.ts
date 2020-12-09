@@ -7,6 +7,7 @@ import { SharedModule } from '../shared/shared.module';
 import { UserCreateComponent } from './user-create/user-create.component';
 import { UserEditComponent } from './user-edit/user-edit.component';
 
+import { NgxBootstrapMultiselectDropdownModule } from 'ngx-bootstrap-multiselect-dropdown';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { UserEditComponent } from './user-edit/user-edit.component';
     CommonModule,
     RouterModule,
     ReactiveFormsModule, 
-    SharedModule
+    SharedModule,
+    NgxBootstrapMultiselectDropdownModule
   ], exports: [
     ManageUsersComponent,
   ]
