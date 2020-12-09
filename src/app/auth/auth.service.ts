@@ -42,6 +42,7 @@ export class AuthService {
             this._userService.getUserById(decodedToken.UserID).subscribe((user: User) => { 
                 this._authorizationService.initializePermissions(user.permissions);
                 this.user.next(user);
+                console.log(user);
             });
         }
         return null;
