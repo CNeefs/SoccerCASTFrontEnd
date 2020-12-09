@@ -26,6 +26,7 @@ import { ManageTeamsComponent } from './manage-teams/manage-teams.component';
 import { TeamCreateComponent } from './manage-teams/team-create/team-create.component';
 import { TeamEditComponent } from './manage-teams/team-edit/team-edit.component';
 import { MyProfileComponent } from './my-profile/my-profile.component';
+import { ViewTeamsComponent } from './view-teams/view-teams.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -49,6 +50,17 @@ const routes: Routes = [
             component: MyProfileComponent,
             canActivate: [AuthGuardService],
             data: { auth: 'PROFILE_VIEW' },
+          }
+        ]
+      },
+      {
+        path: 'teams',
+        children: [
+          {
+            path: '',
+            component: ViewTeamsComponent,
+            canActivate: [AuthGuardService],
+            data: { auth: 'TEAM_VIEW' }
           }
         ]
       }
