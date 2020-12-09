@@ -34,12 +34,12 @@ export class UserTeamService {
         return this.http.delete<UserTeam>(this.baseUrl + 'userteam/' + userTeamID);
     }
 
-    deleteUserTeamByUserIdAndTeamId(userID: number, teamID: number) {
-        return this.http.delete<UserTeam>(this.baseUrl + 'userteam/user/' + userID + '/team/' + teamID);
+    declineUser(userID: number, teamID: number) {
+        return this.http.delete<UserTeam>(this.baseUrl + 'userteam/decline/user/' + userID + '/team/' + teamID);
     }
 
-    addUserTeam(userTeam: UserTeam) {
-        return this.http.post<UserTeam>(this.baseUrl + 'userteam/aprove/', userTeam, { reportProgress: true, observe: 'events' });
+    approveUser(userTeam: UserTeam) {
+        return this.http.post<UserTeam>(this.baseUrl + 'userteam/approve/', userTeam, { reportProgress: true, observe: 'events' });
     }
 
     editUserTeam(id: number, userTeam: UserTeam) {
