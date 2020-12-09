@@ -13,23 +13,16 @@ import { UserService } from 'src/app/services/user.service';
   templateUrl: './team-create.component.html',
   styleUrls: ['./team-create.component.scss', '../../styles/validation_style.scss']
 })
-export class TeamCreateComponent implements OnInit, OnDestroy {
+export class TeamCreateComponent implements OnInit {
   
   createForm: FormGroup;
   users: Observable<User[]>;
 
-  addTeamSub: Subscription;
-
-  constructor(
-    private _teamService: TeamService, 
-    private _userService: UserService, 
-    private fb: FormBuilder, 
-    private route: ActivatedRoute, 
-    private router: Router) { }
+  constructor(private _teamService: TeamService, private _userService: UserService, private fb: FormBuilder, private route: ActivatedRoute, private router: Router) { }
 
   onSubmit() {
     var team = new Team(0, this.createForm.controls['teamName'].value, this.createForm.controls['companyName'].value,
-    this.createForm.controls['location'].value, Number(this.createForm.controls['captainID'].value), null);
+    this.createForm.controls['location'].value, Number(this.createForm.controls['captainID'].value), null, 2, null);
     this._teamService.addTeam(team).subscribe(event => {
       if(event.type === HttpEventType.Response) {
         this.router.navigate(['admin/teams']);
@@ -46,13 +39,4 @@ export class TeamCreateComponent implements OnInit, OnDestroy {
       captainID: ['', Validators.required]
     });
   }
-
-  ngOnDestroy() {
-    if (this.addTeamSub) {
-      this.addTeamSub.unsubscribe();
-    }
-  }
-
-
-
 }

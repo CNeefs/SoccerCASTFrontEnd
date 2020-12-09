@@ -20,14 +20,14 @@ export class AuthInterceptor implements HttpInterceptor {
             const decodedToken = helper.decodeToken(userToken);
             const expirationTime = decodedToken.exp * 1000;
 
-            console.log(decodedToken);
+            //console.log(decodedToken);
             
-            console.log(expirationTime);
+            //console.log(expirationTime);
 
             const currentDate = new Date();
             const currentDateTime = currentDate.getTime();
 
-            console.log(currentDateTime);
+            //console.log(currentDateTime);
 
             if(currentDateTime > expirationTime){
                 this.authService.logout();
