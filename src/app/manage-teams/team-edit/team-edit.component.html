@@ -46,8 +46,8 @@
                         </div>
                       </div>
                     </th>
-                    <td class="text-right" *ngIf="u.userID != selectedTeam.captainID">
-                      <div ngbDropdown class="dropdown" style="position:static;overflow: visible;">
+                    <td class="text-right">
+                      <div ngbDropdown class="dropdown" style="position:static;overflow: visible;" *ngIf="u.userID != selectedTeam.captainID">
                         <a ngbDropdownToggle class="btn btn-sm btn-icon-only text-light" role="button" aria-expanded="false">
                           <mat-icon style="color: black;">more_vert</mat-icon>
                         </a>
@@ -132,7 +132,7 @@
     </div>
     <div class="modal-footer">
         <button class="btn btn-outline-primary" (click)="modal.dismiss()">Cancel</button>
-        <button type="button" class="btn btn-danger white" (click)="removeUserFromTeam(currentUser)">Remove</button>
+        <button type="button" class="btn btn-danger white" (click)="removeFromTeam(currentUser)">Remove</button>
     </div>
   </ng-template>
 <!--<div *ngIf="selectedTeam" class="container shadow-lg p-3 mb-5 bg-white rounded">

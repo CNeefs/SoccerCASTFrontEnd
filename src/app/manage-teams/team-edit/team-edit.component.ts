@@ -8,7 +8,8 @@ import { TeamService } from 'src/app/services/team.service';
 import { UserService } from 'src/app/services/user.service';
 import { UserTeamService } from 'src/app/services/user-team.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { map, tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-team-edit',
@@ -21,12 +22,14 @@ export class TeamEditComponent implements OnInit {
   selectedTeamID: number = 0;
   selectedTeam: Team = null;
 
+  currentUser: User;
+
   pageLoaded: boolean = false;
 
   usersTeam: Observable<User[]>;
   usersReview: Observable<User[]>;
 
-  constructor(private _teamService: TeamService, private _userService: UserService, private _userTeamService: UserTeamService, private route: ActivatedRoute, private fb: FormBuilder, private router: Router) { }
+  constructor(private _teamService: TeamService, private _userService: UserService, private _userTeamService: UserTeamService, private route: ActivatedRoute, private fb: FormBuilder, private router: Router, private _modalService: NgbModal) { }
 
   onSubmit() {
     this.selectedTeam.teamName = this.editForm.controls['teamName'].value;
@@ -36,37 +39,47 @@ export class TeamEditComponent implements OnInit {
     this.router.navigate(['admin/teams']);
   }
 
-  addUserToTeam(user: User) {
-    const newUserTeam = new UserTeam(0,user.userID, null, this.selectedTeam.teamID, null, null, null);
-    console.log(newUserTeam);
-    this._userTeamService.addUserTeam(newUserTeam).subscribe();
-    this.usersTeam = this.usersTeam.pipe(map(res => res.map((user, i) => {
-      if (res.length == i) res.push(user);
-      return user;
-    })));
+  promoteToCaptain(user: User) {
+    this.selectedTeam.captainID = user.userID;
+    this._teamService.editTeam(this.selectedTeamID, this.selectedTeam).subscribe();
   }
 
-  removeUserFromTeam(user: User) {
-    this._userTeamService.deleteUserTeamByUserIdAndTeamId(user.userID, this.selectedTeam.teamID).subscribe();
+  openRemoveFromTeam(user: User, contentDeleteModel) {
+    this.currentUser = user;
+    this._modalService.open(contentDeleteModel)
+  }
+
+  removeFromTeam(user: User) {
+    this._userTeamService.declineUser(user.userID, this.selectedTeam.teamID).subscribe();
     this.usersTeam = this.usersTeam.pipe(map(res => res.filter(u => u.userID != user.userID)));
-    // this._userTeamService.deleteUserTeamById();
+    this._modalService.dismissAll();
+  }
+
+  declineUser(user: User) {
+    this._userTeamService.declineUser(user.userID, this.selectedTeam.teamID).subscribe();
+    this.usersReview = this.usersReview.pipe(map(res => res.filter(u => u.userID != user.userID)));
   }
 
   approveUser(user: User) {
     var newUserTeam = new UserTeam(0,user.userID, null, this.selectedTeam.teamID, null, 1, null);
-    console.log(newUserTeam);
-    this._userTeamService.addUserTeam(newUserTeam).subscribe();
-    this.usersTeam = this.usersTeam.pipe(tap(res => res.push(user)));
-    this.usersReview = this.usersReview.pipe(
-      map(res => res.filter(u => u.userID != user.userID))
+    this._userTeamService.approveUser(newUserTeam).subscribe();
+    this.usersTeam = this.usersTeam.pipe(
+      map(users => {
+        return users.map(u => {
+          return {
+            ...u,
+            user
+          }
+        })
+      })
     );
+    this.usersReview = this.usersReview.pipe(map(res => res.filter(u => u.userID != user.userID)));
   }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       this.selectedTeamID = params['id'];
     });
-
     this._teamService.getTeamById(this.selectedTeamID).subscribe(team => {
       this.selectedTeam = team;
       this.editForm = this.fb.group({
