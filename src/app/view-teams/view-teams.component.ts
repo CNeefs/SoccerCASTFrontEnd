@@ -13,27 +13,21 @@ export class ViewTeamsComponent implements OnInit {
 
   teams: Observable<Team[]>;
   currentTeam: Team;
-  
-  getTeamsSub: Subscription;
 
   pageLoaded: boolean = false;
 
-  constructor(
-    private router: Router,
-    private _teamService: TeamService,
-  ) { }
+  constructor(private router: Router, private _teamService: TeamService) { }
 
   goToCreate() {
     this.router.navigate(['admin/teams/create']);
   }
 
-  ngOnInit(): void {
-    this.teams = this._teamService.getTeams();
-    this.getTeamsSub = this.teams.subscribe(result => this.pageLoaded = true)
-  }
-  
-  ngOnDestroy() {
-    this.getTeamsSub.unsubscribe();
+  goToDetails() {
+
   }
 
+  ngOnInit(): void {
+    this.teams = this._teamService.getTeams();
+    this.teams.subscribe(result => {this.pageLoaded = true; console.log(result)});
+  }
 }
