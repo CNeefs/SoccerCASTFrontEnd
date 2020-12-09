@@ -2,18 +2,19 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { tap, map } from 'rxjs/operators';
 import { User } from '../models/user.model';
 import { UserLogin } from './models/user-login.model';
 import { AuthorizationService } from '../services/authorization.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { UserService } from '../services/user.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
     user = new BehaviorSubject(null);
     baseUrl: string = "https://localhost:44388/api/";
 
-    constructor(private _authorizationService: AuthorizationService, private http: HttpClient, private router: Router) { }
+    constructor(private _authorizationService: AuthorizationService, private _userService: UserService, private http: HttpClient, private router: Router) { }
 
     signup(newUser: User) {
         //console.log('new user: ' + newUser)
@@ -37,24 +38,11 @@ export class AuthService {
             //if userToken exists => decode token and make user object (behaviorSubject)
             const helper = new JwtHelperService();
             const decodedToken = helper.decodeToken(userToken);
-            //console.log(decodedToken);
-            var permissions = decodedToken.Permissions.split(';');
-            permissions.pop();
-            const user: User = new User(
-                decodedToken.UserID,
-                decodedToken.FirstName,
-                decodedToken.LastName,
-                decodedToken.Email,
-                null,
-                userToken,
-                decodedToken.BirthDay,
-                decodedToken.TimesWon,
-                decodedToken.TimesLost,
-                decodedToken.RoleID,
-                permissions
-            );
-            this._authorizationService.initializePermissions(user.permissions);
-            this.user.next(user);
+            //var permissions = decodedToken.permissions.split(';');
+            this._userService.getUserById(decodedToken.UserID).subscribe((user: User) => { 
+                this._authorizationService.initializePermissions(user.permissions);
+                this.user.next(user);
+            });
         }
         return null;
     }
