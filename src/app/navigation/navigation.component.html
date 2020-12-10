@@ -62,7 +62,7 @@
           ngbDropdownToggle>{{ currentUser.firstName | titlecase }}</a>
         <div ngbDropdownMenu aria-labelledby="dropdownBasic2" class="dropdown">
           <div>
-            <a ngbDropdownItem class="nav-link" routerLink="/user/profile" routerLinkActive="active"
+            <a ngbDropdownItem class="nav-link" (click)="goToProfile()" routerLink="/user/profile" routerLinkActive="active"
               [appHideIfUnauthorized]="'PROFILE_VIEW'">
               <mat-icon>account_box</mat-icon> My profile
             </a>

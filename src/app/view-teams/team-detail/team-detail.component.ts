@@ -39,6 +39,10 @@ export class TeamDetailComponent implements OnInit {
 
   constructor(private _userTeamService: UserTeamService, private _teamService: TeamService, private _authService: AuthService, private _matchService: MatchService, private route: ActivatedRoute, private router: Router) { }
 
+  goToUserPage(user: User) {
+    this.router.navigate(['user/profile'], { queryParams: { id: user.userID } });
+  }
+
   joinTeam(team: Team) {
     this._teamService.joinTeam(this.currentUser.userID, team).subscribe();
     const currentRoute = this.router.url;

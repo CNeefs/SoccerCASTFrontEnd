@@ -1,32 +1,340 @@
-  .profile-info {
-    margin-left: 10px;
-    margin-top: 10px;
-    margin-bottom: 10px;
+body{
+  background: #eaeaea;
+  margin-top:20px;
+}
+.profile-info-list {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+}
+.friend-list,
+.img-grid-list {
+  margin: -1px;
+  list-style-type: none;
+}
+.profile-info-list > li.title {
+  font-size: 0.625rem;
+  font-weight: 700;
+  color: #8a8a8f;
+  padding: 0 0 0.3125rem;
+}
+.profile-info-list > li + li.title {
+  padding-top: 1.5625rem;
+}
+.profile-info-list > li {
+  padding: 0.625rem 0;
+}
+.profile-info-list > li .field {
+  font-weight: 700;
+}
+.profile-info-list > li .value {
+  color: #666;
+}
+.profile-info-list > li.img-list a {
+  display: inline-block;
+}
+.profile-info-list > li.img-list a img {
+  max-width: 2.25rem;
+  -webkit-border-radius: 2.5rem;
+  -moz-border-radius: 2.5rem;
+  border-radius: 2.5rem;
+}
+.coming-soon-cover img,
+.email-detail-attachment .email-attachment .document-file img,
+.email-sender-img img,
+.friend-list .friend-img img,
+.profile-header-img img {
+  max-width: 100%;
+}
+.table.table-profile th {
+  border: none;
+  color: #000;
+  padding-bottom: 0.3125rem;
+  padding-top: 0;
+}
+.table.table-profile td {
+  border-color: #c8c7cc;
+}
+.table.table-profile tbody + thead > tr > th {
+  padding-top: 1.5625rem;
+}
+.table.table-profile .field {
+  color: #666;
+  font-weight: 600;
+  width: 25%;
+  text-align: right;
+}
+.table.table-profile .value {
+  font-weight: 500;
+}
+.profile-header {
+  position: relative;
+  overflow: hidden;
+}
+.profile-header .profile-header-cover {
+  background: url(https://bootdey.com/img/Content/bg1.jpg) center no-repeat;
+  background-size: 100% auto;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+.profile-header .profile-header-cover:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.25) 0, rgba(0, 0, 0, 0.85) 100%);
+}
+.profile-header .profile-header-content,
+.profile-header .profile-header-tab,
+.profile-header-img,
+body .fc-icon {
+  position: relative;
+}
+.profile-header .profile-header-tab {
+  background: #fff;
+  list-style-type: none;
+  margin: -1.25rem 0 0;
+  padding: 0 0 0 8.75rem;
+  border-bottom: 1px solid #c8c7cc;
+  white-space: nowrap;
+}
+.profile-header .profile-header-tab > li {
+  display: inline-block;
+  margin: 0;
+}
+.profile-header .profile-header-tab > li > a {
+  display: block;
+  color: #000;
+  line-height: 1.25rem;
+  padding: 0.625rem 1.25rem;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.75rem;
+  border: none;
+}
+.profile-header .profile-header-tab > li.active > a,
+.profile-header .profile-header-tab > li > a.active {
+  color: #007aff;
+}
+.profile-header .profile-header-content:after,
+.profile-header .profile-header-content:before {
+  content: "";
+  display: table;
+  clear: both;
+}
+.profile-header .profile-header-content {
+  color: #fff;
+  padding: 1.25rem;
+}
+body .fc th a,
+body .fc-ltr .fc-basic-view .fc-day-top .fc-day-number,
+body .fc-widget-header a {
+  color: #000;
+}
+.profile-header-img {
+  float: left;
+  width: 7.5rem;
+  height: 7.5rem;
+  overflow: hidden;
+  z-index: 10;
+  margin: 0 1.25rem -1.25rem 0;
+  padding: 0.1875rem;
+  -webkit-border-radius: 0.25rem;
+  -moz-border-radius: 0.25rem;
+  border-radius: 0.25rem;
+  background: #fff;
+}
+.profile-header-info h4 {
+  font-weight: 500;
+  margin-bottom: 0.3125rem;
+}
+.profile-container {
+  padding: 1.5625rem;
+}
+@media (max-width: 967px) {
+  .profile-header-img {
+      width: 5.625rem;
+      height: 5.625rem;
+      margin: 0;
   }
-
   .profile-header-info {
-    margin-left: 10px;
-    margin-top: 10px;
-    margin-bottom: 10px;
+      margin-left: 6.5625rem;
+      padding-bottom: 0.9375rem;
   }
-  
-  .profile-card {
-    min-height: 600px;
+  .profile-header .profile-header-tab {
+      padding-left: 0;
   }
+}
+@media (max-width: 767px) {
+  .profile-header .profile-header-cover {
+      background-position: top;
+  }
+  .profile-header-img {
+      width: 3.75rem;
+      height: 3.75rem;
+      margin: 0;
+  }
+  .profile-header-info {
+      margin-left: 4.6875rem;
+      padding-bottom: 0.9375rem;
+  }
+  .profile-header-info h4 {
+      margin: 0 0 0.3125rem;
+  }
+  .profile-header .profile-header-tab {
+      white-space: nowrap;
+      overflow: scroll;
+      padding: 0;
+  }
+  .profile-container {
+      padding: 0.9375rem 0.9375rem 3.6875rem;
+  }
+  .friend-list > li {
+      float: none;
+      width: auto;
+  }
+}
+.profile-info-list {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+}
+.friend-list,
+.img-grid-list {
+  margin: -1px;
+  list-style-type: none;
+}
+.profile-info-list > li.title {
+  font-size: 0.625rem;
+  font-weight: 700;
+  color: #8a8a8f;
+  padding: 0 0 0.3125rem;
+}
+.profile-info-list > li + li.title {
+  padding-top: 1.5625rem;
+}
+.profile-info-list > li {
+  padding: 0.625rem 0;
+}
+.profile-info-list > li .field {
+  font-weight: 700;
+}
+.profile-info-list > li .value {
+  color: #666;
+}
+.profile-info-list > li.img-list a {
+  display: inline-block;
+}
+.profile-info-list > li.img-list a img {
+  max-width: 2.25rem;
+  -webkit-border-radius: 2.5rem;
+  -moz-border-radius: 2.5rem;
+  border-radius: 2.5rem;
+}
+.coming-soon-cover img,
+.email-detail-attachment .email-attachment .document-file img,
+.email-sender-img img,
+.friend-list .friend-img img,
+.profile-header-img img {
+  max-width: 100%;
+}
+.table.table-profile th {
+  border: none;
+  color: #000;
+  padding-bottom: 0.3125rem;
+  padding-top: 0;
+}
+.table.table-profile td {
+  border-color: #c8c7cc;
+}
+.table.table-profile tbody + thead > tr > th {
+  padding-top: 1.5625rem;
+}
+.table.table-profile .field {
+  color: #666;
+  font-weight: 600;
+  width: 25%;
+  text-align: right;
+}
+.table.table-profile .value {
+  font-weight: 500;
+}
 
-  /* Profile Content */
-  .profile-content {
-    padding: 20px;
-    background: #fff;
-    min-height: 600px;
-  }
+.friend-list {
+  padding: 0;
+}
+.friend-list > li {
+  float: left;
+  width: 50%;
+}
+.friend-list > li > a {
+  display: block;
+  text-decoration: none;
+  color: #000;
+  padding: 0.625rem;
+  margin: 1px;
+  background: #fff;
+}
+.friend-list > li > a:after,
+.friend-list > li > a:before {
+  content: "";
+  display: table;
+  clear: both;
+}
+.friend-list .friend-img {
+  float: left;
+  width: 3rem;
+  height: 3rem;
+  overflow: hidden;
+  background: #efeff4;
+}
+.friend-list .friend-info {
+  margin-left: 3.625rem;
+}
+.friend-list .friend-info h4 {
+  margin: 0.3125rem 0;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+.friend-list .friend-info p {
+  color: #666;
+  margin: 0;
+}
 
-  mat-icon {
-    vertical-align: middle;
-  }
+.profile-info {
+  margin-left: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
 
-  /*Progresss bar*/
-  
+.profile-header-info {
+  margin-left: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.profile-card {
+  min-height: 600px;
+}
+
+/* Profile Content */
+.profile-content {
+  padding: 20px;
+  background: #fff;
+  min-height: 600px;
+}
+
+mat-icon {
+  vertical-align: middle;
+}
+
+/*Progresss bar*/
+
 $borderWidth: 10px;
 $animationTime: .9s;
 $border-color-default: #efefef;
@@ -35,126 +343,126 @@ $size: 160px;
 $howManySteps: 100; //this needs to be even. 
 
 .progress {
-  width: $size;
-  height: $size;
-  line-height: $size;
+width: $size;
+height: $size;
+line-height: $size;
+background: none;
+margin: 0 auto;
+box-shadow: none;
+position: relative;
+&:after {
+  content: "";
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: $borderWidth solid $border-color-default;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+> span {
+  width: 50%;
+  height: 100%;
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  z-index: 1;
+}
+.progress-left {
+  left: 0;
+}
+.progress-bar {
+  width: 100%;
+  height: 100%;
   background: none;
-  margin: 0 auto;
-  box-shadow: none;
-  position: relative;
-  &:after {
-    content: "";
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    border: $borderWidth solid $border-color-default;
-    position: absolute;
-    top: 0;
-    left: 0;
-  }
-  > span {
-    width: 50%;
-    height: 100%;
-    overflow: hidden;
-    position: absolute;
-    top: 0;
-    z-index: 1;
-  }
-  .progress-left {
-    left: 0;
-  }
+  border-width: $borderWidth;
+  border-style: solid;
+  position: absolute;
+  top: 0;
+  border-color: $border-color-fill;
+}
+.progress-left .progress-bar {
+  left: 100%;
+  border-top-right-radius: ($size/2);;
+  border-bottom-right-radius: ($size/2);;
+  border-left: 0;
+  -webkit-transform-origin: center left;
+  transform-origin: center left;
+  //animation: loading-2 1.5s linear forwards 1.8s;
+}
+.progress-right {
+  right: 0;
   .progress-bar {
-    width: 100%;
-    height: 100%;
-    background: none;
-    border-width: $borderWidth;
-    border-style: solid;
-    position: absolute;
-    top: 0;
-    border-color: $border-color-fill;
+    left: -100%;
+    border-top-left-radius: ($size/2);;
+    border-bottom-left-radius: ($size/2);;
+    border-right: 0;
+    -webkit-transform-origin: center right;
+    transform-origin: center right;
+    //animation: loading-1 1.8s linear forwards;
   }
-  .progress-left .progress-bar {
-    left: 100%;
-    border-top-right-radius: ($size/2);;
-    border-bottom-right-radius: ($size/2);;
-    border-left: 0;
-    -webkit-transform-origin: center left;
-    transform-origin: center left;
-    //animation: loading-2 1.5s linear forwards 1.8s;
+}
+.progress-value {
+  display: flex;
+  border-radius: 50%;
+  font-size: 1rem;
+  text-align: center;
+  line-height: 20px;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  font-weight: 300;
+  // div {
+  //   //margin-top: 10px;
+  // }
+  span {
+    font-size: 12px;
+    text-transform: uppercase;
   }
-  .progress-right {
-    right: 0;
-    .progress-bar {
-      left: -100%;
-      border-top-left-radius: ($size/2);;
-      border-bottom-left-radius: ($size/2);;
-      border-right: 0;
-      -webkit-transform-origin: center right;
-      transform-origin: center right;
-      //animation: loading-1 1.8s linear forwards;
-    }
-  }
-  .progress-value {
-    display: flex;
-    border-radius: 50%;
-    font-size: 1rem;
-    text-align: center;
-    line-height: 20px;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    width: 100%;
-    font-weight: 300;
-    // div {
-    //   //margin-top: 10px;
-    // }
-    span {
-      font-size: 12px;
-      text-transform: uppercase;
-    }
-  }
+}
 }
 
 /* This for loop creates the necessary css animation names 
 Due to the split circle of progress-left and progress right, we must use the animations on each side. 
 */
 @for $i from 1 through $howManySteps {
-	$stepName: ($i*(100 / $howManySteps));
+$stepName: ($i*(100 / $howManySteps));
 
-	//animation only the left side if below 50%
-	@if $i <= ($howManySteps/2) { 
-		.progress[data-percentage="#{$stepName}"] {
-			.progress-right .progress-bar {
-				 animation: loading-#{$i} $animationTime linear forwards;
-			}
-			.progress-left .progress-bar {animation: 0;}
-		}
-	}
-	//animation only the right side if above 50%
-	@if $i > ($howManySteps/2)  {  
-		.progress[data-percentage="#{$stepName}"] {
-			.progress-right .progress-bar {
-				animation: loading-#{($howManySteps/2)} $animationTime linear forwards; //set the animation to longest animation
-			}
-			.progress-left .progress-bar {
-      animation: loading-#{$i - ($howManySteps/2)} $animationTime linear forwards $animationTime;
+//animation only the left side if below 50%
+@if $i <= ($howManySteps/2) { 
+  .progress[data-percentage="#{$stepName}"] {
+    .progress-right .progress-bar {
+       animation: loading-#{$i} $animationTime linear forwards;
     }
-		}
-	}
+    .progress-left .progress-bar {animation: 0;}
+  }
+}
+//animation only the right side if above 50%
+@if $i > ($howManySteps/2)  {  
+  .progress[data-percentage="#{$stepName}"] {
+    .progress-right .progress-bar {
+      animation: loading-#{($howManySteps/2)} $animationTime linear forwards; //set the animation to longest animation
+    }
+    .progress-left .progress-bar {
+    animation: loading-#{$i - ($howManySteps/2)} $animationTime linear forwards $animationTime;
+  }
+  }
+}
 }
 
 //animation
 @for $i from 1 through ($howManySteps/2) { 
-	$degrees: (180/($howManySteps/2));
-	$degrees: ($degrees*$i);
-	@keyframes loading-#{$i}{
-    0%{
-        -webkit-transform: rotate(0deg);
-        transform: rotate(0deg);
-    }
-    100%{
-        -webkit-transform: rotate($degrees);
-			transform: rotate(#{$degrees}deg);
-    }
-	}
+$degrees: (180/($howManySteps/2));
+$degrees: ($degrees*$i);
+@keyframes loading-#{$i}{
+  0%{
+      -webkit-transform: rotate(0deg);
+      transform: rotate(0deg);
+  }
+  100%{
+      -webkit-transform: rotate($degrees);
+    transform: rotate(#{$degrees}deg);
+  }
+}
 }

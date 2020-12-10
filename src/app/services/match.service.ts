@@ -15,4 +15,8 @@ export class MatchService {
     getMatchesByTeamId(id: Number) {
         return this.http.get<Match[]>(this.baseUrl + "match/team/" + id);
     }
+
+    getMatchesByUserId(id: Number) {
+        return this.http.get<Match[]>(this.baseUrl + "match/user/" + id);
+    }
 }
