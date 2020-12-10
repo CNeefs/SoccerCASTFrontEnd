@@ -24,8 +24,14 @@
         <div class="form-group">
             <label for="birthDate">Date of birth</label>
             <div class="input-group">
-                <input class="form-control" placeholder="yyyy-mm-dd" ngbDatepicker
-                    #d="ngbDatepicker" formControlName="birthDate">
+                <input 
+                    class="form-control" 
+                    placeholder="yyyy-mm-dd" 
+                    ngbDatepicker
+                    [minDate]="minDate"
+                    [maxDate]="maxDate"
+                    #d="ngbDatepicker" 
+                    formControlName="birthDate">
                 <div class="input-group-append">
                     <button class="btn btn-outline-secondary calendar pb-0" (click)="d.toggle()" type="button"><mat-icon>event</mat-icon></button>
                 </div>

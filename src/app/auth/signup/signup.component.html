@@ -26,8 +26,17 @@
         <div class="form-group">
             <label for="email">Date of birth</label>
             <div class="input-group">
-                <input class="form-control" placeholder="yyyy-mm-dd" name="birthdate" [(ngModel)]="model" ngbDatepicker
-                    #d="ngbDatepicker" #birthdate="ngModel" required ngModel>
+                <input 
+                    class="form-control" 
+                    placeholder="yyyy-mm-dd" 
+                    name="birthdate" 
+                    [minDate]="minDate"
+                    [maxDate]="maxDate"
+                    [(ngModel)]="model" 
+                    ngbDatepicker
+                    #d="ngbDatepicker" 
+                    #birthdate="ngModel" 
+                    required ngModel>
                 <div class="input-group-append">
                     <button class="btn btn-outline-secondary calendar pb-0" (click)="d.toggle()" type="button">
                         <mat-icon>event</mat-icon>

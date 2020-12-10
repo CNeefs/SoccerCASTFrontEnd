@@ -53,7 +53,7 @@ export class ManageUsersComponent implements OnInit, OnDestroy {
       );
       this._modalService.dismissAll();
       this.toastService.show('Deleted user ' + user.firstName + ' ' + user.lastName, {
-        classname: 'bg-danger text-light',
+        classname: 'bg-success text-light',
         delay: 2000,
         autohide: true
       });
