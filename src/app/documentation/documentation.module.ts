@@ -6,11 +6,17 @@ import { DirectivesModule } from '../directives/directives.module';
 import { SharedModule } from '../shared/shared.module';
 
 import { RouterModule } from '@angular/router';
+import { UserDocumentationComponent } from './user-documentation/user-documentation.component';
+import { TeamDocumentationComponent } from './team-documentation/team-documentation.component';
+import { TableDocumentationComponent } from './table-documentation/table-documentation.component';
+import { MatchesDocumentationComponent } from './matches-documentation/matches-documentation.component';
+import { CompetitionsDocumentationComponent } from './competitions-documentation/competitions-documentation.component';
+import { TournamentsDocumentationComponent } from './tournaments-documentation/tournaments-documentation.component';
 
 
 
 @NgModule({
-  declarations: [DocumentationhomeComponent],
+  declarations: [DocumentationhomeComponent, UserDocumentationComponent, TeamDocumentationComponent, TableDocumentationComponent, MatchesDocumentationComponent, CompetitionsDocumentationComponent, TournamentsDocumentationComponent],
   imports: [
     CommonModule,
     DirectivesModule,
