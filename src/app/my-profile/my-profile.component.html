@@ -1,10 +1,7 @@
+
 <div class="container pt-4">
 
-<header *ngIf="userLoaded">
-    <div class="container shadow p-3 mb-5 bg-white rounded">
-        <h1>{{ user.firstName }} {{ user.lastName }}</h1>
-    </div>
-</header>
+
 <button type="button" (click)="fileInput.click()">Choose File</button>
 <input
   hidden
@@ -40,152 +37,257 @@
                 </div>
                 <div class="profile-info">
                     <mat-icon>cake</mat-icon> Birthday: {{ userBirthday }}
+<div class="container" *ngIf="pageLoaded">
+    <div id="content" class="content p-0">
+        <div class="profile-header">
+            <div class="profile-header-cover"></div>
+            <div class="profile-header-content">
+                <div class="profile-header-img mb-4">
+                    <img [src]="imageSource" class="mb-4" alt="" />
                 </div>
-                <hr class="m-0">
-                <div class="profile-info">
-                    <mat-icon class="text-success">check_circle_outline</mat-icon> Won: {{ user.timesWon }}
+    
+                <div class="profile-header-info" *ngIf="selectedUser != null">
+                    <h4 class="m-t-sm">{{selectedUser.firstName}} {{selectedUser.lastName}}</h4>
+                    <p class="m-b-sm">{{userBirthday}}</p>
+                    <a *ngIf="selectedUser.userID == currentUser.userID" (click)="goToEdit(currentUser)" class="btn btn-xs btn-success mb-2">Edit profile</a>
                 </div>
-                <div class="profile-info">
-                    <mat-icon class="text-danger">highlight_off</mat-icon> Lost: {{ user.timesLost}}
-                </div>
-                <hr>
-                <div class="profile-header-info">
-                    <div class="font-weight-bold">
-                        Teams:
-                    </div>
-                </div>
-                <hr>
-                <ul>
-                    <li *ngFor="let team of userTeams">{{team.teamName}} - {{team.companyName}}</li>
-                </ul>
             </div>
+    
+            <ul class="profile-header-tab nav nav-tabs">
+                <li class="nav-item"><a (click)="changeTab('profile-personal-statistics', 'link-personal-statistics')" style="cursor: pointer;" class="nav-link active show" data-toggle="tab" id="link-personal-statistics">PERSONAL STATISTICS</a></li>
+                <li class="nav-item"><a (click)="changeTab('profile-matches', 'link-matches')" style="cursor: pointer;" class="nav-link" data-toggle="tab" id="link-matches">MATCHES</a></li>
+                <li class="nav-item"><a (click)="changeTab('profile-competitions', 'link-competitions')" style="cursor: pointer;" class="nav-link" data-toggle="tab" id="link-competitions">COMPETITIONS</a></li>
+                <li class="nav-item"><a (click)="changeTab('profile-tournaments', 'link-tournaments')" style="cursor: pointer;" class="nav-link" data-toggle="tab" id="link-tournaments">TOURNAMENTS</a></li>
+            </ul>
         </div>
-        <div class="col-md-8 mb-3">
-            <div class="profile-content border shadow bg-white rounded" *ngIf="statisticsLoaded">
-                <h2>Personal statistics</h2>
-                <hr>
-                <div class="row mx-auto">
-                    <div class="container row p-5">
-                        <div class="progress mb-3" [attr.data-percentage]="wonPercent">
-                            <span class="progress-left">
-                                <span class="progress-bar border-success"></span>
-                            </span>
-                            <span class="progress-right">
-                                <span class="progress-bar border-success"></span>
-                            </span>
-                            <div class="progress-value">
-                                <div>
-                                    {{ user.timesWon }}<br>
-                                    <span>Won</span>
+    
+        <div class="profile-container">
+            <div class="row row-space-20">
+                <div class="col-md-9">
+                    <div class="tab-content p-0">
+                        <div class="tab-pane fade active show" id="profile-personal-statistics">
+                            <div class="m-b-10"><b>Personal Statistics</b></div>
+                            <div class="row mx-auto">
+                                <div class="container row p-5">
+                                    <div class="progress mb-3" [attr.data-percentage]="wonPercent">
+                                        <span class="progress-left">
+                                            <span class="progress-bar border-success"></span>
+                                        </span>
+                                        <span class="progress-right">
+                                            <span class="progress-bar border-success"></span>
+                                        </span>
+                                        <div class="progress-value">
+                                            <div>
+                                                {{ selectedUser.timesWon }}<br>
+                                                <span>Won</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="progress mb-3" [attr.data-percentage]="totalPercent">
+                                        <span class="progress-left">
+                                            <span class="progress-bar border-primary"></span>
+                                        </span>
+                                        <span class="progress-right">
+                                            <span class="progress-bar border-primary"></span>
+                                        </span>
+                                        <div class="progress-value">
+                                            <div>
+                                                {{ totalGames }}<br>
+                                                <span>Total</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="progress mb-3" [attr.data-percentage]="lostPercent">
+                                        <span class="progress-left">
+                                            <span class="progress-bar border-danger"></span>
+                                        </span>
+                                        <span class="progress-right">
+                                            <span class="progress-bar border-danger"></span>
+                                        </span>
+                                        <div class="progress-value">
+                                            <div>
+                                                {{ selectedUser.timesLost}}<br>
+                                                <span>Lost</span>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="progress mb-3" [attr.data-percentage]="totalPercent">
-                            <span class="progress-left">
-                                <span class="progress-bar border-primary"></span>
-                            </span>
-                            <span class="progress-right">
-                                <span class="progress-bar border-primary"></span>
-                            </span>
-                            <div class="progress-value">
-                                <div>
-                                    {{ totalGames }}<br>
-                                    <span>Total</span>
+                        <div class="tab-pane fade" id="profile-matches">
+                            <div class="m-b-10"><b>Matches ({{friendlyMatches1v1.length + friendlyMatches2v2.length}})</b></div>
+                            <br>
+                            <div class="m-b-10"><b>1v1 ({{friendlyMatches1v1.length}})</b></div>
+                            <br>
+                            <div class="row" *ngFor="let m of friendlyMatches1v1">
+                                <div class="col">{{m.date.toString().substring(0, 10)}}</div>
+                                <div class="col">{{m.player1.firstName}} {{m.player1.lastName}}</div>
+                                <div class="col text-center">
+                                    <div class="row">
+                                        <div class="col">
+                                            {{m.score1}} - {{m.score2}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col text-right">{{m.player3.firstName}} {{m.player3.lastName}}</div>
+                                <div class="col text-right">{{m.matchStatus.statusName}}</div>
+                            </div>
+                            <br>
+                            <div class="m-b-10"><b>2v2 ({{friendlyMatches2v2.length}})</b></div>
+                            <br>
+                            <div class="row" *ngFor="let m of friendlyMatches2v2">
+                                <div class="col">{{m.date.toString().substring(0, 10)}}</div>
+                                <div class="col">{{m.team1.teamName}}</div>
+                                <div class="col text-center">
+                                    <div class="row">
+                                        <div class="col">
+                                            {{m.score1}} - {{m.score2}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col text-right">{{m.team2.teamName}}</div>
+                                <div class="col text-right">{{m.matchStatus.statusName}}</div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="profile-competitions">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="card shadow">
+                                        <div class="card-header border-0">
+                                            <h3 class="mb-0 float-left">Competitions ({{competitions.length}})</h3>
+                                        </div>
+                                        <div class="table-responsive" style="overflow-y: hidden;">
+                                            <table class="table align-items-center table-flush">
+                                                <thead class="thead-light">
+                                                    <tr>
+                                                        <th scope="col">Name</th>
+                                                        <th scope="col">Status</th>
+                                                        <th scope="col"></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let c of competitions">
+                                                        <th scope="row">
+                                                            <div class="media align-items-center">
+                                                                <div class="media-body">
+                                                                    <span class="mb-0 text-sm text-truncate">{{c.name}}</span>
+                                                                </div>
+                                                            </div>
+                                                        </th>
+                                                        <td *ngIf="c.isActive">
+                                                          <span class="badge badge-dot mr-4">
+                                                            <i class="bg-success"></i> Active
+                                                          </span>
+                                                        </td>
+                                                        <td *ngIf="!c.isActive">
+                                                          <span class="badge badge-dot mr-4">
+                                                            <i class="bg-danger"></i> Inactive
+                                                          </span>
+                                                        </td>
+                                                        <td class="text-right">
+                                                            <div ngbDropdown class="dropdown" style="position:static;overflow: visible;">
+                                                                <a ngbDropdownToggle class="btn btn-sm btn-icon-only text-light"
+                                                                    role="button" aria-expanded="false">
+                                                                    <mat-icon style="color: black;">more_vert</mat-icon>
+                                                                </a>
+                                                                <div ngbDropdownMenu class="dropdown-menu dropdown-menu-left">
+                                                                    <a ngbDropdownItem class="dropdown-item" (click)="goToCompetitionDetails(c)" style="cursor: pointer;">Competition details</a>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="progress mb-3" [attr.data-percentage]="lostPercent">
-                            <span class="progress-left">
-                                <span class="progress-bar border-danger"></span>
-                            </span>
-                            <span class="progress-right">
-                                <span class="progress-bar border-danger"></span>
-                            </span>
-                            <div class="progress-value">
-                                <div>
-                                    {{ user.timesLost}}<br>
-                                    <span>Lost</span>
+                        <div class="tab-pane fade" id="profile-tournaments">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="card shadow">
+                                        <div class="card-header border-0">
+                                            <h3 class="mb-0 float-left">Tournaments ({{tournaments.length}})</h3>
+                                        </div>
+                                        <div class="table-responsive" style="overflow-y: hidden;">
+                                            <table class="table align-items-center table-flush">
+                                                <thead class="thead-light">
+                                                    <tr>
+                                                        <th scope="col">Edition</th>
+                                                        <th scope="col">Max teams</th>
+                                                        <th scope="col">Winner</th>
+                                                        <th scope="col"></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let t of tournaments">
+                                                        <th scope="row">
+                                                            <div class="media align-items-center">
+                                                                <div class="media-body">
+                                                                    <span class="mb-0 text-sm text-truncate">{{t.edition}}</span>
+                                                                </div>
+                                                            </div>
+                                                        </th>
+                                                        <td>
+                                                            {{t.match_Count}}
+                                                        </td>
+                                                        <td *ngIf="t.winner">
+                                                            {{t.winner}}
+                                                        </td>
+                                                        <td *ngIf="!t.winner">
+                                                            To be determined
+                                                        </td>
+                                                        <td class="text-right">
+                                                            <div ngbDropdown class="dropdown" style="position:static;overflow: visible;">
+                                                                <a ngbDropdownToggle class="btn btn-sm btn-icon-only text-light"
+                                                                    role="button" aria-expanded="false">
+                                                                    <mat-icon style="color: black;">more_vert</mat-icon>
+                                                                </a>
+                                                                <div ngbDropdownMenu class="dropdown-menu dropdown-menu-left">
+                                                                    <a ngbDropdownItem class="dropdown-item" (click)="goToTournamentDetails(t)" style="cursor: pointer;">Tournament details</a>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <hr>
-                <h2>Team statistics</h2>
-                <hr>
-                <!--ngfor door lopen-->
-                <div class="row text-center">
-                    <p class="col-6"><mat-icon class="text-success">check_circle_outline</mat-icon> Total wins for team '...' : ..</p>
-                    <p class="col-6"><mat-icon class="text-danger">highlight_off</mat-icon> Total loses for team '...' : ...</p>
+    
+                <div class="col-md-3 hidden-xs hidden-sm text-right">
+                    <ul class="profile-info-list" *ngIf="selectedUser != null">
+                        <li class="title">PERSONAL INFORMATION</li>
+                        <li>
+                            <div class="field">First name:</div>
+                            <div class="value">{{selectedUser.firstName}}</div>
+                        </li>
+                        <li>
+                            <div class="field">Last name:</div>
+                            <div class="value">{{selectedUser.lastName}}</div>
+                        </li>
+                        <li>
+                            <div class="field">Birthday:</div>
+                            <div class="value">{{userBirthday}}</div>
+                        </li>
+                        <li>
+                            <div class="field">Teams:</div>
+                            <div class="value" *ngFor="let team of userTeams"><a style="cursor: pointer;" (click)="goToTeamPage(team)">{{team.teamName}}</a> - {{team.companyName}}</div>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
     </div>
-</section>
-
-<section>
-    <div class="main-content">
-        <div class="mt-7">
-            <br>
-            <div class="row">
-
-                <!--Table one-->
-                <div class="col-6">
-                    <div class="card shadow">
-                        <div class="card-header border-0">
-                            <h3 class="mb-0 float-left">Competitions</h3>
-                        </div>
-                        <div class="table-responsive" style="overflow-y: hidden;">
-                            <table class="table align-items-center table-flush">
-                                <thead class="thead-light">
-                                    <tr>
-                                        <th scope="col">Name</th>
-                                        <th scope="col">Status</th>
-                                        <th scope="col"></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Test</td>
-                                        <td>Test</td>
-                                        <td></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-                <!--Table 2-->
-                <div class="col">
-                    <div class="card shadow">
-                        <div class="card-header border-0">
-                            <h3 class="mb-0 float-left">Tournaments</h3>
-                        </div>
-                        <div class="table-responsive" style="overflow-y: hidden;">
-                            <table class="table align-items-center table-flush">
-                                <thead class="thead-light">
-                                    <tr>
-                                        <th scope="col">Name</th>
-                                        <th scope="col">Status</th>
-                                        <th scope="col"></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Test</td>
-                                        <td>Test</td>
-                                        <td></td>
-                                    </tr>
-                                </tbody>
-                            </table> 
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
-</section>
-
 </div>
+<!--<h2>Team statistics</h2>
+<hr>
+<div class="row text-center">
+    <p class="col-6"><mat-icon class="text-success">check_circle_outline</mat-icon> Total wins for team '...' : ..</p>
+    <p class="col-6"><mat-icon class="text-danger">highlight_off</mat-icon> Total loses for team '...' : ...</p>
+</div>-->
