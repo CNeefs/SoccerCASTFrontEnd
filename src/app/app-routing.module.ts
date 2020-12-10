@@ -37,6 +37,8 @@ import {TableDocumentationComponent} from './documentation/table-documentation/t
 import {MatchesDocumentationComponent} from './documentation/matches-documentation/matches-documentation.component';
 import{CompetitionsDocumentationComponent} from './documentation/competitions-documentation/competitions-documentation.component';
 import {TournamentsDocumentationComponent} from './documentation/tournaments-documentation/tournaments-documentation.component';
+import { ViewTeamCreateComponent } from './view-teams/view-team-create/view-team-create.component';
+import { ViewTeamEditComponent } from './view-teams/view-team-edit/view-team-edit.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -86,6 +88,18 @@ const routes: Routes = [
             component: TeamDetailComponent,
             canActivate: [AuthGuardService],
             data: { auth: 'TEAM_VIEW' }
+          },
+          {
+            path: 'create',
+            component: ViewTeamCreateComponent,
+            canActivate: [AuthGuardService],
+            data: { auth: 'TEAM_CREATE' }
+          },
+          {
+            path: 'edit',
+            component: ViewTeamEditComponent,
+            canActivate: [AuthGuardService],
+            data: { auth: 'TEAM_EDIT' }
           }
         ]
       },
