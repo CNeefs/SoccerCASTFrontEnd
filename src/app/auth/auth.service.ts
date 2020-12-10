@@ -38,12 +38,12 @@ export class AuthService {
             //if userToken exists => decode token and make user object (behaviorSubject)
             const helper = new JwtHelperService();
             const decodedToken = helper.decodeToken(userToken);
-            //var permissions = decodedToken.permissions.split(';');
+            var permissions = decodedToken.Permissions.split(';');
+            permissions.pop();
             this._userService.getUserById(decodedToken.UserID).subscribe((user: User) => { 
-                this._authorizationService.initializePermissions(user.permissions);
                 this.user.next(user);
-                console.log(user);
             });
+            this._authorizationService.initializePermissions(permissions);
         }
         return null;
     }

@@ -18,6 +18,7 @@
                                     <th scope="col">Company name</th>
                                     <th scope="col">Location</th>
                                     <th scope="col">Captain</th>
+                                    <th scope="col">Status</th>
                                     <th scope="col"></th>
                                 </tr>
                             </thead>
@@ -39,6 +40,17 @@
                                     <td>
                                         {{t.captain.firstName}} {{t.captain.lastName}}
                                     </td>
+                                    <td>
+                                        <span class="badge badge-dot mr-4" *ngIf="t.teamStatusID==1">
+                                            <i class="bg-success"></i> {{t.teamStatus.statusName}}
+                                        </span>
+                                        <span class="badge badge-dot mr-4" *ngIf="t.teamStatusID==2">
+                                            <i class="bg-warning"></i> {{t.teamStatus.statusName}}
+                                        </span>
+                                        <span class="badge badge-dot mr-4" *ngIf="t.teamStatusID==3">
+                                            <i class="bg-danger"></i> {{t.teamStatus.statusName}}
+                                        </span>
+                                    </td>
                                     <td class="text-right">
                                         <div ngbDropdown class="dropdown" style="position:static;overflow: visible;">
                                             <a ngbDropdownToggle class="btn btn-sm btn-icon-only text-light"
@@ -46,10 +58,7 @@
                                                 <mat-icon style="color: black;">more_vert</mat-icon>
                                             </a>
                                             <div ngbDropdownMenu class="dropdown-menu dropdown-menu-left">
-                                                <a ngbDropdownItem class="dropdown-item" style="cursor: pointer;">Join
-                                                    team</a>
-                                                <a ngbDropdownItem class="dropdown-item"
-                                                    style="cursor: pointer;">Details team</a>
+                                                <a ngbDropdownItem class="dropdown-item" (click)="goToDetails(t)" style="cursor: pointer;">Team Details</a>
                                             </div>
                                         </div>
                                     </td>
