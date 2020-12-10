@@ -10,6 +10,12 @@ import { MatchService } from 'src/app/services/match.service';
 import { Match } from 'src/app/models/match.model';
 import { Competition } from 'src/app/models/competition.model';
 import { Tournament } from 'src/app/models/tournament.model';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { TeamStatus } from 'src/app/models/team-status.model';
+import { Observable } from 'rxjs';
+import { TeamStatusService } from '../../services/team-status.service';
+import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
+import { ToastService } from 'src/app/toast/services/toast.service';
 
 @Component({
   selector: 'app-team-detail',
@@ -17,7 +23,8 @@ import { Tournament } from 'src/app/models/tournament.model';
   styleUrls: ['./team-detail.component.scss', '../../styles/table_style.scss']
 })
 export class TeamDetailComponent implements OnInit {
-
+ 
+  changeStatusForm: FormGroup;
   selectedTeamID: number = 0;
   selectedTeam: Team = null;
 
@@ -29,6 +36,7 @@ export class TeamDetailComponent implements OnInit {
   competitionsIds: Number[];
   tournaments: Tournament[] = [];
   tournamentIds: Number[];
+  teamStatuses: TeamStatus[] = [];
 
   currentTab: string = "profile-users";
   currentLink: string = "link-users";
@@ -37,7 +45,40 @@ export class TeamDetailComponent implements OnInit {
 
   userTeam: UserTeam = null;
 
-  constructor(private _userTeamService: UserTeamService, private _teamService: TeamService, private _authService: AuthService, private _matchService: MatchService, private route: ActivatedRoute, private router: Router) { }
+  constructor(
+    private _userTeamService: UserTeamService, 
+    private _teamService: TeamService, 
+    private _authService: AuthService, 
+    private _matchService: MatchService, 
+    private route: ActivatedRoute, 
+    private router: Router,
+    private _modalService: NgbModal,
+    private _toastService: ToastService,
+    private _teamStatusService: TeamStatusService,
+    private fb: FormBuilder) { }
+
+  goToEdit(team: Team) {
+    this.router.navigate(['user/teams/edit'], { queryParams: { id: team.teamID }});
+  }
+
+  openChangeStatusModal(selectedTeam: Team, contentChangeStatusModal) {
+    this._modalService.open(contentChangeStatusModal)
+  }
+
+  onSubmit() {
+    const value = this.changeStatusForm.value;
+    const teamStatusID = value.teamStatusID;
+    console.log(teamStatusID);
+    this.selectedTeam.teamStatusID = +teamStatusID;
+    console.log(this.selectedTeam);
+    this._teamService.editTeam(this.selectedTeam.teamID, this.selectedTeam).subscribe();
+    this._modalService.dismissAll();
+    this._toastService.show("Team status changed", {
+      classname: 'bg-success text-light',
+      delay: 2000,
+      autohide: true
+    });
+  }
 
   goToUserPage(user: User) {
     this.router.navigate(['user/profile'], { queryParams: { id: user.userID } });
@@ -102,6 +143,9 @@ export class TeamDetailComponent implements OnInit {
         this.currentUser = user;
         this._teamService.getTeamById(this.selectedTeamID).subscribe(team => {
           this.selectedTeam = team;
+          this.changeStatusForm = this.fb.group({
+            teamStatusID: [this.selectedTeam.teamStatusID, Validators.required],
+          });
           this._userTeamService.getUsersTeamByTeamId(this.selectedTeamID).subscribe(users => {
             this.usersInTeam = users;
             this._userTeamService.userTeams(user.userID, this.selectedTeamID).subscribe(res => {
@@ -121,7 +165,10 @@ export class TeamDetailComponent implements OnInit {
                      this.tournamentIds.push(match.tournamentID);
                   }
                 });
-                this.pageLoaded = true;
+                this._teamStatusService.getTeamStatuses().subscribe((teamStatuses: TeamStatus[]) => {
+                  this.teamStatuses = teamStatuses;
+                  this.pageLoaded = true;
+                })
               });
             });
           });

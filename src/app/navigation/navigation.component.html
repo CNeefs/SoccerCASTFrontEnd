@@ -53,11 +53,11 @@
     </ul>
     <ul class="navbar-nav ml-auto" *ngIf="userLoaded">
 
-      <li class="nav-item pr-5 mr-5" *ngIf="!loggedIn">
+      <li class="nav-item pr-5" *ngIf="!loggedIn">
         <a class="nav-link" routerLink="/login" routerLinkActive="active">Login</a>
       </li>
 
-      <li ngbDropdown class="nav-item dropdown pr-5 mr-5" *ngIf="loggedIn">
+      <li ngbDropdown class="nav-item dropdown pr-5" *ngIf="loggedIn">
         <a class="nav-link dropdown-toggle" id="dropdownBasic2"
           ngbDropdownToggle>{{ currentUser.firstName | titlecase }}</a>
         <div ngbDropdownMenu aria-labelledby="dropdownBasic2" class="dropdown">
