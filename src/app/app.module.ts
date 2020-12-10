@@ -21,6 +21,7 @@ import { MyProfileModule } from './my-profile/my-profile.module';
 import { ViewTeamsModule } from './view-teams/view-teams.module';
 import { ViewRankingsModule } from './view-rankings/view-rankings.module';
 import { ToastComponent } from './toast/toast.component';
+import { DocumentationModule } from './documentation/documentation.module'
 
 @NgModule({
   declarations: [
@@ -44,8 +45,9 @@ import { ToastComponent } from './toast/toast.component';
     ManageTeamsModule,
     MyProfileModule,
     ViewTeamsModule,
-    ViewRankingsModule,
-    SharedModule
+    SharedModule,
+    DocumentationModule,
+    ViewRankingsModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

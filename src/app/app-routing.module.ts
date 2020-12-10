@@ -30,11 +30,14 @@ import { ViewTeamsComponent } from './view-teams/view-teams.component';
 import { TeamDetailComponent } from './view-teams/team-detail/team-detail.component';
 import { ViewRankingsComponent } from './view-rankings/view-rankings.component';
 
+import {DocumentationhomeComponent} from './documentation/documentationhome/documentationhome.component';
+
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full'},
   { path: 'home', component: HomeComponent},
   { path: 'login', component: AuthComponent},
   { path: 'signup', component: SignupComponent},
+  {path: 'documentation', component: DocumentationhomeComponent},
 
   {
     path: 'user',
