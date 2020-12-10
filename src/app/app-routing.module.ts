@@ -28,6 +28,7 @@ import { TeamEditComponent } from './manage-teams/team-edit/team-edit.component'
 import { MyProfileComponent } from './my-profile/my-profile.component';
 import { ViewTeamsComponent } from './view-teams/view-teams.component';
 import { TeamDetailComponent } from './view-teams/team-detail/team-detail.component';
+import { ViewRankingsComponent } from './view-rankings/view-rankings.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -70,7 +71,18 @@ const routes: Routes = [
             data: { auth: 'TEAM_VIEW' }
           }
         ]
-      }
+      },
+      {
+        path: 'rankings',
+        children: [
+          {
+            path: '',
+            component: ViewRankingsComponent,
+            canActivate: [AuthGuardService],
+            data: { auth: 'RANKING_VIEW' },
+          }
+        ]
+      },
     ]
   },
   { 
