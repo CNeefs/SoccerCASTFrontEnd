@@ -20,6 +20,7 @@ import { ManageTeamsModule } from './manage-teams/manage-teams.module';
 import { MyProfileModule } from './my-profile/my-profile.module';
 import { ViewTeamsModule } from './view-teams/view-teams.module';
 import { ToastComponent } from './toast/toast.component';
+import { DocumentationModule } from './documentation/documentation.module'
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { ToastComponent } from './toast/toast.component';
     ManageTeamsModule,
     MyProfileModule,
     ViewTeamsModule,
-    SharedModule
+    SharedModule,
+    DocumentationModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,
