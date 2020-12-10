@@ -10,7 +10,7 @@
                             <h3 class="mb-0 float-left">Individual rankings</h3>
                         </div>
                         <div class="table-responsive" style="overflow-y: hidden;">
-                            <table class="table align-items-center table-flush">
+                            <table class="table align-items-center table-flush" *ngIf="pageLoaded">
                                 <thead class="thead-light">
                                     <tr>
                                         <th scope="col">Player</th>
@@ -22,7 +22,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr *ngFor="let u of (users | async)">
+                                    <tr *ngFor="let u of (editedUsers); let i = index">
                                         <th scope="row">
                                             <div class="media align-items-center">
                                                 <div class="media-body">
@@ -31,7 +31,7 @@
                                             </div>
                                         </th>
                                         <td>
-                                            
+                                            {{u.timesWon + u.timesLost}}
                                         </td>
                                         <td>
                                             {{u.timesWon}}
@@ -40,10 +40,10 @@
                                             {{u.timesLost}}
                                         </td>
                                         <td>
-
+                                            {{u.points}}
                                         </td>
                                         <td>
-
+                                            {{i + 1}}
                                         </td>
                                     </tr>
                                 </tbody>
