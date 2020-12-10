@@ -30,15 +30,17 @@ export class MyProfileComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.userSub = this._authService.user.subscribe((user: User) => {
-      this.user = user
-      // console.log(this.user)
-      let StrUserBirtDay = user.birthDate.toString();
-      this.userBirthday = StrUserBirtDay.substr(0, 10)
-      this.calculateStatistics()
-      this.userTeamSub = this._userTeamService.getUserTeamsByUserId(user.userID).subscribe((teams: Team[]) => {
-        this.userTeams = teams;
-        this.userLoaded = true;
-      })
+      if (user) {
+        this.user = user
+        // console.log(this.user)
+        let StrUserBirtDay = user.birthDate.toString();
+        this.userBirthday = StrUserBirtDay.substr(0, 10)
+        this.calculateStatistics()
+        this.userTeamSub = this._userTeamService.getUserTeamsByUserId(user.userID).subscribe((teams: Team[]) => {
+          this.userTeams = teams;
+          this.userLoaded = true;
+        })
+      }
     });
   }
 
