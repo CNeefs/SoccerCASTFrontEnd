@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { UserTeam } from '../models/user-team.model';
 import { User } from '../models/user.model';
 import { Team } from '../models/team.model';
-import { map } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
@@ -20,6 +19,10 @@ export class UserTeamService {
 
     getUserTeamsByUserId(userID: number) {
         return this.http.get<Team[]>(this.baseUrl + 'userteam/userteams/' + userID);
+    }
+
+    userTeams(userID: number) {
+        return this.http.get<UserTeam[]>(this.baseUrl + 'userteam/' + userID);
     }
 
     getUsersTeamByTeamId(teamID: number) {
