@@ -1,5 +1,197 @@
-<div *ngIf="pageLoaded">
+<!--<div *ngIf="pageLoaded">
     <a *ngIf="selectedTeam.teamStatusID==1 && !teamIds.includes(selectedTeam.teamID)" class="dropdown-item" (click)="joinTeam(t)" style="cursor: pointer;">Join team</a>
     <a *ngIf="selectedTeam.teamStatusID==2 && !teamIds.includes(selectedTeam.teamID)" class="dropdown-item" (click)="askJoinTeam(t)" style="cursor: pointer;">Ask to join</a>
-</div>
-                                                
+</div>-->
+<div class="container" *ngIf="pageLoaded">
+    <div id="content" class="content p-0">
+        <div class="profile-header">
+            <div class="profile-header-cover"></div>
+            <div class="profile-header-content">
+                <div class="profile-header-img mb-4">
+                    <img src="https://bootdey.com/img/Content/avatar/avatar7.png" class="mb-4" alt="" />
+                </div>
+    
+                <div class="profile-header-info" *ngIf="selectedTeam != null">
+                    <h4 class="m-t-sm">{{selectedTeam.teamName}}</h4>
+                    <p class="m-b-sm">{{selectedTeam.companyName}}</p>
+                    <a *ngIf="selectedTeam.teamStatusID==1 && userTeam == null" (click)="joinTeam(selectedTeam)" class="btn btn-xs btn-success mb-2 mr-2">Join team</a>
+                    <a *ngIf="selectedTeam.teamStatusID==2 && userTeam == null" (click)="askJoinTeam(selectedTeam)" class="btn btn-xs btn-success mb-2 mr-2">Ask to join</a>
+                    <a *ngIf="userTeam != null && userTeam.userTeamStatusID == 1 && selectedTeam.captainID != currentUser.userID" (click)="leaveTeam(selectedTeam)" class="btn btn-xs btn-danger mb-2 mr-2">Leave team</a>
+                    <a *ngIf="userTeam != null && userTeam.userTeamStatusID == 2" (click)="leaveTeam(selectedTeam)" class="btn btn-xs btn-warning mb-2 mr-2">Remove request</a>
+                    <a *ngIf="selectedTeam.captainID == currentUser.userID" (click)="goToEdit(selectedTeam)" class="btn btn-xs btn-success mb-2">Edit team</a>
+                    <a *ngIf="selectedTeam.captainID == currentUser.userID" (click)="disbandTeam(selectedTeam)" class="btn btn-xs btn-danger mb-2">Disband team</a>
+                </div>
+            </div>
+    
+            <ul class="profile-header-tab nav nav-tabs">
+                <li class="nav-item"><a (click)="changeTab('profile-users', 'link-users')" style="cursor: pointer;" class="nav-link active show" data-toggle="tab" id="link-users">USERS</a></li>
+                <li class="nav-item"><a (click)="changeTab('profile-matches', 'link-matches')" style="cursor: pointer;" class="nav-link" data-toggle="tab" id="link-matches">MATCHES</a></li>
+                <li class="nav-item"><a (click)="changeTab('profile-competitions', 'link-competitions')" style="cursor: pointer;" class="nav-link" data-toggle="tab" id="link-competitions">COMPETITIONS</a></li>
+                <li class="nav-item"><a (click)="changeTab('profile-tournaments', 'link-tournaments')" style="cursor: pointer;" class="nav-link" data-toggle="tab" id="link-tournaments">TOURNAMENTS</a></li>
+            </ul>
+        </div>
+    
+        <div class="profile-container">
+            <div class="row row-space-20">
+                <div class="col-md-9">
+                    <div class="tab-content p-0">
+                        <div class="tab-pane fade active show" id="profile-users">
+                            <div class="m-b-10"><b>Users ({{usersInTeam.length}})</b></div>
+                            <ul class="friend-list clearfix">
+                                <li *ngFor="let u of usersInTeam">
+                                    <a>
+                                        <div class="friend-img"><img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="" /></div>
+                                        <div class="friend-info">
+                                            <h4>{{u.firstName}} {{u.lastName}} <span *ngIf="selectedTeam.captainID == u.userID">(Captain)</span></h4>
+                                            <p>{{u.timesWon}} wins</p>
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="tab-pane fade" id="profile-matches">
+                            <div class="m-b-10"><b>Matches ({{friendlyMatches.length}})</b></div>
+                            <br>
+                            <div class="row" *ngFor="let m of friendlyMatches">
+                                <div class="col">{{m.date.toString().substring(0, 10)}}</div>
+                                <div class="col">{{m.team1.teamName}}</div>
+                                <div class="col text-center">
+                                    <div class="row">
+                                        <div class="col">
+                                            {{m.score1}} - {{m.score2}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col text-right">{{m.team2.teamName}}</div>
+                                <div class="col text-right">{{m.matchStatus.statusName}}</div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="profile-competitions">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="card shadow">
+                                        <div class="card-header border-0">
+                                            <h3 class="mb-0 float-left">Competitions ({{competitions.length}})</h3>
+                                        </div>
+                                        <div class="table-responsive" style="overflow-y: hidden;">
+                                            <table class="table align-items-center table-flush">
+                                                <thead class="thead-light">
+                                                    <tr>
+                                                        <th scope="col">Name</th>
+                                                        <th scope="col">Status</th>
+                                                        <th scope="col"></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let c of competitions">
+                                                        <th scope="row">
+                                                            <div class="media align-items-center">
+                                                                <div class="media-body">
+                                                                    <span class="mb-0 text-sm text-truncate">{{c.name}}</span>
+                                                                </div>
+                                                            </div>
+                                                        </th>
+                                                        <td *ngIf="c.isActive">
+                                                          <span class="badge badge-dot mr-4">
+                                                            <i class="bg-success"></i> Active
+                                                          </span>
+                                                        </td>
+                                                        <td *ngIf="!c.isActive">
+                                                          <span class="badge badge-dot mr-4">
+                                                            <i class="bg-danger"></i> Inactive
+                                                          </span>
+                                                        </td>
+                                                        <td class="text-right">
+                                                            <div ngbDropdown class="dropdown" style="position:static;overflow: visible;">
+                                                                <a ngbDropdownToggle class="btn btn-sm btn-icon-only text-light"
+                                                                    role="button" aria-expanded="false">
+                                                                    <mat-icon style="color: black;">more_vert</mat-icon>
+                                                                </a>
+                                                                <div ngbDropdownMenu class="dropdown-menu dropdown-menu-left">
+                                                                    <a ngbDropdownItem class="dropdown-item" (click)="goToCompetitionDetails(c)" style="cursor: pointer;">Competition details</a>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="profile-tournaments">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="card shadow">
+                                        <div class="card-header border-0">
+                                            <h3 class="mb-0 float-left">Tournaments ({{tournaments.length}})</h3>
+                                        </div>
+                                        <div class="table-responsive" style="overflow-y: hidden;">
+                                            <table class="table align-items-center table-flush">
+                                                <thead class="thead-light">
+                                                    <tr>
+                                                        <th scope="col">Edition</th>
+                                                        <th scope="col">Max teams</th>
+                                                        <th scope="col">Winner</th>
+                                                        <th scope="col"></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let t of tournaments">
+                                                        <th scope="row">
+                                                            <div class="media align-items-center">
+                                                                <div class="media-body">
+                                                                    <span class="mb-0 text-sm text-truncate">{{t.edition}}</span>
+                                                                </div>
+                                                            </div>
+                                                        </th>
+                                                        <td>
+                                                            {{t.match_Count}}
+                                                        </td>
+                                                        <td>
+                                                            {{t.winner}}
+                                                        </td>
+                                                        <td class="text-right">
+                                                            <div ngbDropdown class="dropdown" style="position:static;overflow: visible;">
+                                                                <a ngbDropdownToggle class="btn btn-sm btn-icon-only text-light"
+                                                                    role="button" aria-expanded="false">
+                                                                    <mat-icon style="color: black;">more_vert</mat-icon>
+                                                                </a>
+                                                                <div ngbDropdownMenu class="dropdown-menu dropdown-menu-left">
+                                                                    <a ngbDropdownItem class="dropdown-item" (click)="goToTournamentDetails(t)" style="cursor: pointer;">Tournament details</a>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="col-md-3 hidden-xs hidden-sm text-right">
+                    <ul class="profile-info-list" *ngIf="selectedTeam != null">
+                        <li class="title">TEAM INFORMATION</li>
+                        <li>
+                            <div class="field">Team name:</div>
+                            <div class="value">{{selectedTeam.teamName}}</div>
+                        </li>
+                        <li>
+                            <div class="field">Company name:</div>
+                            <div class="value">{{selectedTeam.companyName}}</div>
+                        </li>
+                        <li>
+                            <div class="field">Location:</div>
+                            <div class="value">{{selectedTeam.location}}</div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>                     
