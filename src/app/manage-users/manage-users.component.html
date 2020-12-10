@@ -48,16 +48,13 @@
                                     </td>
                                     <td class="text-right">
                                         <div ngbDropdown class="dropdown" style="position:static;overflow: visible;">
-                                            <a ngbDropdownToggle class="btn btn-sm btn-icon-only text-light"
-                                                role="button" aria-expanded="false">
+                                            <a ngbDropdownToggle class="btn btn-sm btn-icon-only text-light" role="button" aria-expanded="false">
                                                 <mat-icon style="color: black;">more_vert</mat-icon>
                                             </a>
                                             <div ngbDropdownMenu class="dropdown-menu dropdown-menu-left">
-                                                <a ngbDropdownItem class="dropdown-item" (click)="goToEdit(u)"
-                                                    style="cursor: pointer;">Edit user</a>
-                                                <a ngbDropdownItem class="dropdown-item"
-                                                    (click)="openDeleteUser(u, contentDeleteModel)"
-                                                    style="cursor: pointer;">Delete user</a>
+                                                <a ngbDropdownItem class="dropdown-item" (click)="goToEdit(u)" style="cursor: pointer;">Edit user</a>
+                                                <a ngbDropdownItem class="dropdown-item" (click)="openDeleteUser(u, contentDeleteModel)" style="cursor: pointer;">Delete user</a>
+                                                <a ngbDropdownItem class="dropdown-item" (click)="goToDetails(u)" style="cursor: pointer;">Profile Page</a>
                                             </div>
                                         </div>
                                     </td>

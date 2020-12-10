@@ -24,7 +24,7 @@ export class TableEditComponent implements OnInit {
   onSubmit() {
     this.selectedTable.tableName = this.editForm.controls['tableName'].value;
     this.selectedTable.companyName = this.editForm.controls['companyName'].value;
-    this.selectedTable.adres = this.editForm.controls['adres'].value;
+    this.selectedTable.location = this.editForm.controls['location'].value;
     this.selectedTable.contactUserID = Number(this.editForm.controls['contactUserID'].value);
     this._tableService.editTable(this.selectedTableID, this.selectedTable).subscribe();
     this.router.navigate(['admin/tables']);
@@ -41,8 +41,8 @@ export class TableEditComponent implements OnInit {
       this.selectedTable = res;
       this.editForm = this.fb.group({
         tableName: [res.tableName, Validators.required],
-        companyName: [res.companyName, Validators.required],
-        adres: [res.adres, Validators.required],
+        companyName: [res.companyName],
+        location: [res.location, Validators.required],
         contactUserID: [res.contactUserID, Validators.required]
       });
     }, error => {

@@ -32,6 +32,10 @@ export class ManageUsersComponent implements OnInit, OnDestroy {
     private toastService: ToastService,
     private _authService: AuthService) { }
 
+  goToDetails(user: User) {
+    this.router.navigate(['user/profile'], { queryParams: { id: user.userID }});
+  }
+
   goToCreate() {
     this.router.navigate(['admin/users/create']);
   }

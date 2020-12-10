@@ -31,8 +31,11 @@
                   <td>
                       {{t.match_Count}}
                   </td>
-                  <td>
+                  <td *ngIf="t.winner">
                       {{t.winner}}
+                  </td>
+                  <td *ngIf="!t.winner">
+                      To be determined
                   </td>
                   <td class="text-right">
                     <div ngbDropdown class="dropdown" style="position:static;overflow: visible;">

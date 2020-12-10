@@ -22,7 +22,7 @@ export class TableCreateComponent implements OnInit {
 
   onSubmit() {
     var table = new Table(0, this.createForm.controls['tableName'].value, this.createForm.controls['companyName'].value,
-      this.createForm.controls['adres'].value, Number(this.createForm.controls['contactUserID'].value), null);
+      this.createForm.controls['location'].value, Number(this.createForm.controls['contactUserID'].value), null);
     this._tableService.addTable(table).subscribe(event => {
       if(event.type === HttpEventType.Response) {
         this.router.navigate(['admin/tables']);
@@ -34,8 +34,8 @@ export class TableCreateComponent implements OnInit {
     this.users = this._userService.getUsers();
     this.createForm = this.fb.group({
       tableName: ['', Validators.required],
-      companyName: ['', Validators.required],
-      adres: ['', Validators.required],
+      companyName: [''],
+      location: ['', Validators.required],
       contactUserID: ['', Validators.required]
     });
   }
