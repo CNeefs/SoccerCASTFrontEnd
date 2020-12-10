@@ -29,15 +29,22 @@ export class MyProfileComponent implements OnInit, OnDestroy {
   lostPercent: number;
   totalPercent: number;
 
+  filename = '';
+
+  imageSource = '';
+
   constructor(private _authService: AuthService, private _userTeamService: UserTeamService, private _userService: UserService) { }
 
   ngOnInit(): void {
     this.userIdSub = this._authService.user.subscribe((user: User) => {
       if (user) {
-        this.userId = user.userID
-        // console.log(this.user)
+        this.userId = user.userID;
+        
+        //console.log(this.user)
         this.userSub = this._userService.getUserById(this.userId).subscribe((user: User) => {
           this.user = user
+          console.log(this.user.imagePath)
+          this.imageSource = user.imagePath;
           let StrUserBirtDay = user.birthDate.toString();
           this.userBirthday = StrUserBirtDay.substr(0, 10)
           this.calculateStatistics()
@@ -72,4 +79,22 @@ export class MyProfileComponent implements OnInit, OnDestroy {
     }
   }
 
+  setFilename(files) {
+    if (files[0]) {
+      this.filename = files[0].name;
+    }
+  }
+
+  save(files) {
+    const formData = new FormData();
+
+    if (files[0]) {
+      formData.append(files[0].name, files[0]);
+    }
+
+    this._userService
+      .upload(formData, this.userId)
+      .subscribe(({path}) => (this.imageSource = path));
+      console.log(this.imageSource)
+  }
 }
