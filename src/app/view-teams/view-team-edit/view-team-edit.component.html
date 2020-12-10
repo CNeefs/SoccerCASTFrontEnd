@@ -1,1 +1,156 @@
-<p>view-team-edit works!</p>
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+<br>
+<div class="container shadow-lg p-3 mb-5 bg-white rounded">
+    <form *ngIf="selectedTeam" [formGroup]="editForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label for="tableName">Name</label>
+            <input type="text" class="form-control" id="teamName" placeholder="Name" formControlName="teamName">
+            <small class="pl-1" *ngIf="!editForm.get('teamName').valid && editForm.get('teamName').touched">This team name is invalid!</small>
+        </div>
+        <div class="form-group">
+            <label for="companyName">Company name</label>
+            <input type="text" class="form-control" id="companyName" placeholder="Company Name" formControlName="companyName">
+            <small class="pl-1" *ngIf="!editForm.get('companyName').valid && editForm.get('companyName').touched">This company name is invalid!</small>
+        </div>
+        <div class="form-group">
+          <label for="location">Location</label>
+          <input type="text" class="form-control" id="location" placeholder="Location" formControlName="location">
+          <small class="pl-1" *ngIf="!editForm.get('location').valid && editForm.get('location').touched">This location is invalid!</small>
+        </div>
+        <button type="submit" class="btn btn-primary" [disabled]="!editForm.valid">Submit</button>
+    </form>
+</div>
+<div class="main-content">
+    <div class="container mt-7">
+        <br>
+        <div class="row">
+        <div class="col">
+          <div class="card shadow">
+            <div class="card-header border-0">
+                <h3 class="mb-0 float-left">Users in team</h3>
+            </div>
+            <div class="table-responsive" style="overflow-y: hidden;">
+              <table class="table align-items-center table-flush">
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col"></th>
+                  </tr>
+                </thead>
+                <tbody *ngIf="pageLoaded">
+                  <tr *ngFor="let u of (usersTeam | async)">
+                    <th scope="row">
+                      <div class="media align-items-center">
+                        <div class="media-body">
+                          <span class="mb-0 text-sm text-truncate">{{u.firstName}} {{u.lastName}}</span>
+                        </div>
+                      </div>
+                    </th>
+                    <td class="text-right">
+                      <div ngbDropdown class="dropdown" style="position:static;overflow: visible;" *ngIf="u.userID != selectedTeam.captainID">
+                        <a ngbDropdownToggle class="btn btn-sm btn-icon-only text-light" role="button" aria-expanded="false">
+                          <mat-icon style="color: black;">more_vert</mat-icon>
+                        </a>
+                        <div ngbDropdownMenu class="dropdown-menu dropdown-menu-left">
+                            <a ngbDropdownItem class="dropdown-item" (click)="promoteToCaptain(u)" style="cursor: pointer;">Promote to captain</a>
+                            <a ngbDropdownItem class="dropdown-item" (click)="openRemoveFromTeam(u, contentDeleteModel)" style="cursor: pointer;">Remove from team</a>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <div *ngIf="!pageLoaded" class="mb-3 mt-3">
+                <app-loading-spinner></app-loading-spinner>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="main-content">
+    <div class="container mt-7">
+        <br>
+        <div class="row">
+        <div class="col">
+          <div class="card shadow">
+            <div class="card-header border-0">
+                <h3 class="mb-0 float-left">Review users</h3>
+            </div>
+            <div class="table-responsive" style="overflow-y: hidden;">
+              <table class="table align-items-center table-flush">
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let u of (usersReview | async)">
+                    <th scope="row">
+                      <div class="media align-items-center">
+                        <div class="media-body">
+                          <span class="mb-0 text-sm text-truncate">{{u.firstName}} {{u.lastName}}</span>
+                        </div>
+                      </div>
+                    </th>
+                    <td class="text-right">
+                      <div ngbDropdown class="dropdown" style="position:static;overflow: visible;">
+                        <a ngbDropdownToggle class="btn btn-sm btn-icon-only text-light" role="button" aria-expanded="false">
+                          <mat-icon style="color: black;">more_vert</mat-icon>
+                        </a>
+                        <div ngbDropdownMenu class="dropdown-menu dropdown-menu-left">
+                            <a ngbDropdownItem class="dropdown-item" (click)="approveUser(u)" style="cursor: pointer;">Approve</a>
+                            <a ngbDropdownItem class="dropdown-item" (click)="declineUser(u)" style="cursor: pointer;">Decline</a>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <div *ngIf="!pageLoaded" class="mb-3 mt-3">
+                <app-loading-spinner></app-loading-spinner>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Model -->
+<ng-template #contentDeleteModel let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Delete Table</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <p>You are about to remove <span class="font-weight-bold">'{{currentUser.firstName}} {{currentUser.lastName}}'</span> from this team, are you sure?</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-outline-primary" (click)="modal.dismiss()">Cancel</button>
+        <button type="button" class="btn btn-danger white" (click)="removeFromTeam(currentUser)">Remove</button>
+    </div>
+  </ng-template>
+<!--<div *ngIf="selectedTeam" class="container shadow-lg p-3 mb-5 bg-white rounded">
+    <div *ngFor="let u of (usersTeam | async)" class="card p-2 m-3">
+        <div class="row">
+            <div class="col m-auto">{{ u.firstName }} {{u.lastName}}</div>
+            <div class="col"><button class="btn btn-danger float-right" (click)="removeUserFromTeam(u)">Remove</button></div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="selectedTeam" class="container shadow-lg p-3 mb-5 bg-white rounded">
+    array users moet array van users die request hebben gedaan worden
+    <div *ngFor="let u of (users | async)" class="card p-2 m-3">
+        <div class="row">
+            <div class="col m-auto">{{ u.firstName }} {{u.lastName}}</div>
+            <div class="col"><button class="btn btn-success float-right" (click)="addUserToTeam(u)">Add user to team</button></div>
+        </div>
+    </div>
+</div>-->
+
