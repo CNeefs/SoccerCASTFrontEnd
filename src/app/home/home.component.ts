@@ -15,6 +15,8 @@ export class HomeComponent implements OnInit {
 
   userSub: Subscription;
 
+  currentYear: number = new Date().getFullYear();
+
   constructor(private router: Router, private _authService: AuthService) { }
 
   scroll(el: HTMLElement) {
