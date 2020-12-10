@@ -31,4 +31,12 @@ export class TeamService {
     editTeam(id: number, team: Team) {
       return this.http.put<Team>(this.baseUrl + "team/" + id, team);
     }
+
+    joinTeam(id: number, team: Team) {
+        return this.http.post<Team>(this.baseUrl + "team/join/" + id, team);
+    }
+
+    joinReviewTeam(id: number, team: Team) {
+        return this.http.post<Team>(this.baseUrl + "team/join/review/" + id, team);
+    }
 }
