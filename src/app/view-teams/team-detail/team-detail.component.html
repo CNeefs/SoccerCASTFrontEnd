@@ -20,6 +20,7 @@
                     <a *ngIf="userTeam != null && userTeam.userTeamStatusID == 2" (click)="leaveTeam(selectedTeam)" class="btn btn-xs btn-warning mb-2 mr-2">Remove request</a>
                     <a *ngIf="selectedTeam.captainID == currentUser.userID" (click)="goToEdit(selectedTeam)" class="btn btn-xs btn-success mb-2">Edit team</a>
                     <a *ngIf="selectedTeam.captainID == currentUser.userID" (click)="disbandTeam(selectedTeam)" class="btn btn-xs btn-danger mb-2">Disband team</a>
+                    <a *ngIf="selectedTeam.captainID == currentUser.userID" (click)="openChangeStatusModal(selectedTeam, contentChangeStatusModal)" class="btn btn-xs btn-success mb-2 float-right">Change team status</a>
                 </div>
             </div>
     
@@ -194,4 +195,25 @@
             </div>
         </div>
     </div>
-    </div>                     
+</div>
+
+<!-- Modal -->
+<ng-template #contentChangeStatusModal let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Change status</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="changeStatusForm" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+                <label for="teamStatusID">Team status</label>
+                <select class="form-control" formControlName="teamStatusID" id="teamStatusID">
+                  <option *ngFor="let teamStatus of teamStatuses" [value]="teamStatus.teamStatusID">{{teamStatus.statusName}}</option>
+                </select>
+              </div>
+            <button [disabled]="changeStatusForm.invalid && changeStatusForm.touched" class="btn btn-primary" type="submit">Change status</button>
+        </form>
+    </div>
+</ng-template>
