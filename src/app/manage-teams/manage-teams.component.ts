@@ -27,12 +27,11 @@ export class ManageTeamsComponent implements OnInit, OnDestroy {
 
   pageLoaded: boolean = false;
 
-  constructor(
-    private router: Router,
-    private _modalService: NgbModal,
-    private _teamService: TeamService,
-    private _userTeamService: UserTeamService
-  ) { }
+  constructor(private router: Router, private _modalService: NgbModal, private _teamService: TeamService, private _userTeamService: UserTeamService) { }
+
+  goToDetails(team: Team) {
+    this.router.navigate(['user/teams/detail'], { queryParams: { id: team.teamID }});
+  }
 
   goToCreate() {
     this.router.navigate(['admin/teams/create']);
