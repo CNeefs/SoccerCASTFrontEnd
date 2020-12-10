@@ -28,6 +28,7 @@ import { TeamEditComponent } from './manage-teams/team-edit/team-edit.component'
 import { MyProfileComponent } from './my-profile/my-profile.component';
 import { ViewTeamsComponent } from './view-teams/view-teams.component';
 import { TeamDetailComponent } from './view-teams/team-detail/team-detail.component';
+import { ViewRankingsComponent } from './view-rankings/view-rankings.component';
 
 import {DocumentationhomeComponent} from './documentation/documentationhome/documentationhome.component';
 
@@ -73,7 +74,18 @@ const routes: Routes = [
             data: { auth: 'TEAM_VIEW' }
           }
         ]
-      }
+      },
+      {
+        path: 'rankings',
+        children: [
+          {
+            path: '',
+            component: ViewRankingsComponent,
+            canActivate: [AuthGuardService],
+            data: { auth: 'RANKING_VIEW' },
+          }
+        ]
+      },
     ]
   },
   { 
@@ -192,7 +204,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { useHash: true })],
+  imports: [RouterModule.forRoot(routes, { useHash: true, anchorScrolling: 'enabled' })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

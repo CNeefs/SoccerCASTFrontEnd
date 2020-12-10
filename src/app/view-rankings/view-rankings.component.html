@@ -1,0 +1,61 @@
+<div class="container pt-4">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+    <div class="main-content">
+        <div class="container mt-7">
+            <br>
+            <div class="row">
+                <div class="col">
+                    <div class="card shadow">
+                        <div class="card-header border-0">
+                            <h3 class="mb-0 float-left">Individual rankings</h3>
+                        </div>
+                        <div class="table-responsive" style="overflow-y: hidden;">
+                            <table class="table align-items-center table-flush" *ngIf="pageLoaded">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th scope="col">Player</th>
+                                        <th scope="col">Total</th>
+                                        <th scope="col">Won</th>
+                                        <th scope="col">Lost</th>
+                                        <th scope="col">Points</th>
+                                        <th scope="col">Ranking</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let u of (editedUsers); let i = index">
+                                        <th scope="row">
+                                            <div class="media align-items-center">
+                                                <div class="media-body">
+                                                    <span class="mb-0 text-sm text-truncate">{{u.firstName}} {{u.lastName}}</span>
+                                                </div>
+                                            </div>
+                                        </th>
+                                        <td>
+                                            {{u.timesWon + u.timesLost}}
+                                        </td>
+                                        <td>
+                                            {{u.timesWon}}
+                                        </td>
+                                        <td>
+                                            {{u.timesLost}}
+                                        </td>
+                                        <td>
+                                            {{u.points}}
+                                        </td>
+                                        <td>
+                                            {{i + 1}}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div *ngIf="!pageLoaded" class="mb-3 mt-3">
+                                <app-loading-spinner></app-loading-spinner>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

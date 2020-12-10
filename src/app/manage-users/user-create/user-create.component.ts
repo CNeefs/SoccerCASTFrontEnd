@@ -2,6 +2,7 @@ import { HttpEventType } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Role } from 'src/app/models/role.model';
@@ -20,6 +21,9 @@ export class UserCreateComponent implements OnInit {
   roles: Observable<Role[]>
   roleList = [];
   selectedItems = [];
+  currentDate: Date = new Date();
+  minDate: NgbDateStruct;
+  maxDate: NgbDateStruct;
 
   roleSettings = { dataIdProperty: "idValue", dataNameProperty: "nameValue", headerText: "Roles", noneSelectedBtnText: "No roles selected", btnWidth: "200px", 
     showDeselectAllBtn: true, showSelectAllBtn: true, deselectAllBtnText: 'Deselect', selectAllBtnText: 'Select', btnClasses: 'btn btn-primary btn-sm dropdown-toggle', };
@@ -56,6 +60,12 @@ export class UserCreateComponent implements OnInit {
       return role;
     }))).subscribe();
 
+    let minDateYear = this.currentDate.getFullYear() - 90;
+    let maxDateYear = this.currentDate.getFullYear() - 18;
+
+    this.minDate = {year: minDateYear, month: 1, day: 1};
+    this.maxDate = {year: maxDateYear, month: 12, day: 31};
+
     this.createForm = this.fb.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
@@ -67,3 +77,4 @@ export class UserCreateComponent implements OnInit {
   }
 
 }
+ 

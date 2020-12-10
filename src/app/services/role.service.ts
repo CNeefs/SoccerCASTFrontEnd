@@ -18,4 +18,8 @@ export class RoleService {
     getRoles() {
         return this.http.get<Role[]>(this.baseUrl + "Role");
     }
+
+    getRoleByRoleId(roleID: number) {
+        return this.http.get<Role>(this.baseUrl + "Role/" + roleID);
+    }
 }

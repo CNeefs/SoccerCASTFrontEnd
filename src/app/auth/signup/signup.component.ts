@@ -7,6 +7,7 @@ import { User } from '../../models/user.model';
 
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { Role } from 'src/app/models/role.model';
+import { RoleService } from 'src/app/services/role.service';
 
 @Component({
   selector: 'app-signup',
@@ -15,12 +16,26 @@ import { Role } from 'src/app/models/role.model';
 })
 export class SignupComponent implements OnInit {
   model: NgbDateStruct;
+  minDate: NgbDateStruct;
+  maxDate: NgbDateStruct;
+  currentDate: Date = new Date();
+  userRole: Role;
 
   userSignupSub: Subscription;
+  getUserRoleSub: Subscription;
 
-  constructor(private authService: AuthService) { }
+  constructor(
+    private authService: AuthService,
+    private _roleService: RoleService) { }
 
   ngOnInit(): void {
+    let minDateYear = this.currentDate.getFullYear() - 90;
+    let maxDateYear = this.currentDate.getFullYear() - 18;
+    this.minDate = {year: minDateYear, month: 1, day: 1};
+    this.maxDate = {year: maxDateYear, month: 12, day: 31};
+    this.getUserRoleSub = this._roleService.getRoleByRoleId(1).subscribe((role: Role) => {
+      this.userRole = role;
+    });
   }
 
   onSubmit(signupForm: NgModel) {
@@ -38,7 +53,7 @@ export class SignupComponent implements OnInit {
     const convertedBirthdate = new Date(year, month-1, day+1, 0, 0, 0, 0)
     // const convertedBirthdate: string = year+'-'+month+'-'+day+'T00:00:00'
 
-    const user = new User(0, value.firstname, value.lastname, value.email, value.password, null, convertedBirthdate, 0, 0, null, null)
+    const user = new User(0, value.firstname, value.lastname, value.email, value.password, null, convertedBirthdate, 0, 0, [this.userRole], null)
     console.log(user);
     //Unsubscribe nodig?
     this.userSignupSub = this.authService.signup(user).subscribe();

@@ -21,8 +21,8 @@ export class UserTeamService {
         return this.http.get<Team[]>(this.baseUrl + 'userteam/userteams/' + userID);
     }
 
-    userTeams(userID: number) {
-        return this.http.get<UserTeam[]>(this.baseUrl + 'userteam/' + userID);
+    userTeams(userID: number, teamID: number) {
+        return this.http.get<UserTeam>(this.baseUrl + 'userteam/' + userID + "/" + teamID);
     }
 
     getUsersTeamByTeamId(teamID: number) {
@@ -47,5 +47,9 @@ export class UserTeamService {
 
     editUserTeam(id: number, userTeam: UserTeam) {
       return this.http.put<UserTeam>(this.baseUrl + "userteam/" + id, userTeam);
+    }
+
+    leaveTeam(id: number) {
+        return this.http.delete<UserTeam>(this.baseUrl + "userteam/" + id);
     }
 }
