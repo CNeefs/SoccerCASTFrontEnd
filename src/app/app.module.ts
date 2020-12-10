@@ -19,6 +19,7 @@ import { NavigationModule } from './navigation/navigation.module';
 import { ManageTeamsModule } from './manage-teams/manage-teams.module';
 import { MyProfileModule } from './my-profile/my-profile.module';
 import { ViewTeamsModule } from './view-teams/view-teams.module';
+import { ViewRankingsModule } from './view-rankings/view-rankings.module';
 import { ToastComponent } from './toast/toast.component';
 
 @NgModule({
@@ -43,6 +44,7 @@ import { ToastComponent } from './toast/toast.component';
     ManageTeamsModule,
     MyProfileModule,
     ViewTeamsModule,
+    ViewRankingsModule,
     SharedModule
   ],
   providers: [{
