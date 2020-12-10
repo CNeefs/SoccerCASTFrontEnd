@@ -1,0 +1,5 @@
+<div *ngIf="pageLoaded">
+    <a *ngIf="selectedTeam.teamStatusID==1 && !teamIds.includes(selectedTeam.teamID)" class="dropdown-item" (click)="joinTeam(t)" style="cursor: pointer;">Join team</a>
+    <a *ngIf="selectedTeam.teamStatusID==2 && !teamIds.includes(selectedTeam.teamID)" class="dropdown-item" (click)="askJoinTeam(t)" style="cursor: pointer;">Ask to join</a>
+</div>
+                                                
