@@ -1,7 +1,3 @@
-<!--<div *ngIf="pageLoaded">
-    <a *ngIf="selectedTeam.teamStatusID==1 && !teamIds.includes(selectedTeam.teamID)" class="dropdown-item" (click)="joinTeam(t)" style="cursor: pointer;">Join team</a>
-    <a *ngIf="selectedTeam.teamStatusID==2 && !teamIds.includes(selectedTeam.teamID)" class="dropdown-item" (click)="askJoinTeam(t)" style="cursor: pointer;">Ask to join</a>
-</div>-->
 <div class="container" *ngIf="pageLoaded">
     <div id="content" class="content p-0">
         <div class="profile-header">
@@ -42,7 +38,7 @@
                                     <a>
                                         <div class="friend-img"><img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="" /></div>
                                         <div class="friend-info">
-                                            <h4>{{u.firstName}} {{u.lastName}} <span *ngIf="selectedTeam.captainID == u.userID">(Captain)</span></h4>
+                                            <h4><a style="cursor: pointer;" (click)="goToUserPage(u)">{{u.firstName}} {{u.lastName}}<span *ngIf="selectedTeam.captainID == u.userID"> (Captain)</span></a></h4>
                                             <p>{{u.timesWon}} wins</p>
                                         </div>
                                     </a>
@@ -149,8 +145,11 @@
                                                         <td>
                                                             {{t.match_Count}}
                                                         </td>
-                                                        <td>
+                                                        <td *ngIf="t.winner">
                                                             {{t.winner}}
+                                                        </td>
+                                                        <td *ngIf="!t.winner">
+                                                            To be determined
                                                         </td>
                                                         <td class="text-right">
                                                             <div ngbDropdown class="dropdown" style="position:static;overflow: visible;">

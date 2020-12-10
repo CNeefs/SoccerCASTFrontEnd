@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
 import { User } from '../models/user.model';
@@ -18,7 +19,7 @@ export class NavigationComponent implements OnInit, OnDestroy {
 
   userSub: Subscription;
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
     this.userSub = this.authService.user.subscribe((user: User) => {
@@ -26,6 +27,10 @@ export class NavigationComponent implements OnInit, OnDestroy {
       this.currentUser = user;
       this.userLoaded = true;
     });
+  }
+
+  goToProfile() {
+    this.router.navigate(['user/profile'], { queryParams: { id: this.currentUser.userID } });
   }
 
   onLogout() {
