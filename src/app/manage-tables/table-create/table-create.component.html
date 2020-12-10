@@ -7,9 +7,8 @@
             <small class="pl-1" *ngIf="!createForm.get('tableName').valid && createForm.get('tableName').touched">This table name is invalid!</small>
         </div>
         <div class="form-group">
-            <label for="companyName">Company name</label>
+            <label for="companyName">Company name (Optional)</label>
             <input type="text" class="form-control" id="companyName" placeholder="Company Name" formControlName="companyName">
-            <small class="pl-1" *ngIf="!createForm.get('companyName').valid && createForm.get('companyName').touched">This company name is invalid!</small>
         </div>
         <div class="form-group">
           <label for="location">Location</label>

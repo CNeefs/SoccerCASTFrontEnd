@@ -41,7 +41,7 @@ export class TableEditComponent implements OnInit {
       this.selectedTable = res;
       this.editForm = this.fb.group({
         tableName: [res.tableName, Validators.required],
-        companyName: [res.companyName, Validators.required],
+        companyName: [res.companyName],
         location: [res.location, Validators.required],
         contactUserID: [res.contactUserID, Validators.required]
       });

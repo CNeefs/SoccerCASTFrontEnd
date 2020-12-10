@@ -34,7 +34,7 @@ export class TableCreateComponent implements OnInit {
     this.users = this._userService.getUsers();
     this.createForm = this.fb.group({
       tableName: ['', Validators.required],
-      companyName: ['', Validators.required],
+      companyName: [''],
       location: ['', Validators.required],
       contactUserID: ['', Validators.required]
     });
