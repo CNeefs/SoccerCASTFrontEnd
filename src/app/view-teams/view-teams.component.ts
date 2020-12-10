@@ -29,14 +29,6 @@ export class ViewTeamsComponent implements OnInit {
     this.router.navigate(['user/teams/detail'], { queryParams: { id: team.teamID }});
   }
 
-  joinTeam(team: Team) {
-    this._teamService.joinTeam(this.currentUser.userID, team).subscribe();
-  }
-
-  askJoinTeam(team: Team) {
-    this._teamService.joinReviewTeam(this.currentUser.userID, team).subscribe();
-  }
-
   ngOnInit(): void {
     this._authService.user.subscribe((user: User) => {
       this.currentUser = user;
