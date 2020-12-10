@@ -19,10 +19,12 @@ import { NavigationModule } from './navigation/navigation.module';
 import { ManageTeamsModule } from './manage-teams/manage-teams.module';
 import { MyProfileModule } from './my-profile/my-profile.module';
 import { ViewTeamsModule } from './view-teams/view-teams.module';
+import { ToastComponent } from './toast/toast.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    ToastComponent,
     ErrorPageComponent
   ],
   imports: [
