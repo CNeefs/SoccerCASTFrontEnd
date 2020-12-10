@@ -31,13 +31,27 @@ import { TeamDetailComponent } from './view-teams/team-detail/team-detail.compon
 import { ViewRankingsComponent } from './view-rankings/view-rankings.component';
 
 import {DocumentationhomeComponent} from './documentation/documentationhome/documentationhome.component';
+import { UserDocumentationComponent} from './documentation/user-documentation/user-documentation.component';
+import {TeamDocumentationComponent} from './documentation/team-documentation/team-documentation.component';
+import {TableDocumentationComponent} from './documentation/table-documentation/table-documentation.component';
+import {MatchesDocumentationComponent} from './documentation/matches-documentation/matches-documentation.component';
+import{CompetitionsDocumentationComponent} from './documentation/competitions-documentation/competitions-documentation.component';
+import {TournamentsDocumentationComponent} from './documentation/tournaments-documentation/tournaments-documentation.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full'},
   { path: 'home', component: HomeComponent},
   { path: 'login', component: AuthComponent},
   { path: 'signup', component: SignupComponent},
-  {path: 'documentation', component: DocumentationhomeComponent},
+  { path: 'documentation', children: [
+    {path: '', component: DocumentationhomeComponent},
+    {path: 'user', component: UserDocumentationComponent},
+    {path: 'teams', component: TeamDocumentationComponent},
+    {path: 'table', component: TableDocumentationComponent},
+    {path: 'matches', component: MatchesDocumentationComponent},
+    {path: 'competitions', component: CompetitionsDocumentationComponent},
+    {path: 'tournaments', component: TournamentsDocumentationComponent}
+  ]},
 
   {
     path: 'user',
