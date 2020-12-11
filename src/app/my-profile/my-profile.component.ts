@@ -60,10 +60,15 @@ export class MyProfileComponent implements OnInit {
   }
 
   startMatch(match: Match) {
+    match.date = new Date();
     this._matchService.startMatch(match.matchID, match).subscribe(res => {
       this.ngOnInit();
       //navigate to match start page
     });
+  }
+
+  goToMatch(match: Match) {
+    //navigate to match start page
   }
 
   cancelMatch(match: Match) {
@@ -84,9 +89,9 @@ export class MyProfileComponent implements OnInit {
   }
 
   challengeUser() {
+    // dropdown in modal to select a table
     var match = new Match(0, 0, 0, new Date(), 1, null, 2, null, null, null, null, null, this.currentUser.userID, null, null, null, Number(this.selectedUserID),
     null, null, null, 5, null, null, null, null, null);
-    console.log(match);
     this._matchService.addMatch(match).subscribe();
     this._modalService.dismissAll();
   }
