@@ -1,0 +1,23 @@
+.image {
+    width: 100%;
+    height: auto;
+}
+
+.match-img {
+    width: 7.5rem;
+    height: 7.5rem;
+    // overflow: hidden;
+    z-index: 10;
+    // margin: 0 1.25rem -1.25rem 0;
+    // padding: 0.1875rem;
+    -webkit-border-radius: 0.25rem;
+    -moz-border-radius: 0.25rem;
+    border-radius: 0.25rem;
+    background: #000;
+}
+
+.changeScoreButton{
+    margin: 5px;
+    width: 40px;
+    height: 40px;
+}

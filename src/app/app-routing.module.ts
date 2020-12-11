@@ -40,6 +40,7 @@ import {TournamentsDocumentationComponent} from './documentation/tournaments-doc
 import { ViewTeamCreateComponent } from './view-teams/view-team-create/view-team-create.component';
 import { ViewTeamEditComponent } from './view-teams/view-team-edit/view-team-edit.component';
 import { MyProfileEditComponent } from './my-profile/my-profile-edit/my-profile-edit.component';
+import { MatchComponent } from './match/match.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -55,7 +56,18 @@ const routes: Routes = [
     {path: 'competitions', component: CompetitionsDocumentationComponent},
     {path: 'tournaments', component: TournamentsDocumentationComponent}
   ]},
-
+  {
+    path: 'match',
+    children: [
+      {
+        path: '',
+        pathMatch: 'full',
+        component: MatchComponent,
+        canActivate: [AuthGuardService],
+        data: { auth: 'PLAY_VIEW' }
+      }
+    ]
+  },
   {
     path: 'user',
     children: [
