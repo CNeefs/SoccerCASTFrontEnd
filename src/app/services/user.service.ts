@@ -14,6 +14,12 @@ export class UserService implements OnDestroy {
 
     constructor(private http: HttpClient) {}
 
+    upload(formData: FormData, id:number) {
+        return this.http.post<{path:string}>(
+          this.baseUrl + 'User/'+ id+ '/upload', formData
+        );
+      }
+
     getUsers() {
         return this.http.get<User[]>(this.baseUrl + "User");
     }

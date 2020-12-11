@@ -13,6 +13,7 @@ export class User {
         public timesLost: number,
         public roles: Role[],
         public permissions: string[],
-        public points?: number
+        public points?: number,
+        public imagePath?: string
     ) {}
 }

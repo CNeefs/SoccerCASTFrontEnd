@@ -1,10 +1,49 @@
+
+<div class="container pt-4">
+
+
+<button type="button" (click)="fileInput.click()">Choose File</button>
+<input
+  hidden
+  #fileInput
+  type="file"
+  id="file"
+  (change)="setFilename(fileInput.files)"
+/>
+<label>{{ filename }}</label>
+<br />
+<button type="button" (click)="save(fileInput.files)">Save</button>
+<br />
+<img [src]="imageSource"/>
+
+<section *ngIf="userLoaded">
+    <div class="row ">
+        <div class="col-md-4 mb-3">
+            <div class="profile-card border shadow bg-white rounded">
+                <div class="profile-header-info">
+                    <div class="font-weight-bold">
+                        Personal Information
+                    </div>
+                </div>
+                <hr class="m-0">
+                <div class="profile-info">
+                    <mat-icon>account_circle</mat-icon> Firstname: {{ user.firstName }}
+                </div>
+                <div class="profile-info">
+                    <mat-icon>account_circle</mat-icon> Lastname: {{ user.lastName }}
+                </div>
+                <div class="profile-info">
+                    <mat-icon>mail_outline</mat-icon> Email: {{ user.email }}
+                </div>
+                <div class="profile-info">
+                    <mat-icon>cake</mat-icon> Birthday: {{ userBirthday }}
 <div class="container" *ngIf="pageLoaded">
     <div id="content" class="content p-0">
         <div class="profile-header">
             <div class="profile-header-cover"></div>
             <div class="profile-header-content">
                 <div class="profile-header-img mb-4">
-                    <img src="https://bootdey.com/img/Content/avatar/avatar7.png" class="mb-4" alt="" />
+                    <img [src]="imageSource" class="mb-4" alt="" />
                 </div>
     
                 <div class="profile-header-info" *ngIf="selectedUser != null">

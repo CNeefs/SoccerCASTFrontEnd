@@ -41,6 +41,8 @@ export class MyProfileComponent implements OnInit {
   wonPercent: number = 0;
   lostPercent: number = 0;
   totalPercent: number = 0;
+  filename = '';
+  imageSource = '';
 
   constructor(private _authService: AuthService, private _userTeamService: UserTeamService, private _userService: UserService, private _matchService: MatchService, private route: ActivatedRoute, private router: Router) { }
 
@@ -61,7 +63,9 @@ export class MyProfileComponent implements OnInit {
     currentTabel.classList.remove('active');
     currentTabel.classList.remove('show');
 
-    let element: HTMLElement = document.getElementById(id) as HTMLElement;
+
+  
+  let element: HTMLElement = document.getElementById(id) as HTMLElement;
     element.classList.add("active");
     element.classList.add("show");
 
@@ -70,12 +74,18 @@ export class MyProfileComponent implements OnInit {
     linkel.classList.add("show");
     this.currentTab = id;
     this.currentLink = linkid;
-  }
 
   ngOnInit(): void {
     this.pageLoaded = false;
     this._authService.user.subscribe((user: User) => {
       if (user) {
+        this.userId = user.userID;
+        
+        //console.log(this.user)
+        this.userSub = this._userService.getUserById(this.userId).subscribe((user: User) => {
+          this.user = user
+          console.log(this.user.imagePath)
+          this.imageSource = user.imagePath;}
         this.route.queryParams.subscribe(params => {
           this.selectedUserID = params['id'];
         });
@@ -118,5 +128,31 @@ export class MyProfileComponent implements OnInit {
       this.lostPercent = Math.floor((+this.selectedUser.timesLost / +this.totalGames) * 100)
       this.totalPercent = 100;
     }
+  }
+
+  ngOnDestroy(): void {
+    this.userIdSub.unsubscribe();
+    if (this.userSub) {
+      this.userSub.unsubscribe();
+    }
+  }
+
+  setFilename(files) {
+    if (files[0]) {
+      this.filename = files[0].name;
+    }
+  }
+
+  save(files) {
+    const formData = new FormData();
+
+    if (files[0]) {
+      formData.append(files[0].name, files[0]);
+    }
+
+    this._userService
+      .upload(formData, this.userId)
+      .subscribe(({path}) => (this.imageSource = path));
+      console.log(this.imageSource)
   }
 }
