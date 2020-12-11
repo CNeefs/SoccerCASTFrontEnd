@@ -98,7 +98,7 @@ export class MyProfileComponent implements OnInit {
   challengeUser() {
     // dropdown in modal to select a table
     var match = new Match(0, 0, 0, new Date(), 1, null, 2, null, null, null, null, null, this.currentUser.userID, null, null, null, Number(this.selectedUserID),
-    null, null, null, 5, null, null, null, null, null);
+    null, null, null, 2, null, null, null, null, null);
     this._matchService.addMatch(match).subscribe();
     this._modalService.dismissAll();
   }
@@ -156,10 +156,10 @@ export class MyProfileComponent implements OnInit {
               this.competitionsIds = [];
               this.tournamentIds = [];
               matches.forEach(match => {
-                if (match.tournamentID == null && match.competitionID == null && match.player2ID == null && (match.matchStatusID == 4 || match.matchStatusID == 3)) this.plannedMatches.push(match);
-                if (match.tournamentID == null && match.competitionID == null && match.player2ID == null && match.matchStatusID == 5 && this.selectedUser.userID != match.player1ID) this.requestMatches.push(match);
-                if (match.tournamentID == null && match.competitionID == null && match.player2ID == null && (match.matchStatusID == 2 || match.matchStatusID == 1)) this.friendlyMatches1v1.push(match);
-                if (match.tournamentID == null && match.competitionID == null && match.player2ID != null && (match.matchStatusID == 2 || match.matchStatusID == 1)) this.friendlyMatches2v2.push(match);
+                if (match.tournamentID == null && match.competitionID == null && match.player2ID == null && (match.matchStatusID == 6 || match.matchStatusID == 5)) this.plannedMatches.push(match);
+                if (match.tournamentID == null && match.competitionID == null && match.player2ID == null && match.matchStatusID == 2 && this.selectedUser.userID != match.player1ID) this.requestMatches.push(match);
+                if (match.tournamentID == null && match.competitionID == null && match.player2ID == null && (match.matchStatusID == 4 || match.matchStatusID == 3)) this.friendlyMatches1v1.push(match);
+                if (match.tournamentID == null && match.competitionID == null && match.player2ID != null && (match.matchStatusID == 4 || match.matchStatusID == 3)) this.friendlyMatches2v2.push(match);
                 if (match.tournamentID == null && match.competitionID != null && !this.competitionsIds.some(x => x === match.competitionID)) {
                    this.competitions.push(match.competition);
                    this.competitionsIds.push(match.competitionID);
