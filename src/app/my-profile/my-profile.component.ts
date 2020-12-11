@@ -1,15 +1,19 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AuthService } from '../auth/auth.service';
 import { Competition } from '../models/competition.model';
 import { Match } from '../models/match.model';
+import { Table } from '../models/table.model';
 import { Team } from '../models/team.model';
 import { Tournament } from '../models/tournament.model';
 import { User } from '../models/user.model';
 import { MatchService } from '../services/match.service';
+import { TableService } from '../services/table.service';
 import { UserTeamService } from '../services/user-team.service';
 import { UserService } from '../services/user.service';
+import { ToastService } from '../toast/services/toast.service';
 
 @Component({
   selector: 'app-my-profile',
@@ -18,6 +22,7 @@ import { UserService } from '../services/user.service';
 })
 export class MyProfileComponent implements OnInit {
 
+  challengeUserForm: FormGroup;
   selectedUserID: number = 0;
   selectedUser: User = null;
 
@@ -31,6 +36,7 @@ export class MyProfileComponent implements OnInit {
   competitionsIds: Number[];
   tournaments: Tournament[] = [];
   tournamentIds: Number[];
+  tables: Table[] = [];
 
   currentTab: string = "profile-personal-statistics";
   currentLink: string = "link-personal-statistics";
@@ -46,7 +52,8 @@ export class MyProfileComponent implements OnInit {
   totalPercent: number = 0;
   filename = '';
 
-  constructor(private _authService: AuthService, private _userTeamService: UserTeamService, private _userService: UserService, private _matchService: MatchService, private route: ActivatedRoute, private router: Router, private _modalService: NgbModal) { }
+  constructor(private _tableService: TableService, private _authService: AuthService, private _userTeamService: UserTeamService, private _userService: UserService, 
+    private _matchService: MatchService, private route: ActivatedRoute, private router: Router, private _modalService: NgbModal, private fb: FormBuilder, private _toastService: ToastService) { }
 
   goToEdit(user: User) {
     this.router.navigate(['user/profile/edit'], { queryParams: { id: user.userID } });
@@ -63,7 +70,6 @@ export class MyProfileComponent implements OnInit {
   openProfilePictureModal(contentChangeProfilePictureModal) {
     this._modalService.open(contentChangeProfilePictureModal);
   }
-
 
   startMatch(match: Match) {
     match.date = new Date();
@@ -95,11 +101,15 @@ export class MyProfileComponent implements OnInit {
   }
 
   challengeUser() {
-    // dropdown in modal to select a table
-    var match = new Match(0, 0, 0, new Date(), 1, null, 2, null, null, null, null, null, this.currentUser.userID, null, null, null, Number(this.selectedUserID),
+    var match = new Match(0, 0, 0, new Date(), Number(this.challengeUserForm.controls["tableID"].value), null, 2, null, null, null, null, null, this.currentUser.userID, null, null, null, Number(this.selectedUserID),
     null, null, null, 2, null, null, null, null, null);
     this._matchService.addMatch(match).subscribe();
     this._modalService.dismissAll();
+    this._toastService.show("Challenge send", {
+      classname: 'bg-success text-light',
+      delay: 2000,
+      autohide: true
+    });
   }
 
   changeTab(id: string, linkid: string) {
@@ -141,6 +151,12 @@ export class MyProfileComponent implements OnInit {
         this.currentUser = user;
         this.route.queryParams.subscribe(params => {
           this.selectedUserID = params['id'];
+        });
+        this._tableService.getTables().subscribe(res => {
+          this.tables = res;
+          this.challengeUserForm = this.fb.group({
+            tableID: [this.tables[0].tableID, Validators.required],
+          });
         });
         this._userService.getUserById(this.selectedUserID).subscribe((user: User) => {
           this.selectedUser = user;
