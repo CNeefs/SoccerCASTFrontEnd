@@ -332,7 +332,7 @@ body .fc-widget-header a {
   }
   
   /* The icon inside the overlay is positioned in the middle vertically and horizontally */
-  .icon {
+.icon {
     color: white;
     font-size: 100px;
     position: absolute;
@@ -343,6 +343,6 @@ body .fc-widget-header a {
     text-align: center;
   }
   
-  mat-icon{
+  .icon mat-icon{
     font-size: 45px;
   }
