@@ -45,6 +45,8 @@ export class TeamDetailComponent implements OnInit {
 
   userTeam: UserTeam = null;
 
+  filename = '';
+
   constructor(
     private _userTeamService: UserTeamService, 
     private _teamService: TeamService, 
@@ -63,6 +65,10 @@ export class TeamDetailComponent implements OnInit {
 
   openChangeStatusModal(selectedTeam: Team, contentChangeStatusModal) {
     this._modalService.open(contentChangeStatusModal)
+  }
+
+  openProfilePictureModal(contentChangeProfilePictureModal) {
+    this._modalService.open(contentChangeProfilePictureModal);
   }
 
   onSubmit() {
@@ -175,5 +181,23 @@ export class TeamDetailComponent implements OnInit {
         });
       }
     });
+  }
+  setFilename(files) {
+    if (files[0]) {
+      this.filename = files[0].name;
+    }
+  }
+
+  save(files) {
+    const formData = new FormData();
+
+    if (files[0]) {
+      formData.append(files[0].name, files[0]);
+    }
+
+    this._teamService
+      .upload(formData, this.selectedTeamID)
+      .subscribe(({path}) => (this.selectedTeam.imagePath = path));
+      this._modalService.dismissAll();
   }
 }

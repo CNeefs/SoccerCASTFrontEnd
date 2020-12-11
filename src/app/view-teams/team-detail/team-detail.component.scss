@@ -305,3 +305,44 @@ body .fc-widget-header a {
     color: #666;
     margin: 0;
 }
+
+/* Make the image to responsive */
+.image {
+    width: 100%;
+    height: auto;
+  }
+  
+  /* The overlay effect (full height and width) - lays on top of the container and over the image */
+  .overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    transition: .3s ease;
+    background-color: rgb(99, 168, 136);
+  }
+  
+  /* When you mouse over the container, fade in the overlay icon*/
+   .overlay:hover {
+    opacity: 1;
+  }
+  
+  /* The icon inside the overlay is positioned in the middle vertically and horizontally */
+  .icon {
+    color: white;
+    font-size: 100px;
+    position: absolute;
+    top: 30%;
+    left: 42%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    text-align: center;
+  }
+  
+  mat-icon{
+    font-size: 45px;
+  }

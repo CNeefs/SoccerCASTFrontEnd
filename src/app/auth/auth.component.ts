@@ -10,10 +10,8 @@ import { Router } from '@angular/router';
   templateUrl: './auth.component.html',
   styleUrls: ['./auth.component.scss', '../styles/validation_style.scss']
 })
-export class AuthComponent implements OnInit, OnDestroy {
+export class AuthComponent implements OnInit {
   userLogin: UserLogin;
-
-  userLoginSub: Subscription;
 
   constructor(private authService: AuthService, private router: Router) { }
 
@@ -24,18 +22,12 @@ export class AuthComponent implements OnInit, OnDestroy {
     const value = loginForm.value;
     this.userLogin = new UserLogin(value.email, value.password);
 
-    this.userLoginSub = this.authService.login(this.userLogin).subscribe();
-    loginForm.reset();
+    this.authService.login(this.userLogin).subscribe(res => {
+      loginForm.reset();
+    });
   }
 
   navigateSignUp() {
     this.router.navigate(['/signup']);
   }
-
-  ngOnDestroy() {
-    if (this.userLoginSub) {
-      this.userLoginSub.unsubscribe();
-    }
-  }
-
 }
