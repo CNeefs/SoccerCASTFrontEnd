@@ -10,6 +10,7 @@ export class Team {
         public captainID: number,
         public captain: User,
         public teamStatusID: number,
-        public teamStatus: TeamStatus
+        public teamStatus: TeamStatus,
+        public imagePath?: string
     ) {}
 }
