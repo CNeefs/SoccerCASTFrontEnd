@@ -61,6 +61,11 @@ export class MyProfileComponent implements OnInit {
     this._modalService.open(contentChallengeUserModal);
   }
 
+  openProfilePictureModal(contentChangeProfilePictureModal) {
+    this._modalService.open(contentChangeProfilePictureModal);
+  }
+
+
   startMatch(match: Match) {
     match.date = new Date();
     this._matchService.startMatch(match.matchID, match).subscribe(res => {
@@ -198,5 +203,6 @@ export class MyProfileComponent implements OnInit {
       .upload(formData, this.currentUser.userID)
       .subscribe(({path}) => (this.imageSource = path));
       console.log(this.imageSource)
+      this._modalService.dismissAll();
   }
 }
