@@ -45,7 +45,6 @@ export class MyProfileComponent implements OnInit {
   lostPercent: number = 0;
   totalPercent: number = 0;
   filename = '';
-  imageSource = '';
 
   constructor(private _authService: AuthService, private _userTeamService: UserTeamService, private _userService: UserService, private _matchService: MatchService, private route: ActivatedRoute, private router: Router, private _modalService: NgbModal) { }
 
@@ -145,7 +144,6 @@ export class MyProfileComponent implements OnInit {
         });
         this._userService.getUserById(this.selectedUserID).subscribe((user: User) => {
           this.selectedUser = user;
-          this.imageSource = user.imagePath;
           let StrUserBirtDay = user.birthDate.toString();
           this.userBirthday = StrUserBirtDay.substr(0, 10);
           this.calculateStatistics();
@@ -201,8 +199,7 @@ export class MyProfileComponent implements OnInit {
 
     this._userService
       .upload(formData, this.currentUser.userID)
-      .subscribe(({path}) => (this.imageSource = path));
-      console.log(this.imageSource)
+      .subscribe(({path}) => (this.selectedUser.imagePath = path));
       this._modalService.dismissAll();
   }
 }

@@ -12,6 +12,12 @@ export class TeamService {
 
     constructor(private http: HttpClient) {}
 
+    upload(formData: FormData, id:number) {
+        return this.http.post<{path:string}>(
+          this.baseUrl + 'Team/'+ id+ '/upload', formData
+        );
+      }
+
     getTeams() {
         return this.http.get<Team[]>(this.baseUrl + "team/");
     }
