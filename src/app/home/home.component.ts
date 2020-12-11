@@ -13,8 +13,6 @@ export class HomeComponent implements OnInit {
 
   loggedIn: boolean = false
 
-  userSub: Subscription;
-
   currentYear: number = new Date().getFullYear();
 
   constructor(private router: Router, private _authService: AuthService) { }
@@ -24,7 +22,7 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.userSub = this._authService.user.subscribe((user: User) => {
+    this._authService.user.subscribe((user: User) => {
       this.loggedIn = !!user;
     });
   }
@@ -36,5 +34,4 @@ export class HomeComponent implements OnInit {
   navigateSignUp() {
     this.router.navigate(['/signup'])
   }
-
 }
