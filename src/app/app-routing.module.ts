@@ -39,6 +39,7 @@ import{CompetitionsDocumentationComponent} from './documentation/competitions-do
 import {TournamentsDocumentationComponent} from './documentation/tournaments-documentation/tournaments-documentation.component';
 import { ViewTeamCreateComponent } from './view-teams/view-team-create/view-team-create.component';
 import { ViewTeamEditComponent } from './view-teams/view-team-edit/view-team-edit.component';
+import { MyProfileEditComponent } from './my-profile/my-profile-edit/my-profile-edit.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -71,7 +72,13 @@ const routes: Routes = [
             component: MyProfileComponent,
             canActivate: [AuthGuardService],
             data: { auth: 'PROFILE_VIEW' },
-          }
+          },
+          {
+            path: 'edit',
+            component: MyProfileEditComponent,
+            canActivate: [AuthGuardService],
+            data: { auth: 'PROFILE_EDIT' },
+          },
         ]
       },
       {

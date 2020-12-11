@@ -1,0 +1,43 @@
+<br>
+<div class="container shadow-lg p-3 mb-5 bg-white rounded">
+    <form *ngIf="selectedUser" [formGroup]="editForm" (ngSubmit)="onSubmit()">
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="firstname">Firstname</label>
+                <input type="text" class="form-control" id="firstname" placeholder="Firstname"
+                    formControlName="firstName">
+                <small class="pl-1" *ngIf="!editForm.get('firstName').valid && editForm.get('firstName').touched">This
+                    firstname name is invalid!</small>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="lastname">Lastname</label>
+                <input type="text" class="form-control" id="lastname" placeholder="Lastname" formControlName="lastName">
+                <small class="pl-1" *ngIf="!editForm.get('lastName').valid && editForm.get('lastName').touched">This
+                    lastname name is invalid!</small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" class="form-control" id="email" placeholder="Email" formControlName="email">
+            <small class="pl-1" *ngIf="!editForm.get('email').valid && editForm.get('email').touched">This email is
+                invalid!</small>
+        </div>
+
+        <div class="form-group">
+            <label for="email">Date of birth</label>
+            <div class="input-group">
+                <input class="form-control" placeholder="yyyy-mm-dd" ngbDatepicker #d="ngbDatepicker"
+                    formControlName="birthDate">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary calendar pb-0" (click)="d.toggle()" type="button">
+                        <mat-icon>event</mat-icon>
+                    </button>
+                </div>
+            </div>
+            <small class="pl-1" *ngIf="!editForm.get('birthDate').valid && editForm.get('birthDate').touched">This
+                birthdate is invalid!</small>
+        </div>
+        
+        <button type="submit" class="btn btn-primary" [disabled]="!editForm.valid">Submit</button>
+    </form>
+</div>
