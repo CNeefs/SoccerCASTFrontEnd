@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/auth.service';
 import { Team } from 'src/app/models/team.model';
@@ -13,17 +13,18 @@ import { Tournament } from 'src/app/models/tournament.model';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TeamStatus } from 'src/app/models/team-status.model';
 import { TeamStatusService } from '../../services/team-status.service';
-import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastService } from 'src/app/toast/services/toast.service';
 import { TableService } from 'src/app/services/table.service';
 import { Table } from 'src/app/models/table.model';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-team-detail',
   templateUrl: './team-detail.component.html',
   styleUrls: ['./team-detail.component.scss', '../../styles/table_style.scss',  '../../styles/validation_style.scss']
 })
-export class TeamDetailComponent implements OnInit {
+export class TeamDetailComponent implements OnInit, OnDestroy {
  
   challengeTeamForm: FormGroup;
   changeStatusForm: FormGroup;
@@ -57,6 +58,7 @@ export class TeamDetailComponent implements OnInit {
   userTeam: UserTeam = null;
 
   filename = '';
+  userSub: Subscription;
 
   constructor(
     private _tableService: TableService,
@@ -216,6 +218,10 @@ export class TeamDetailComponent implements OnInit {
     this.currentLink = linkid;
   }
 
+  ngOnDestroy(): void {
+    this.userSub.unsubscribe();
+  }
+
   ngOnInit(): void {
     this.allMatches = [];
     this.plannedMatches = [];
@@ -229,7 +235,7 @@ export class TeamDetailComponent implements OnInit {
     this.currentLink = "link-users";
     this.userTeams = [];
     this.pageLoaded = false;
-    this._authService.user.subscribe((user: User) => {
+    this.userSub = this._authService.user.subscribe((user: User) => {
       if (user) {
         this.route.queryParams.subscribe(params => {
           this.selectedTeamID = params['id'];

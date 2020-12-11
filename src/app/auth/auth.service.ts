@@ -24,11 +24,10 @@ export class AuthService {
             }));
     }
 
-    login(userLogin: UserLogin): Observable<User> {
-        return this.http.post<User>(this.baseUrl + "user/authenticate", userLogin)
-            .pipe(tap(userData => {
-                this.authenticationHandler(userData)
-            }));
+    login(userLogin: UserLogin) {
+        this.http.post<User>(this.baseUrl + "user/authenticate", userLogin).subscribe(userData => {
+            this.authenticationHandler(userData);
+        });
     }
 
     autoLogin() {
@@ -49,17 +48,15 @@ export class AuthService {
     }
 
     logout() {
-        this.user.next(null);
+        //this.user.next(null);
         localStorage.removeItem('userToken');
         this.router.navigate(['/login']);
         this._authorizationService.initializePermissions(null);
     }
 
     private authenticationHandler(currentUser: User) {
-        const user = currentUser;
-        this._authorizationService.initializePermissions(user.permissions);
-        this.user.next(user);
-        localStorage.setItem("userToken", JSON.stringify(user.token));
-        this.router.navigate(['/home']);
+        this._authorizationService.initializePermissions(currentUser.permissions);
+        this.user.next(currentUser);
+        localStorage.setItem("userToken", JSON.stringify(currentUser.token));
     }
 }

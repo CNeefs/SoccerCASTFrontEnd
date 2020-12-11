@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Subscription } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
 import { Competition } from '../models/competition.model';
 import { Match } from '../models/match.model';
@@ -20,7 +21,7 @@ import { ToastService } from '../toast/services/toast.service';
   templateUrl: './my-profile.component.html',
   styleUrls: ['./my-profile.component.scss', '../styles/table_style.scss', '../styles/validation_style.scss']
 })
-export class MyProfileComponent implements OnInit {
+export class MyProfileComponent implements OnInit, OnDestroy {
 
   challengeUserForm: FormGroup;
   selectedUserID: number = 0;
@@ -51,6 +52,8 @@ export class MyProfileComponent implements OnInit {
   lostPercent: number = 0;
   totalPercent: number = 0;
   filename = '';
+
+  userSub: Subscription;
 
   constructor(private _tableService: TableService, private _authService: AuthService, private _userTeamService: UserTeamService, private _userService: UserService, 
     private _matchService: MatchService, private route: ActivatedRoute, private router: Router, private _modalService: NgbModal, private fb: FormBuilder, private _toastService: ToastService) { }
@@ -132,6 +135,10 @@ export class MyProfileComponent implements OnInit {
     this.currentLink = linkid;
   }
 
+  ngOnDestroy(): void {
+    this.userSub.unsubscribe();
+  }
+
   ngOnInit(): void {
     this.allMatches = [];
     this.plannedMatches = [];
@@ -146,7 +153,7 @@ export class MyProfileComponent implements OnInit {
     this.currentLink = "link-personal-statistics";
     this.userTeams = [];
     this.pageLoaded = false;
-    this._authService.user.subscribe((user: User) => {
+    this.userSub = this._authService.user.subscribe((user: User) => {
       if (user) {
         this.currentUser = user;
         this.route.queryParams.subscribe(params => {

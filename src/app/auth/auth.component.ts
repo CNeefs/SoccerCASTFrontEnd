@@ -22,9 +22,9 @@ export class AuthComponent implements OnInit {
     const value = loginForm.value;
     this.userLogin = new UserLogin(value.email, value.password);
 
-    this.authService.login(this.userLogin).subscribe(res => {
-      loginForm.reset();
-    });
+    this.authService.login(this.userLogin);
+    loginForm.reset();
+    this.router.navigate(['/home']);
   }
 
   navigateSignUp() {
