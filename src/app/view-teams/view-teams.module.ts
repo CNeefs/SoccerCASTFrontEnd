@@ -7,6 +7,8 @@ import { ViewTeamEditComponent } from './view-team-edit/view-team-edit.component
 import { ViewTeamCreateComponent } from './view-team-create/view-team-create.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+import { NgxBootstrapMultiselectDropdownModule } from 'ngx-bootstrap-multiselect-dropdown';
+
 
 @NgModule({
   declarations: [ViewTeamsComponent, TeamDetailComponent, ViewTeamEditComponent, ViewTeamCreateComponent],
@@ -14,6 +16,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    NgxBootstrapMultiselectDropdownModule,
     SharedModule
   ]
 })

@@ -12,42 +12,54 @@ import { Competition } from 'src/app/models/competition.model';
 import { Tournament } from 'src/app/models/tournament.model';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TeamStatus } from 'src/app/models/team-status.model';
-import { Observable } from 'rxjs';
 import { TeamStatusService } from '../../services/team-status.service';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { ToastService } from 'src/app/toast/services/toast.service';
+import { TableService } from 'src/app/services/table.service';
+import { Table } from 'src/app/models/table.model';
 
 @Component({
   selector: 'app-team-detail',
   templateUrl: './team-detail.component.html',
-  styleUrls: ['./team-detail.component.scss', '../../styles/table_style.scss']
+  styleUrls: ['./team-detail.component.scss', '../../styles/table_style.scss',  '../../styles/validation_style.scss']
 })
 export class TeamDetailComponent implements OnInit {
  
+  challengeTeamForm: FormGroup;
   changeStatusForm: FormGroup;
+  acceptChallengeForm: FormGroup;
   selectedTeamID: number = 0;
   selectedTeam: Team = null;
+  selectedMatch: Match = null;
 
   currentUser: User;
   usersInTeam: User[];
   allMatches: Match[];
+  plannedMatches: Match[] = [];
+  requestMatches: Match[] = [];
   friendlyMatches: Match[] = [];
   competitions: Competition[] = [];
   competitionsIds: Number[];
   tournaments: Tournament[] = [];
   tournamentIds: Number[];
   teamStatuses: TeamStatus[] = [];
+  tables: Table[] = [];
+
+  teams: Team[] = [];
+  usersInSelectedTeam: User[] = [];
 
   currentTab: string = "profile-users";
   currentLink: string = "link-users";
 
   pageLoaded: boolean = false;
 
+  userTeams: Team[] = [];
   userTeam: UserTeam = null;
 
   filename = '';
 
   constructor(
+    private _tableService: TableService,
     private _userTeamService: UserTeamService, 
     private _teamService: TeamService, 
     private _authService: AuthService, 
@@ -59,8 +71,70 @@ export class TeamDetailComponent implements OnInit {
     private _teamStatusService: TeamStatusService,
     private fb: FormBuilder) { }
 
+  challengeTeam() {
+    var match = new Match(0, 0, 0, new Date(), Number(this.challengeTeamForm.controls["tableID"].value), null, 1, null, Number(this.challengeTeamForm.controls["userTeamID"].value),
+    null, Number(this.selectedTeamID), null, Number(this.challengeTeamForm.controls["usersInTeamID1"].value), null, Number(this.challengeTeamForm.controls["usersInTeamID2"].value), 
+    null, null, null, null, null, 2, null, null, null, null, null);
+    this._matchService.addMatch(match).subscribe();
+    this._modalService.dismissAll();
+    this._toastService.show("Challenge send", {
+      classname: 'bg-success text-light',
+      delay: 2000,
+      autohide: true
+    });
+  }
+
+  acceptMatch() {
+    this.selectedMatch.player3ID = Number(this.acceptChallengeForm.controls["usersInTeamID1"].value);
+    this.selectedMatch.player4ID = Number(this.acceptChallengeForm.controls["usersInTeamID2"].value);
+    this._matchService.acceptMatch(this.selectedMatch.matchID, this.selectedMatch).subscribe(res => {
+      this._modalService.dismissAll();
+      this.ngOnInit();
+    });
+  }
+
+  declineMatch(match: Match) {
+    this._matchService.deleteMatch(match.matchID).subscribe();
+    this.requestMatches.splice(this.requestMatches.indexOf(match));
+  }
+
+  cancelMatch(match: Match) {
+    this._matchService.cancelMatch(match.matchID, match).subscribe(res => {
+      this.ngOnInit();
+    });
+  }
+
+  startMatch(match: Match) {
+    match.date = new Date();
+    this._matchService.startMatch(match.matchID, match).subscribe(res => {
+      this.ngOnInit();
+      //navigate to match start page
+    });
+  }
+
+  goToMatch(match: Match) {
+    //navigate to match start page
+  }
+
+  onChangeTeam(teamID) {
+    this.usersInSelectedTeam = [];
+    this.teams.map(team => {
+      if (team.teamID == teamID) {
+        team.users.map(user => {
+          this.usersInSelectedTeam.push(user);
+        });
+      }
+    });
+    this.challengeTeamForm.controls["usersInTeamID1"].setValue("");
+    this.challengeTeamForm.controls["usersInTeamID2"].setValue("");
+  }
+
   goToEdit(team: Team) {
     this.router.navigate(['user/teams/edit'], { queryParams: { id: team.teamID }});
+  }
+
+  openChallengeTeamModal(contentChallengeTeamModal) {
+    this._modalService.open(contentChallengeTeamModal);
   }
 
   openChangeStatusModal(selectedTeam: Team, contentChangeStatusModal) {
@@ -71,12 +145,15 @@ export class TeamDetailComponent implements OnInit {
     this._modalService.open(contentChangeProfilePictureModal);
   }
 
+  openAcceptChallengeModal(match: Match, contentAcceptChallengeModal) {
+    this.selectedMatch = match;
+    this._modalService.open(contentAcceptChallengeModal);
+  }
+
   onSubmit() {
     const value = this.changeStatusForm.value;
     const teamStatusID = value.teamStatusID;
-    console.log(teamStatusID);
     this.selectedTeam.teamStatusID = +teamStatusID;
-    console.log(this.selectedTeam);
     this._teamService.editTeam(this.selectedTeam.teamID, this.selectedTeam).subscribe();
     this._modalService.dismissAll();
     this._toastService.show("Team status changed", {
@@ -84,6 +161,7 @@ export class TeamDetailComponent implements OnInit {
       delay: 2000,
       autohide: true
     });
+    this.ngOnInit();
   }
 
   goToUserPage(user: User) {
@@ -92,7 +170,6 @@ export class TeamDetailComponent implements OnInit {
 
   joinTeam(team: Team) {
     this._teamService.joinTeam(this.currentUser.userID, team).subscribe();
-    const currentRoute = this.router.url;
     this.ngOnInit();
   }
 
@@ -140,11 +217,41 @@ export class TeamDetailComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.allMatches = [];
+    this.plannedMatches = [];
+    this.requestMatches = [];
+    this.friendlyMatches = [];
+    this.competitions = [];
+    this.competitionsIds = [];
+    this.tournaments = [];
+    this.tournamentIds = [];
+    this.currentTab = "profile-users";
+    this.currentLink = "link-users";
+    this.userTeams = [];
     this.pageLoaded = false;
     this._authService.user.subscribe((user: User) => {
       if (user) {
         this.route.queryParams.subscribe(params => {
           this.selectedTeamID = params['id'];
+        });
+        this._teamService.getTeams().subscribe(res => {
+          this.teams = res;
+          this._tableService.getTables().subscribe(res => {
+            this.tables = res;
+            this._userTeamService.getUserTeamsByUserId(this.currentUser.userID).subscribe(res => { 
+              res.map(team => {
+                if (team.teamID != this.selectedTeamID) this.userTeams.push(team);
+              })
+              this.challengeTeamForm = this.fb.group({
+                tableID: ['', Validators.required],
+                userTeamID: ['', Validators.required],
+                usersInTeamID1: ['', Validators.required],
+                usersInTeamID2: ['', Validators.required]
+              }, {
+                validator: this.mustNotMatch('usersInTeamID1', 'usersInTeamID2')
+              });
+            });
+          });
         });
         this.currentUser = user;
         this._teamService.getTeamById(this.selectedTeamID).subscribe(team => {
@@ -154,6 +261,12 @@ export class TeamDetailComponent implements OnInit {
           });
           this._userTeamService.getUsersTeamByTeamId(this.selectedTeamID).subscribe(users => {
             this.usersInTeam = users;
+            this.acceptChallengeForm = this.fb.group({
+              usersInTeamID1: ['', Validators.required],
+              usersInTeamID2: ['', Validators.required]
+            }, {
+              validator: this.mustNotMatch('usersInTeamID1', 'usersInTeamID2')
+            });
             this._userTeamService.userTeams(user.userID, this.selectedTeamID).subscribe(res => {
               this.userTeam = res;
               this._matchService.getMatchesByTeamId(this.selectedTeamID).subscribe(matches => {
@@ -161,7 +274,9 @@ export class TeamDetailComponent implements OnInit {
                 this.competitionsIds = [];
                 this.tournamentIds = [];
                 matches.forEach(match => {
-                  if (match.tournamentID == null && match.competitionID == null) this.friendlyMatches.push(match);
+                  if (match.tournamentID == null && match.competitionID == null && (match.matchStatusID == 6 || match.matchStatusID == 5)) this.plannedMatches.push(match);
+                  if (match.tournamentID == null && match.competitionID == null && match.matchStatusID == 2 && this.selectedTeam.teamID != match.team1ID) this.requestMatches.push(match);
+                  if (match.tournamentID == null && match.competitionID == null && (match.matchStatusID == 4 || match.matchStatusID == 3)) this.friendlyMatches.push(match);
                   if (match.tournamentID == null && match.competitionID != null && !this.competitionsIds.some(x => x === match.competitionID)) {
                      this.competitions.push(match.competition);
                      this.competitionsIds.push(match.competitionID);
@@ -182,6 +297,24 @@ export class TeamDetailComponent implements OnInit {
       }
     });
   }
+
+  mustNotMatch(controlName: string, matchingControlName: string) {
+    return (formGroup: FormGroup) => {
+      const control = formGroup.controls[controlName];
+      const matchingControl = formGroup.controls[matchingControlName];
+
+      if (matchingControl.errors && !matchingControl.errors.mustNotMatch) {
+          return;
+      }
+
+      if (control.value == matchingControl.value) {
+          matchingControl.setErrors({ mustNotMatch: true });
+      } else {
+          matchingControl.setErrors(null);
+      }
+    }  
+  }
+
   setFilename(files) {
     if (files[0]) {
       this.filename = files[0].name;

@@ -11,6 +11,7 @@ export class Team {
         public captain: User,
         public teamStatusID: number,
         public teamStatus: TeamStatus,
+        public users?: User[],
         public imagePath?: string
     ) {}
 }

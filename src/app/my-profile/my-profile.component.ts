@@ -18,7 +18,7 @@ import { ToastService } from '../toast/services/toast.service';
 @Component({
   selector: 'app-my-profile',
   templateUrl: './my-profile.component.html',
-  styleUrls: ['./my-profile.component.scss', '../styles/table_style.scss']
+  styleUrls: ['./my-profile.component.scss', '../styles/table_style.scss', '../styles/validation_style.scss']
 })
 export class MyProfileComponent implements OnInit {
 
@@ -155,7 +155,7 @@ export class MyProfileComponent implements OnInit {
         this._tableService.getTables().subscribe(res => {
           this.tables = res;
           this.challengeUserForm = this.fb.group({
-            tableID: [this.tables[0].tableID, Validators.required],
+            tableID: ['', Validators.required],
           });
         });
         this._userService.getUserById(this.selectedUserID).subscribe((user: User) => {
