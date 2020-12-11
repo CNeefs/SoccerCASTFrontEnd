@@ -19,4 +19,27 @@ export class MatchService {
     getMatchesByUserId(id: Number) {
         return this.http.get<Match[]>(this.baseUrl + "match/user/" + id);
     }
+
+    addMatch(match: Match) {
+        return this.http.post<Match>(this.baseUrl + "match/", match);
+    }
+
+    acceptMatch(id: Number, match: Match) {
+        match.matchStatusID = 4;
+        return this.http.put<Match>(this.baseUrl + "match/" + id, match);
+    }
+
+    startMatch(id: Number, match: Match) {
+        match.matchStatusID = 3;
+        return this.http.put<Match>(this.baseUrl + "match/" + id, match);
+    }
+
+    cancelMatch(id: Number, match: Match) {
+        match.matchStatusID = 1;
+        return this.http.put<Match>(this.baseUrl + "match/" + id, match);
+    }
+
+    deleteMatch(id: Number) {
+        return this.http.delete<Match>(this.baseUrl + "match/" + id);
+    }
 }

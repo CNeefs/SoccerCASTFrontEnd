@@ -11,12 +11,15 @@
                     <h4 class="m-t-sm">{{selectedUser.firstName}} {{selectedUser.lastName}}</h4>
                     <p class="m-b-sm">{{userBirthday}}</p>
                     <a *ngIf="selectedUser.userID == currentUser.userID" (click)="goToEdit(currentUser)" class="btn btn-xs btn-success mb-2">Edit profile</a>
+                    <a *ngIf="selectedUser.userID != currentUser.userID" (click)="openChallengeUserModal(contentChallengeUserModal)" class="btn btn-xs btn-success mb-2 float-right">Challenge user</a>
                 </div>
             </div>
     
             <ul class="profile-header-tab nav nav-tabs">
                 <li class="nav-item"><a (click)="changeTab('profile-personal-statistics', 'link-personal-statistics')" style="cursor: pointer;" class="nav-link active show" data-toggle="tab" id="link-personal-statistics">PERSONAL STATISTICS</a></li>
-                <li class="nav-item"><a (click)="changeTab('profile-matches', 'link-matches')" style="cursor: pointer;" class="nav-link" data-toggle="tab" id="link-matches">MATCHES</a></li>
+                <li class="nav-item" *ngIf="selectedUser.userID == currentUser.userID"><a (click)="changeTab('profile-request-matches', 'link-request-matches')" style="cursor: pointer;" class="nav-link" data-toggle="tab" id="link-request-matches">REQUESTS</a></li>
+                <li class="nav-item" *ngIf="selectedUser.userID == currentUser.userID"><a (click)="changeTab('profile-planned-matches', 'link-planned-matches')" style="cursor: pointer;" class="nav-link" data-toggle="tab" id="link-planned-matches">PLANNED</a></li>
+                <li class="nav-item"><a (click)="changeTab('profile-history', 'link-history')" style="cursor: pointer;" class="nav-link" data-toggle="tab" id="link-history">HISTORY</a></li>
                 <li class="nav-item"><a (click)="changeTab('profile-competitions', 'link-competitions')" style="cursor: pointer;" class="nav-link" data-toggle="tab" id="link-competitions">COMPETITIONS</a></li>
                 <li class="nav-item"><a (click)="changeTab('profile-tournaments', 'link-tournaments')" style="cursor: pointer;" class="nav-link" data-toggle="tab" id="link-tournaments">TOURNAMENTS</a></li>
             </ul>
@@ -75,7 +78,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="tab-pane fade" id="profile-matches">
+                        <div class="tab-pane fade" id="profile-history">
                             <div class="m-b-10"><b>Matches ({{friendlyMatches1v1.length + friendlyMatches2v2.length}})</b></div>
                             <br>
                             <div class="m-b-10"><b>1v1 ({{friendlyMatches1v1.length}})</b></div>
@@ -108,6 +111,106 @@
                                 </div>
                                 <div class="col text-right">{{m.team2.teamName}}</div>
                                 <div class="col text-right">{{m.matchStatus.statusName}}</div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="profile-request-matches" *ngIf="selectedUser.userID == currentUser.userID">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="card shadow">
+                                        <div class="card-header border-0">
+                                            <h3 class="mb-0 float-left">Requests ({{requestMatches.length}})</h3>
+                                        </div>
+                                        <div class="table-responsive" style="overflow-y: hidden;">
+                                            <table class="table align-items-center table-flush">
+                                                <thead class="thead-light">
+                                                    <tr>
+                                                        <th scope="col">Name user</th>
+                                                        <th scope="col">Date</th>
+                                                        <th scope="col"></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let m of requestMatches">
+                                                        <th scope="row">
+                                                            <div class="media align-items-center">
+                                                                <div class="media-body">
+                                                                    <span class="mb-0 text-sm text-truncate">{{m.player1.firstName}} {{m.player1.lastName}}</span>
+                                                                </div>
+                                                            </div>
+                                                        </th>
+                                                        <td>
+                                                            {{m.date}}
+                                                        </td>
+                                                        <td class="text-right">
+                                                            <div ngbDropdown class="dropdown" style="position:static;overflow: visible;">
+                                                                <a ngbDropdownToggle class="btn btn-sm btn-icon-only text-light"
+                                                                    role="button" aria-expanded="false">
+                                                                    <mat-icon style="color: black;">more_vert</mat-icon>
+                                                                </a>
+                                                                <div ngbDropdownMenu class="dropdown-menu dropdown-menu-left">
+                                                                    <a ngbDropdownItem class="dropdown-item" (click)="acceptMatch(m)" style="cursor: pointer;">Accept</a>
+                                                                    <a ngbDropdownItem class="dropdown-item" (click)="declineMatch(m)" style="cursor: pointer;">Decline</a>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="profile-planned-matches" *ngIf="selectedUser.userID == currentUser.userID">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="card shadow">
+                                        <div class="card-header border-0">
+                                            <h3 class="mb-0 float-left">Planned ({{plannedMatches.length}})</h3>
+                                        </div>
+                                        <div class="table-responsive" style="overflow-y: hidden;">
+                                            <table class="table align-items-center table-flush">
+                                                <thead class="thead-light">
+                                                    <tr>
+                                                        <th scope="col">Name user</th>
+                                                        <th scope="col">Date</th>
+                                                        <th scope="col">Status</th>
+                                                        <th scope="col"></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let m of plannedMatches">
+                                                        <th scope="row">
+                                                            <div class="media align-items-center">
+                                                                <div class="media-body">
+                                                                    <span class="mb-0 text-sm text-truncate">{{m.player1.firstName}} {{m.player1.lastName}}</span>
+                                                                </div>
+                                                            </div>
+                                                        </th>
+                                                        <td>
+                                                            {{m.date}}
+                                                        </td>
+                                                        <td>
+                                                            
+                                                        </td>
+                                                        <td class="text-right">
+                                                            <div ngbDropdown class="dropdown" style="position:static;overflow: visible;">
+                                                                <a ngbDropdownToggle class="btn btn-sm btn-icon-only text-light"
+                                                                    role="button" aria-expanded="false">
+                                                                    <mat-icon style="color: black;">more_vert</mat-icon>
+                                                                </a>
+                                                                <div ngbDropdownMenu class="dropdown-menu dropdown-menu-left">
+                                                                    <a *ngIf="m.matchStatusID == 4" ngbDropdownItem class="dropdown-item" (click)="startMatch(m)" style="cursor: pointer;">Start match</a>
+                                                                    <a ngbDropdownItem class="dropdown-item" (click)="cancelMatch(m)" style="cursor: pointer;">Cancel match</a>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="tab-pane fade" id="profile-competitions">
@@ -246,6 +349,23 @@
         </div>
     </div>
 </div>
+
+<!-- Model -->
+<ng-template #contentChallengeUserModal let-modal>
+  <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Challenge user</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+      </button>
+  </div>
+  <div class="modal-body">
+      <p>You are about to challenge <span class="font-weight-bold">'{{selectedUser.firstName}} {{selectedUser.lastName}}'</span>, are you sure?</p>
+  </div>
+  <div class="modal-footer">
+      <button class="btn btn-outline-primary" (click)="modal.dismiss()">Cancel</button>
+      <button type="button" class="btn btn-success white" (click)="challengeUser()">Challenge</button>
+  </div>
+</ng-template>
 <!--<h2>Team statistics</h2>
 <hr>
 <div class="row text-center">

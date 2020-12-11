@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AuthService } from '../auth/auth.service';
 import { Competition } from '../models/competition.model';
 import { Match } from '../models/match.model';
@@ -21,7 +22,9 @@ export class MyProfileComponent implements OnInit {
   selectedUser: User = null;
 
   currentUser: User;
-  allMatches: Match[];
+  allMatches: Match[] = [];
+  plannedMatches: Match[] = [];
+  requestMatches: Match[] = [];
   friendlyMatches1v1: Match[] = [];
   friendlyMatches2v2: Match[] = [];
   competitions: Competition[] = [];
@@ -42,7 +45,7 @@ export class MyProfileComponent implements OnInit {
   lostPercent: number = 0;
   totalPercent: number = 0;
 
-  constructor(private _authService: AuthService, private _userTeamService: UserTeamService, private _userService: UserService, private _matchService: MatchService, private route: ActivatedRoute, private router: Router) { }
+  constructor(private _authService: AuthService, private _userTeamService: UserTeamService, private _userService: UserService, private _matchService: MatchService, private route: ActivatedRoute, private router: Router, private _modalService: NgbModal) { }
 
   goToEdit(user: User) {
     this.router.navigate(['user/profile/edit'], { queryParams: { id: user.userID } });
@@ -50,6 +53,42 @@ export class MyProfileComponent implements OnInit {
 
   goToTeamPage(team: Team) {
     this.router.navigate(['user/teams/detail'], { queryParams: { id: team.teamID } });
+  }
+
+  openChallengeUserModal(contentChallengeUserModal) {
+    this._modalService.open(contentChallengeUserModal);
+  }
+
+  startMatch(match: Match) {
+    this._matchService.startMatch(match.matchID, match).subscribe(res => {
+      this.ngOnInit();
+      //navigate to match start page
+    });
+  }
+
+  cancelMatch(match: Match) {
+    this._matchService.cancelMatch(match.matchID, match).subscribe(res => {
+      this.ngOnInit();
+    });
+  }
+
+  acceptMatch(match: Match) {
+    this._matchService.acceptMatch(match.matchID, match).subscribe(res => {
+      this.ngOnInit();
+    });
+  }
+
+  declineMatch(match: Match) {
+    this._matchService.deleteMatch(match.matchID).subscribe();
+    this.requestMatches.splice(this.requestMatches.indexOf(match));
+  }
+
+  challengeUser() {
+    var match = new Match(0, 0, 0, new Date(), 1, null, 2, null, null, null, null, null, this.currentUser.userID, null, null, null, Number(this.selectedUserID),
+    null, null, null, 5, null, null, null, null, null);
+    console.log(match);
+    this._matchService.addMatch(match).subscribe();
+    this._modalService.dismissAll();
   }
 
   changeTab(id: string, linkid: string) {
@@ -73,6 +112,18 @@ export class MyProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.allMatches = [];
+    this.plannedMatches = [];
+    this.requestMatches = [];
+    this.friendlyMatches1v1 = [];
+    this.friendlyMatches2v2 = [];
+    this.competitions = [];
+    this.competitionsIds = [];
+    this.tournaments = [];
+    this.tournamentIds = [];
+    this.currentTab = "profile-personal-statistics";
+    this.currentLink = "link-personal-statistics";
+    this.userTeams = [];
     this.pageLoaded = false;
     this._authService.user.subscribe((user: User) => {
       if (user) {
@@ -92,8 +143,10 @@ export class MyProfileComponent implements OnInit {
               this.competitionsIds = [];
               this.tournamentIds = [];
               matches.forEach(match => {
-                if (match.tournamentID == null && match.competitionID == null && match.player2ID == null) this.friendlyMatches1v1.push(match);
-                if (match.tournamentID == null && match.competitionID == null && match.player2ID != null) this.friendlyMatches2v2.push(match);
+                if (match.tournamentID == null && match.competitionID == null && match.player2ID == null && (match.matchStatusID == 4 || match.matchStatusID == 3)) this.plannedMatches.push(match);
+                if (match.tournamentID == null && match.competitionID == null && match.player2ID == null && match.matchStatusID == 5 && this.selectedUser.userID != match.player1ID) this.requestMatches.push(match);
+                if (match.tournamentID == null && match.competitionID == null && match.player2ID == null && (match.matchStatusID == 2 || match.matchStatusID == 1)) this.friendlyMatches1v1.push(match);
+                if (match.tournamentID == null && match.competitionID == null && match.player2ID != null && (match.matchStatusID == 2 || match.matchStatusID == 1)) this.friendlyMatches2v2.push(match);
                 if (match.tournamentID == null && match.competitionID != null && !this.competitionsIds.some(x => x === match.competitionID)) {
                    this.competitions.push(match.competition);
                    this.competitionsIds.push(match.competitionID);
