@@ -107,9 +107,7 @@ export class MyProfileComponent implements OnInit {
     currentTabel.classList.remove('active');
     currentTabel.classList.remove('show');
 
-
-  
-  let element: HTMLElement = document.getElementById(id) as HTMLElement;
+    let element: HTMLElement = document.getElementById(id) as HTMLElement;
     element.classList.add("active");
     element.classList.add("show");
 
@@ -118,6 +116,7 @@ export class MyProfileComponent implements OnInit {
     linkel.classList.add("show");
     this.currentTab = id;
     this.currentLink = linkid;
+  }
 
   ngOnInit(): void {
     this.allMatches = [];
@@ -135,19 +134,13 @@ export class MyProfileComponent implements OnInit {
     this.pageLoaded = false;
     this._authService.user.subscribe((user: User) => {
       if (user) {
-        this.userId = user.userID;
-        
-        //console.log(this.user)
-        this.userSub = this._userService.getUserById(this.userId).subscribe((user: User) => {
-          this.user = user
-          console.log(this.user.imagePath)
-          this.imageSource = user.imagePath;}
+        this.currentUser = user;
         this.route.queryParams.subscribe(params => {
           this.selectedUserID = params['id'];
         });
-        this.currentUser = user;
         this._userService.getUserById(this.selectedUserID).subscribe((user: User) => {
           this.selectedUser = user;
+          this.imageSource = user.imagePath;
           let StrUserBirtDay = user.birthDate.toString();
           this.userBirthday = StrUserBirtDay.substr(0, 10);
           this.calculateStatistics();
@@ -188,13 +181,6 @@ export class MyProfileComponent implements OnInit {
     }
   }
 
-  ngOnDestroy(): void {
-    this.userIdSub.unsubscribe();
-    if (this.userSub) {
-      this.userSub.unsubscribe();
-    }
-  }
-
   setFilename(files) {
     if (files[0]) {
       this.filename = files[0].name;
@@ -209,7 +195,7 @@ export class MyProfileComponent implements OnInit {
     }
 
     this._userService
-      .upload(formData, this.userId)
+      .upload(formData, this.currentUser.userID)
       .subscribe(({path}) => (this.imageSource = path));
       console.log(this.imageSource)
   }
