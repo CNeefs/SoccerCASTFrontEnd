@@ -1,23 +1,15 @@
 <div class="container" *ngIf="pageLoaded">
-    <button type="button" (click)="fileInput.click()">Choose File</button>
-    <input
-    hidden
-    #fileInput
-    type="file"
-    id="file"
-    (change)="setFilename(fileInput.files)"
-    />
-    <label>{{ filename }}</label>
-    <br />
-    <button type="button" (click)="save(fileInput.files)">Save</button>
-    <br />
-    <img [src]="imageSource"/>
     <div id="content" class="content p-0">
         <div class="profile-header">
             <div class="profile-header-cover"></div>
             <div class="profile-header-content">
                 <div class="profile-header-img mb-4">
-                    <img src="https://bootdey.com/img/Content/avatar/avatar7.png" class="mb-4" alt="" />
+                    <img [src]="imageSource" class="mb-4 image" alt=""/>
+                    <div class="overlay" (click)="openProfilePictureModal(contentChangeProfilePictureModal)">
+                        <a  class="icon" title="Edit Profile Picture">
+                            <mat-icon>create</mat-icon>
+                        </a>
+                    </div>
                 </div>
     
                 <div class="profile-header-info" *ngIf="selectedUser != null">
@@ -387,6 +379,25 @@
       <button type="button" class="btn btn-success white" (click)="challengeUser()">Challenge</button>
   </div>
 </ng-template>
+
+<!-- Model -->
+<ng-template #contentChangeProfilePictureModal let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Change profile picture</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body text-center">
+        <button type="button" class="btn btn-success white" (click)="fileInput.click()">Choose File</button>
+    <input hidden #fileInput type="file" id="file" (change)="setFilename(fileInput.files)"/> <br>
+    <label>{{ filename }}</label>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-outline-primary" (click)="modal.dismiss()">Cancel</button>
+        <button type="button" class="btn btn-success white" (click)="save(fileInput.files)">Save</button>
+    </div>
+  </ng-template>
 <!--<h2>Team statistics</h2>
 <hr>
 <div class="row text-center">
