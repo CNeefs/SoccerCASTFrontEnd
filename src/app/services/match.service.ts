@@ -25,17 +25,17 @@ export class MatchService {
     }
 
     acceptMatch(id: Number, match: Match) {
-        match.matchStatusID = 4;
+        match.matchStatusID = 6;
         return this.http.put<Match>(this.baseUrl + "match/" + id, match);
     }
 
     startMatch(id: Number, match: Match) {
-        match.matchStatusID = 3;
+        match.matchStatusID = 5;
         return this.http.put<Match>(this.baseUrl + "match/" + id, match);
     }
 
     cancelMatch(id: Number, match: Match) {
-        match.matchStatusID = 1;
+        match.matchStatusID = 3;
         return this.http.put<Match>(this.baseUrl + "match/" + id, match);
     }
 
