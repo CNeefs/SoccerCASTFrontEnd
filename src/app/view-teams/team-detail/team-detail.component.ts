@@ -84,6 +84,7 @@ export class TeamDetailComponent implements OnInit {
       delay: 2000,
       autohide: true
     });
+    this.ngOnInit();
   }
 
   goToUserPage(user: User) {

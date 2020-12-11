@@ -5,7 +5,7 @@
             <div class="profile-header-content">
                 <div class="profile-header-img mb-4">
                     <div style="width: 100%; height: 100%;">
-                        <img [src]="imageSource" class="mb-4 image" alt="" style="width: 100%; height: 100%; object-fit: cover;"/>
+                        <img [src]="selectedUser.imagePath" class="mb-4 image" alt="" style="width: 100%; height: 100%; object-fit: cover;"/>
                     </div>
                     <div *ngIf="selectedUser.userID == currentUser.userID" class="overlay" (click)="openProfilePictureModal(contentChangeProfilePictureModal)">
                         <a class="icon" title="Edit Profile Picture" style="cursor: pointer;">

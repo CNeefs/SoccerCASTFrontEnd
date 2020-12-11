@@ -4,15 +4,20 @@
             <div class="profile-header-cover"></div>
             <div class="profile-header-content">
                 <div class="profile-header-img mb-4">
-                    <img [src]="selectedTeam.imagePath" class="mb-4 image" alt=""  style="width: 100%; height: 100%; object-fit: cover;"/>
-                    <div class="overlay" (click)="openProfilePictureModal(contentChangeProfilePictureModal)">
-                        <a  class="icon" title="Edit Profile Picture">
+                    <div style="width: 100%; height: 100%;">
+                        <img [src]="selectedTeam.imagePath" class="mb-4 image" alt="" style="width: 100%; height: 100%; object-fit: cover;"/>
+                    </div>
+                    <div *ngIf="selectedTeam.captainID == currentUser.userID" class="overlay" (click)="openProfilePictureModal(contentChangeProfilePictureModal)">
+                        <a  class="icon" title="Edit Teamprofile Picture" style="cursor: pointer;">
                             <mat-icon>create</mat-icon>
                         </a>
                     </div>
                 </div>
     
                 <div class="profile-header-info" *ngIf="selectedTeam != null">
+                    <span *ngIf="selectedTeam.teamStatusID == 1" class="m-b-sm float-right badge badge-dot mr-4"><i class="bg-success"></i>{{selectedTeam.teamStatus.statusName}}</span>
+                    <span *ngIf="selectedTeam.teamStatusID == 2" class="m-b-sm float-right badge badge-dot mr-4"><i class="bg-warning"></i>{{selectedTeam.teamStatus.statusName}}</span>
+                    <span *ngIf="selectedTeam.teamStatusID == 3" class="m-b-sm float-right badge badge-dot mr-4"><i class="bg-danger"></i>{{selectedTeam.teamStatus.statusName}}</span>
                     <h4 class="m-t-sm">{{selectedTeam.teamName}}</h4>
                     <p class="m-b-sm">{{selectedTeam.companyName}}</p>
                     <a *ngIf="selectedTeam.teamStatusID==1 && userTeam == null" (click)="joinTeam(selectedTeam)" class="btn btn-xs btn-success mb-2 mr-2">Join team</a>
