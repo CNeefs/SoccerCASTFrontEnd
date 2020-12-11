@@ -1,0 +1,50 @@
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+<div class="main-content">
+    <div class="container mt-7">
+        <br>
+        <div class="row">
+            <div class="col">
+                <div class="card shadow">
+                    <div class="row mt-4">
+                        <div class="col-4 text-center">
+                            <div class="match-img mx-auto">
+                                <img src="" class="image" alt="team1">
+                            </div>
+                        </div>
+                        <div class="col text-center mt-5">
+                            <h2>4 - 8</h2>
+                        </div>
+                        <div class="col-4">
+                            <div class="match-img mx-auto">
+                                <img src="" class="image" alt="team2">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-4">
+                        <div class="col-4 text-center">
+                            <p>Team 1</p>
+                            <button type="button" class="btn btn-success changeScoreButton" (click)="changeScore1Add()">+</button>
+                            <button type="button" class="btn btn-danger changeScoreButton" (click)="changeScore1Remove()">-</button>
+                        </div>
+                        <div class="col-4">
+                            <div class="text-center">
+                                <img src="../../assets/LogoVS.png" width="125px" alt="vs">
+                            </div>
+                        </div>
+                        <div class="col-4 text-center">
+                            <p>Team 2</p>
+                            <button type="button" class="btn btn-success changeScoreButton" (click)="changeScore2Add()">+</button>
+                            <button type="button" class="btn btn-danger changeScoreButton" (click)="changeScore2Remove()">-</button>
+                        </div>
+                    </div>
+                    <div class="row mb-4">
+                        <div class="col-4"></div>
+                        <div class="col-4 text-center"><button type="button" class="btn btn-danger" (click)="stopMatch()">Stop match</button>
+                        </div>
+                        <div class="col-4"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
