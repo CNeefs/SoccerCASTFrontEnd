@@ -87,7 +87,7 @@
                                             <table class="table align-items-center table-flush">
                                                 <thead class="thead-light">
                                                     <tr>
-                                                        <th scope="col">Name user</th>
+                                                        <th scope="col">Team name</th>
                                                         <th scope="col">Date</th>
                                                         <th scope="col"></th>
                                                     </tr>
@@ -97,7 +97,7 @@
                                                         <th scope="row">
                                                             <div class="media align-items-center">
                                                                 <div class="media-body">
-                                                                    <span class="mb-0 text-sm text-truncate">{{m.player1.firstName}} {{m.player1.lastName}}</span>
+                                                                    <span class="mb-0 text-sm text-truncate">{{m.team1.teamName}}</span>
                                                                 </div>
                                                             </div>
                                                         </th>
@@ -119,6 +119,10 @@
                                                     </tr>
                                                 </tbody>
                                             </table>
+                                             <!--Nothing found-->
+                                             <div class="card-header border-0 mb-4" *ngIf="requestMatches.length == 0">
+                                                <h5 class="mb-0 float-left">Nothing found</h5>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -135,7 +139,7 @@
                                             <table class="table align-items-center table-flush">
                                                 <thead class="thead-light">
                                                     <tr>
-                                                        <th scope="col">Name user</th>
+                                                        <th scope="col">Team name</th>
                                                         <th scope="col">Date</th>
                                                         <th scope="col">Status</th>
                                                         <th scope="col"></th>
@@ -146,7 +150,7 @@
                                                         <th scope="row">
                                                             <div class="media align-items-center">
                                                                 <div class="media-body">
-                                                                    <span class="mb-0 text-sm text-truncate">{{m.player1.firstName}} {{m.player1.lastName}}</span>
+                                                                    <span class="mb-0 text-sm text-truncate">{{m.team1.teamName}}</span>
                                                                 </div>
                                                             </div>
                                                         </th>
@@ -179,6 +183,10 @@
                                                     </tr>
                                                 </tbody>
                                             </table>
+                                            <!--Nothing found-->
+                                            <div class="card-header border-0 mb-4" *ngIf="plannedMatches.length == 0">
+                                                <h5 class="mb-0 float-left">Nothing found</h5>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -233,6 +241,10 @@
                                                     </tr>
                                                 </tbody>
                                             </table>
+                                            <!--Nothing found-->
+                                            <div class="card-header border-0 mb-4" *ngIf="competitions.length == 0">
+                                                <h5 class="mb-0 float-left">Nothing found</h5>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -287,6 +299,10 @@
                                                     </tr>
                                                 </tbody>
                                             </table>
+                                             <!--Nothing found-->
+                                             <div class="card-header border-0 mb-4" *ngIf="tournaments.length == 0">
+                                                <h5 class="mb-0 float-left">Nothing found</h5>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
