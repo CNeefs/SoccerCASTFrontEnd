@@ -29,8 +29,8 @@
                             <p *ngIf="currentMatch.team1">{{currentMatch.team1.teamName}}</p>
                             <p *ngIf="currentMatch.player1 && !currentMatch.team1">{{currentMatch.player1.firstName}} {{currentMatch.player1.lastName}}</p>
                             <p *ngIf="currentMatch.player2 && !currentMatch.team1">{{currentMatch.player2.firstName}} {{currentMatch.player2.lastName}}</p>
-                            <button type="button" class="btn btn-success changeScoreButton" (click)="changeScore1Add()">+</button>
-                            <button *ngIf="this.currentMatch.score1 > 0" type="button" class="btn btn-danger changeScoreButton" (click)="changeScore1Remove()">-</button>
+                            <button type="button" class="btn btn-success changeScoreButton" (click)="changeScore('1', 'add')">+</button>
+                            <button *ngIf="this.currentMatch.score1 > 0" type="button" class="btn btn-danger changeScoreButton" (click)="changeScore('1', 'remove')">-</button>
                         </div>
                         <div class="col-4 mt-5 mt-md-0">
                             <div class="text-center">
@@ -41,8 +41,8 @@
                             <p *ngIf="currentMatch.team2">{{currentMatch.team2.teamName}}</p>
                             <p *ngIf="currentMatch.player3 && !currentMatch.team2">{{currentMatch.player3.firstName}} {{currentMatch.player3.lastName}}</p>
                             <p *ngIf="currentMatch.player4 && !currentMatch.team2">{{currentMatch.player4.firstName}} {{currentMatch.player4.lastName}}</p>
-                            <button type="button" class="btn btn-success changeScoreButton" (click)="changeScore2Add()">+</button>
-                            <button *ngIf="this.currentMatch.score2 > 0" type="button" class="btn btn-danger changeScoreButton" (click)="changeScore2Remove()">-</button>
+                            <button type="button" class="btn btn-success changeScoreButton" (click)="changeScore('2', 'add')">+</button>
+                            <button *ngIf="this.currentMatch.score2 > 0" type="button" class="btn btn-danger changeScoreButton" (click)="changeScore('2', 'remove')">-</button>
                         </div>
                     </div>
                     <div class="row mb-4">

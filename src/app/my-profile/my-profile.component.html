@@ -306,7 +306,7 @@
                                                 <thead class="thead-light">
                                                     <tr>
                                                         <th scope="col">Edition</th>
-                                                        <th scope="col">Max teams</th>
+                                                        <th scope="col">Teams</th>
                                                         <th scope="col">Winner</th>
                                                         <th scope="col"></th>
                                                     </tr>
@@ -321,7 +321,7 @@
                                                             </div>
                                                         </th>
                                                         <td>
-                                                            {{t.match_Count}}
+                                                            {{t.total_Joined}}/{{t.match_Count}}
                                                         </td>
                                                         <td *ngIf="t.winner">
                                                             {{t.winner}}
