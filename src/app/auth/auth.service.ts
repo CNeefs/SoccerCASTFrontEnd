@@ -17,11 +17,9 @@ export class AuthService {
     constructor(private _authorizationService: AuthorizationService, private _userService: UserService, private http: HttpClient, private router: Router) { }
 
     signup(newUser: User) {
-        //console.log('new user: ' + newUser)
-        return this.http.post<User>(this.baseUrl + "user", newUser)
-            .pipe(tap(userData => {
-                this.authenticationHandler(userData);
-            }));
+        this.http.post<User>(this.baseUrl + "user", newUser).subscribe(userData => {
+            this.authenticationHandler(userData);
+        });
     }
 
     login(userLogin: UserLogin) {
@@ -48,7 +46,7 @@ export class AuthService {
     }
 
     logout() {
-        //this.user.next(null);
+        this.user.next(null);
         localStorage.removeItem('userToken');
         this.router.navigate(['/login']);
         this._authorizationService.initializePermissions(null);
@@ -58,5 +56,6 @@ export class AuthService {
         this._authorizationService.initializePermissions(currentUser.permissions);
         this.user.next(currentUser);
         localStorage.setItem("userToken", JSON.stringify(currentUser.token));
+        this.router.navigate(['/home']);
     }
 }

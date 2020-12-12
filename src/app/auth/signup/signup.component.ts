@@ -53,15 +53,8 @@ export class SignupComponent implements OnInit {
     const convertedBirthdate = new Date(year, month-1, day+1, 0, 0, 0, 0)
     // const convertedBirthdate: string = year+'-'+month+'-'+day+'T00:00:00'
 
-    const user = new User(0, value.firstname, value.lastname, value.email, value.password, null, convertedBirthdate, 0, 0, [this.userRole], null)
-    console.log(user);
+    const user = new User(0, value.firstname, value.lastname, value.email, value.password, null, convertedBirthdate, 0, 0, [this.userRole], null);
     //Unsubscribe nodig?
-    this.userSignupSub = this.authService.signup(user).subscribe();
-  }
-
-  ngOnDestroy(): void {
-    if(this.userSignupSub) {
-      this.userSignupSub.unsubscribe();
-    }
+    this.authService.signup(user);
   }
 }

@@ -24,7 +24,6 @@ export class AuthComponent implements OnInit {
 
     this.authService.login(this.userLogin);
     loginForm.reset();
-    this.router.navigate(['/home']);
   }
 
   navigateSignUp() {
