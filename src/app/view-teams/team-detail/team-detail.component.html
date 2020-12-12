@@ -89,6 +89,7 @@
                                                     <tr>
                                                         <th scope="col">Team name</th>
                                                         <th scope="col">Date</th>
+                                                        <th scope="col">Score</th>
                                                         <th scope="col"></th>
                                                     </tr>
                                                 </thead>
@@ -104,6 +105,12 @@
                                                         <td>
                                                             {{m.date}}
                                                         </td>
+                                                        <td *ngIf="m.matchStatusID == 1">
+                                                            {{m.score1}} - {{m.score2}}
+                                                        </td>
+                                                        <td *ngIf="m.matchStatusID != 1">
+                                                            TBD
+                                                        </td>
                                                         <td class="text-right">
                                                             <div ngbDropdown class="dropdown" style="position:static;overflow: visible;">
                                                                 <a ngbDropdownToggle class="btn btn-sm btn-icon-only text-light"
@@ -111,8 +118,12 @@
                                                                     <mat-icon style="color: black;">more_vert</mat-icon>
                                                                 </a>
                                                                 <div ngbDropdownMenu class="dropdown-menu dropdown-menu-left">
-                                                                    <a ngbDropdownItem class="dropdown-item" (click)="openAcceptChallengeModal(m, contentAcceptChallengeModal)" style="cursor: pointer;">Accept</a>
-                                                                    <a ngbDropdownItem class="dropdown-item" (click)="declineMatch(m)" style="cursor: pointer;">Decline</a>
+                                                                    <a *ngIf="m.matchStatusID == 2 && m.team1ID != selectedTeam.teamID" ngbDropdownItem class="dropdown-item" (click)="openAcceptChallengeModal(m, contentAcceptChallengeModal)" style="cursor: pointer;">Accept</a>
+                                                                    <a *ngIf="m.matchStatusID == 2 && m.team1ID != selectedTeam.teamID" ngbDropdownItem class="dropdown-item" (click)="declineMatch(m)" style="cursor: pointer;">Decline</a>
+                                                                    <a *ngIf="m.matchStatusID == 2 && m.team1ID == selectedTeam.teamID" ngbDropdownItem class="dropdown-item" (click)="declineMatch(m)" style="cursor: pointer;">Delete Request</a>
+                                                                    <a *ngIf="m.matchStatusID == 1 && m.team1ID != selectedTeam.teamID" ngbDropdownItem class="dropdown-item" (click)="acceptScore(m)" style="cursor: pointer;">Accept Score</a>
+                                                                    <a *ngIf="m.matchStatusID == 1 && m.team1ID != selectedTeam.teamID" ngbDropdownItem class="dropdown-item" (click)="declineScore(m)" style="cursor: pointer;">Decline Score</a>
+                                                                    <a *ngIf="m.matchStatusID == 1 && m.team1ID == selectedTeam.teamID" ngbDropdownItem class="dropdown-item" style="pointer-events: none;color: red;">Other team needs to accept the score</a>
                                                                 </div>
                                                             </div>
                                                         </td>

@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { AuthService } from '../auth/auth.service';
 import { Match } from '../models/match.model';
+import { User } from '../models/user.model';
 import { MatchService } from '../services/match.service';
 import { ToastService } from '../toast/services/toast.service';
 
@@ -9,25 +12,35 @@ import { ToastService } from '../toast/services/toast.service';
   templateUrl: './match.component.html',
   styleUrls: ['./match.component.scss']
 })
-export class MatchComponent implements OnInit {
+export class MatchComponent implements OnInit, OnDestroy {
   currentMatch: Match;
+  currentUser: User;
   currentMatchId: number;
   matchLoaded: boolean;
 
-  constructor(private _matchService: MatchService, private route: ActivatedRoute, private router: Router, private _toastService: ToastService) { }
+  userSub: Subscription;
+
+  constructor(private _matchService: MatchService, private _authService: AuthService, private route: ActivatedRoute, private router: Router, private _toastService: ToastService) { }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       this.currentMatchId = params['id'];
     });
-
-    this._matchService.getMatchByMatchId(this.currentMatchId).subscribe((match: Match) => {
-      this.currentMatch = match;
-      console.log(this.currentMatch);
-      this.matchLoaded = true;
-    }, err => {
-      this.router.navigate(['not-found']);
+    this.userSub = this._authService.user.subscribe((user: User) => {
+      if (user) {
+        this.currentUser = user;
+        this._matchService.getMatchByMatchId(this.currentMatchId).subscribe((match: Match) => {
+          this.currentMatch = match;
+          this.matchLoaded = true;
+        }, err => {
+          this.router.navigate(['not-found']);
+        });
+      }
     });
+  }
+
+  ngOnDestroy(): void {
+    this.userSub.unsubscribe();
   }
 
   stopMatch() {
@@ -35,6 +48,11 @@ export class MatchComponent implements OnInit {
       this.currentMatch.matchStatusID = 1;
       this._matchService.editMatch(this.currentMatch.matchID, this.currentMatch).subscribe(() => {
         this.router.navigate(['user/teams']);
+        this._toastService.show("Score review has been send", {
+          classname: 'bg-success text-light',
+          delay: 2000,
+          autohide: true
+        });
       });
     } else {
       this._toastService.show("Keep playing we don't want any draws", {
