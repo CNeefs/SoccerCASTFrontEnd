@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Subscription } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
 import { Competition } from '../models/competition.model';
 import { Match } from '../models/match.model';
@@ -20,7 +21,7 @@ import { ToastService } from '../toast/services/toast.service';
   templateUrl: './my-profile.component.html',
   styleUrls: ['./my-profile.component.scss', '../styles/table_style.scss', '../styles/validation_style.scss']
 })
-export class MyProfileComponent implements OnInit {
+export class MyProfileComponent implements OnInit, OnDestroy {
 
   challengeUserForm: FormGroup;
   selectedUserID: number = 0;
@@ -41,7 +42,9 @@ export class MyProfileComponent implements OnInit {
   currentTab: string = "profile-personal-statistics";
   currentLink: string = "link-personal-statistics";
 
-  pageLoaded: boolean = false;
+  userLoaded: boolean = false;
+  matchesLoaded: boolean = false;
+  userTeamsLoaded: boolean = false;
 
   userTeams: Team[];
   userBirthday: string;
@@ -51,6 +54,8 @@ export class MyProfileComponent implements OnInit {
   lostPercent: number = 0;
   totalPercent: number = 0;
   filename = '';
+
+  userSub: Subscription;
 
   constructor(private _tableService: TableService, private _authService: AuthService, private _userTeamService: UserTeamService, private _userService: UserService, 
     private _matchService: MatchService, private route: ActivatedRoute, private router: Router, private _modalService: NgbModal, private fb: FormBuilder, private _toastService: ToastService) { }
@@ -74,7 +79,7 @@ export class MyProfileComponent implements OnInit {
   startMatch(match: Match) {
     match.date = new Date();
     this._matchService.startMatch(match.matchID, match).subscribe(res => {
-      this.ngOnInit();
+      this.getMatches();
       //navigate to match start page
     });
   }
@@ -85,13 +90,13 @@ export class MyProfileComponent implements OnInit {
 
   cancelMatch(match: Match) {
     this._matchService.cancelMatch(match.matchID, match).subscribe(res => {
-      this.ngOnInit();
+      this.getMatches();
     });
   }
 
   acceptMatch(match: Match) {
     this._matchService.acceptMatch(match.matchID, match).subscribe(res => {
-      this.ngOnInit();
+      this.getMatches();
     });
   }
 
@@ -132,21 +137,15 @@ export class MyProfileComponent implements OnInit {
     this.currentLink = linkid;
   }
 
+  ngOnDestroy(): void {
+    this.userSub.unsubscribe();
+  }
+
   ngOnInit(): void {
-    this.allMatches = [];
-    this.plannedMatches = [];
-    this.requestMatches = [];
-    this.friendlyMatches1v1 = [];
-    this.friendlyMatches2v2 = [];
-    this.competitions = [];
-    this.competitionsIds = [];
-    this.tournaments = [];
-    this.tournamentIds = [];
     this.currentTab = "profile-personal-statistics";
     this.currentLink = "link-personal-statistics";
     this.userTeams = [];
-    this.pageLoaded = false;
-    this._authService.user.subscribe((user: User) => {
+    this.userSub = this._authService.user.subscribe((user: User) => {
       if (user) {
         this.currentUser = user;
         this.route.queryParams.subscribe(params => {
@@ -163,31 +162,44 @@ export class MyProfileComponent implements OnInit {
           let StrUserBirtDay = user.birthDate.toString();
           this.userBirthday = StrUserBirtDay.substr(0, 10);
           this.calculateStatistics();
-          this._userTeamService.getUserTeamsByUserId(this.selectedUserID).subscribe((teams: Team[]) => {
-            this.userTeams = teams;
-            this._matchService.getMatchesByUserId(this.selectedUserID).subscribe(matches => {
-              this.allMatches = matches;
-              this.competitionsIds = [];
-              this.tournamentIds = [];
-              matches.forEach(match => {
-                if (match.tournamentID == null && match.competitionID == null && match.player2ID == null && (match.matchStatusID == 6 || match.matchStatusID == 5)) this.plannedMatches.push(match);
-                if (match.tournamentID == null && match.competitionID == null && match.player2ID == null && match.matchStatusID == 2 && this.selectedUser.userID != match.player1ID) this.requestMatches.push(match);
-                if (match.tournamentID == null && match.competitionID == null && match.player2ID == null && (match.matchStatusID == 4 || match.matchStatusID == 3)) this.friendlyMatches1v1.push(match);
-                if (match.tournamentID == null && match.competitionID == null && match.player2ID != null && (match.matchStatusID == 4 || match.matchStatusID == 3)) this.friendlyMatches2v2.push(match);
-                if (match.tournamentID == null && match.competitionID != null && !this.competitionsIds.some(x => x === match.competitionID)) {
-                   this.competitions.push(match.competition);
-                   this.competitionsIds.push(match.competitionID);
-                }
-                if (match.tournamentID != null && match.competitionID == null && !this.tournamentIds.some(x => x === match.tournamentID)) {
-                   this.tournaments.push(match.tournament);
-                   this.tournamentIds.push(match.tournamentID);
-                }
-              });
-              this.pageLoaded = true;
-            });
-          })
-        })
+          this.userLoaded = true;
+          this.getMatches();
+        });
+        this._userTeamService.getUserTeamsByUserId(this.selectedUserID).subscribe((teams: Team[]) => {
+          this.userTeams = teams;
+          this.userTeamsLoaded = true;
+        });
       }
+    });
+  }
+
+  getMatches() {
+    this.allMatches = [];
+    this.plannedMatches = [];
+    this.requestMatches = [];
+    this.friendlyMatches1v1 = [];
+    this.friendlyMatches2v2 = [];
+    this.competitions = [];
+    this.tournaments = [];
+    this._matchService.getMatchesByUserId(this.selectedUserID).subscribe(matches => {
+      this.allMatches = matches;
+      this.competitionsIds = [];
+      this.tournamentIds = [];
+      matches.forEach(match => {
+        if (match.tournamentID == null && match.competitionID == null && match.player2ID == null && (match.matchStatusID == 6 || match.matchStatusID == 5)) this.plannedMatches.push(match);
+        if (match.tournamentID == null && match.competitionID == null && match.player2ID == null && match.matchStatusID == 2 && this.selectedUser.userID != match.player1ID) this.requestMatches.push(match);
+        if (match.tournamentID == null && match.competitionID == null && match.player2ID == null && (match.matchStatusID == 4 || match.matchStatusID == 3)) this.friendlyMatches1v1.push(match);
+        if (match.tournamentID == null && match.competitionID == null && match.player2ID != null && (match.matchStatusID == 4 || match.matchStatusID == 3)) this.friendlyMatches2v2.push(match);
+        if (match.tournamentID == null && match.competitionID != null && !this.competitionsIds.some(x => x === match.competitionID)) {
+           this.competitions.push(match.competition);
+           this.competitionsIds.push(match.competitionID);
+        }
+        if (match.tournamentID != null && match.competitionID == null && !this.tournamentIds.some(x => x === match.tournamentID)) {
+           this.tournaments.push(match.tournament);
+           this.tournamentIds.push(match.tournamentID);
+        }
+      });
+      this.matchesLoaded = true;
     });
   }
 
