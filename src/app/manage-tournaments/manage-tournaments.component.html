@@ -51,6 +51,9 @@
                 </tr>
               </tbody>
             </table>
+            <div *ngIf="pageLoaded && tournamentsLength == 0" class="card-header border-0">
+              <h3 class="float-left mb-3">Nothing found</h3>
+            </div>
             <div *ngIf="!pageLoaded" class="mb-3 mt-3">
               <app-loading-spinner></app-loading-spinner>
             </div>

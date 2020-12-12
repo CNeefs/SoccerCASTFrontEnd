@@ -14,6 +14,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 export class ManageTournamentsComponent implements OnInit {
 
   tournaments: Observable<Tournament[]>;
+  tournamentsLength: number = 0;
   currentTournament: Tournament;
 
   pageLoaded: boolean = false;
@@ -34,15 +35,17 @@ export class ManageTournamentsComponent implements OnInit {
   }
 
   deleteTournament(tournament: Tournament) {
-    this._tournamentService.deleteCTournamentById(tournament.tournamentID).subscribe();
-    this.tournaments = this.tournaments.pipe(
-      map(res => res.filter(t => t.tournamentID != tournament.tournamentID))
-    );
+    this._tournamentService.deleteCTournamentById(tournament.tournamentID).subscribe(res => {
+      this.ngOnInit();
+    });
     this._modalService.dismissAll();
   }
 
   ngOnInit(): void {
     this.tournaments = this._tournamentService.getTournaments();
+    this.tournaments.subscribe(tournaments => {
+      this.tournamentsLength = tournaments.length;
+    })
     this.tournaments.subscribe(result => this.pageLoaded = true)
   }
 }

@@ -17,6 +17,7 @@ import { UserTeamService } from '../services/user-team.service';
 export class ManageTeamsComponent implements OnInit, OnDestroy {
 
   teams: Observable<Team[]>;
+  teamsLenght: number = 0;
   userTeams: UserTeam[];
   currentTeam: Team;
 
@@ -54,16 +55,18 @@ export class ManageTeamsComponent implements OnInit, OnDestroy {
           this.deleteUserTeamSub = this._userTeamService.deleteUserTeamById(userTeam.userTeamID).subscribe();
         }
       }
-      this.deleteTeamSub = this._teamService.deleteTeamById(team.teamID).subscribe();
-      this.teams = this.teams.pipe(
-        map(res => res.filter(t => t.teamID != team.teamID))
-      );
+      this.deleteTeamSub = this._teamService.deleteTeamById(team.teamID).subscribe(res => {
+        this.ngOnInit()
+      });
       this._modalService.dismissAll();
     })
   }
 
   ngOnInit(): void {
     this.teams = this._teamService.getTeams();
+    this.teams.subscribe(teams => {
+      this.teamsLenght = teams.length;
+    })
     this.getTeamsSub = this.teams.subscribe(result => this.pageLoaded = true)
   }
   
