@@ -1,6 +1,6 @@
-<div class="container" *ngIf="pageLoaded">
+<div class="container">
     <div id="content" class="content p-0">
-        <div class="profile-header">
+        <div class="profile-header" *ngIf="teamLoaded">
             <div class="profile-header-cover"></div>
             <div class="profile-header-content">
                 <div class="profile-header-img mb-4">
@@ -41,7 +41,7 @@
             </ul>
         </div>
     
-        <div class="profile-container">
+        <div class="profile-container" *ngIf="teamLoaded">
             <div class="row row-space-20">
                 <div class="col-md-9">
                     <div class="tab-content p-0">
@@ -59,7 +59,7 @@
                                 </li>
                             </ul>
                         </div>
-                        <div class="tab-pane fade" id="profile-history">
+                        <div class="tab-pane fade" id="profile-history" *ngIf="matchesLoaded">
                             <div class="m-b-10"><b>Matches ({{friendlyMatches.length}})</b></div>
                             <br>
                             <div class="row" *ngFor="let m of friendlyMatches">
@@ -76,7 +76,7 @@
                                 <div class="col text-right">{{m.matchStatus.statusName}}</div>
                             </div>
                         </div>
-                        <div class="tab-pane fade" id="profile-request-matches" *ngIf="selectedTeam.captainID == currentUser.userID">
+                        <div class="tab-pane fade" id="profile-request-matches" *ngIf="matchesLoaded && selectedTeam.captainID == currentUser.userID">
                             <div class="row">
                                 <div class="col">
                                     <div class="card shadow">
@@ -124,7 +124,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="tab-pane fade" id="profile-planned-matches" *ngIf="selectedTeam.captainID == currentUser.userID">
+                        <div class="tab-pane fade" id="profile-planned-matches" *ngIf="matchesLoaded && selectedTeam.captainID == currentUser.userID">
                             <div class="row">
                                 <div class="col">
                                     <div class="card shadow">
@@ -184,7 +184,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="tab-pane fade" id="profile-competitions">
+                        <div class="tab-pane fade" id="profile-competitions" *ngIf="matchesLoaded">
                             <div class="row">
                                 <div class="col">
                                     <div class="card shadow">
@@ -238,7 +238,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="tab-pane fade" id="profile-tournaments">
+                        <div class="tab-pane fade" id="profile-tournaments" *ngIf="matchesLoaded">
                             <div class="row">
                                 <div class="col">
                                     <div class="card shadow">
@@ -295,7 +295,7 @@
                     </div>
                 </div>
     
-                <div class="col-md-3 hidden-xs hidden-sm text-right">
+                <div class="col-md-3 hidden-xs hidden-sm text-right" *ngIf="teamLoaded">
                     <ul class="profile-info-list" *ngIf="selectedTeam != null">
                         <li class="title">TEAM INFORMATION</li>
                         <li>

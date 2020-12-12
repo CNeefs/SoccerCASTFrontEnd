@@ -34,7 +34,7 @@ export class TeamDetailComponent implements OnInit, OnDestroy {
   selectedMatch: Match = null;
 
   currentUser: User;
-  usersInTeam: User[];
+  usersInTeam: User[] = [];
   allMatches: Match[];
   plannedMatches: Match[] = [];
   requestMatches: Match[] = [];
@@ -52,7 +52,9 @@ export class TeamDetailComponent implements OnInit, OnDestroy {
   currentTab: string = "profile-users";
   currentLink: string = "link-users";
 
-  pageLoaded: boolean = false;
+  teamLoaded: boolean = false;
+  matchesLoaded: boolean = false;
+  userTeamsLoaded: boolean = false;
 
   userTeams: Team[] = [];
   userTeam: UserTeam = null;
@@ -91,7 +93,7 @@ export class TeamDetailComponent implements OnInit, OnDestroy {
     this.selectedMatch.player4ID = Number(this.acceptChallengeForm.controls["usersInTeamID2"].value);
     this._matchService.acceptMatch(this.selectedMatch.matchID, this.selectedMatch).subscribe(res => {
       this._modalService.dismissAll();
-      this.ngOnInit();
+      this.getMatches();
     });
   }
 
@@ -102,14 +104,14 @@ export class TeamDetailComponent implements OnInit, OnDestroy {
 
   cancelMatch(match: Match) {
     this._matchService.cancelMatch(match.matchID, match).subscribe(res => {
-      this.ngOnInit();
+      this.getMatches();
     });
   }
 
   startMatch(match: Match) {
     match.date = new Date();
     this._matchService.startMatch(match.matchID, match).subscribe(res => {
-      this.ngOnInit();
+      this.getMatches();
       //navigate to match start page
     });
   }
@@ -223,84 +225,87 @@ export class TeamDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.allMatches = [];
-    this.plannedMatches = [];
-    this.requestMatches = [];
-    this.friendlyMatches = [];
-    this.competitions = [];
-    this.competitionsIds = [];
-    this.tournaments = [];
-    this.tournamentIds = [];
     this.currentTab = "profile-users";
     this.currentLink = "link-users";
     this.userTeams = [];
-    this.pageLoaded = false;
     this.userSub = this._authService.user.subscribe((user: User) => {
       if (user) {
+        this.currentUser = user;
         this.route.queryParams.subscribe(params => {
           this.selectedTeamID = params['id'];
         });
         this._teamService.getTeams().subscribe(res => {
           this.teams = res;
-          this._tableService.getTables().subscribe(res => {
-            this.tables = res;
-            this._userTeamService.getUserTeamsByUserId(this.currentUser.userID).subscribe(res => { 
-              res.map(team => {
-                if (team.teamID != this.selectedTeamID) this.userTeams.push(team);
-              })
-              this.challengeTeamForm = this.fb.group({
-                tableID: ['', Validators.required],
-                userTeamID: ['', Validators.required],
-                usersInTeamID1: ['', Validators.required],
-                usersInTeamID2: ['', Validators.required]
-              }, {
-                validator: this.mustNotMatch('usersInTeamID1', 'usersInTeamID2')
-              });
-            });
+        });
+        this._tableService.getTables().subscribe(res => {
+          this.tables = res;
+        });
+        this._userTeamService.getUserTeamsByUserId(this.currentUser.userID).subscribe(res => { 
+          res.map(team => {
+            if (team.teamID != this.selectedTeamID) this.userTeams.push(team);
+          })
+          this.challengeTeamForm = this.fb.group({
+            tableID: ['', Validators.required],
+            userTeamID: ['', Validators.required],
+            usersInTeamID1: ['', Validators.required],
+            usersInTeamID2: ['', Validators.required]
+          }, {
+            validator: this.mustNotMatch('usersInTeamID1', 'usersInTeamID2')
           });
         });
-        this.currentUser = user;
+        this._userTeamService.getUsersTeamByTeamId(this.selectedTeamID).subscribe(users => {
+          this.usersInTeam = users;
+          this.acceptChallengeForm = this.fb.group({
+            usersInTeamID1: ['', Validators.required],
+            usersInTeamID2: ['', Validators.required]
+          }, {
+            validator: this.mustNotMatch('usersInTeamID1', 'usersInTeamID2')
+          });
+        });
         this._teamService.getTeamById(this.selectedTeamID).subscribe(team => {
           this.selectedTeam = team;
           this.changeStatusForm = this.fb.group({
-            teamStatusID: [this.selectedTeam.teamStatusID, Validators.required],
+            teamStatusID: [this.selectedTeam.teamStatusID, Validators.required]
           });
-          this._userTeamService.getUsersTeamByTeamId(this.selectedTeamID).subscribe(users => {
-            this.usersInTeam = users;
-            this.acceptChallengeForm = this.fb.group({
-              usersInTeamID1: ['', Validators.required],
-              usersInTeamID2: ['', Validators.required]
-            }, {
-              validator: this.mustNotMatch('usersInTeamID1', 'usersInTeamID2')
-            });
-            this._userTeamService.userTeams(user.userID, this.selectedTeamID).subscribe(res => {
-              this.userTeam = res;
-              this._matchService.getMatchesByTeamId(this.selectedTeamID).subscribe(matches => {
-                this.allMatches = matches;
-                this.competitionsIds = [];
-                this.tournamentIds = [];
-                matches.forEach(match => {
-                  if (match.tournamentID == null && match.competitionID == null && (match.matchStatusID == 6 || match.matchStatusID == 5)) this.plannedMatches.push(match);
-                  if (match.tournamentID == null && match.competitionID == null && match.matchStatusID == 2 && this.selectedTeam.teamID != match.team1ID) this.requestMatches.push(match);
-                  if (match.tournamentID == null && match.competitionID == null && (match.matchStatusID == 4 || match.matchStatusID == 3)) this.friendlyMatches.push(match);
-                  if (match.tournamentID == null && match.competitionID != null && !this.competitionsIds.some(x => x === match.competitionID)) {
-                     this.competitions.push(match.competition);
-                     this.competitionsIds.push(match.competitionID);
-                  }
-                  if (match.tournamentID != null && match.competitionID == null && !this.tournamentIds.some(x => x === match.tournamentID)) {
-                     this.tournaments.push(match.tournament);
-                     this.tournamentIds.push(match.tournamentID);
-                  }
-                });
-                this._teamStatusService.getTeamStatuses().subscribe((teamStatuses: TeamStatus[]) => {
-                  this.teamStatuses = teamStatuses;
-                  this.pageLoaded = true;
-                })
-              });
-            });
-          });
+          this.teamLoaded = true;
+          this.getMatches();
+        });
+        this._userTeamService.userTeams(user.userID, this.selectedTeamID).subscribe(res => {
+          this.userTeam = res;
+          this.userTeamsLoaded = true;
         });
       }
+    });
+  }
+
+  getMatches() {
+    this.allMatches = [];
+    this.plannedMatches = [];
+    this.requestMatches = [];
+    this.friendlyMatches = [];
+    this.competitions = [];
+    this.tournaments = [];
+    this._matchService.getMatchesByTeamId(this.selectedTeamID).subscribe(matches => {
+      this.allMatches = matches;
+      this.competitionsIds = [];
+      this.tournamentIds = [];
+      matches.forEach(match => {
+        if (match.tournamentID == null && match.competitionID == null && (match.matchStatusID == 6 || match.matchStatusID == 5)) this.plannedMatches.push(match);
+        if (match.tournamentID == null && match.competitionID == null && match.matchStatusID == 2 && this.selectedTeam.teamID != match.team1ID) this.requestMatches.push(match);
+        if (match.tournamentID == null && match.competitionID == null && (match.matchStatusID == 4 || match.matchStatusID == 3)) this.friendlyMatches.push(match);
+        if (match.tournamentID == null && match.competitionID != null && !this.competitionsIds.some(x => x === match.competitionID)) {
+            this.competitions.push(match.competition);
+            this.competitionsIds.push(match.competitionID);
+        }
+        if (match.tournamentID != null && match.competitionID == null && !this.tournamentIds.some(x => x === match.tournamentID)) {
+            this.tournaments.push(match.tournament);
+            this.tournamentIds.push(match.tournamentID);
+        }
+      });
+      this._teamStatusService.getTeamStatuses().subscribe((teamStatuses: TeamStatus[]) => {
+        this.teamStatuses = teamStatuses;
+        this.matchesLoaded = true;
+      })
     });
   }
 
