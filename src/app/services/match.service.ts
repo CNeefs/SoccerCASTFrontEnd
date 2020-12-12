@@ -20,6 +20,10 @@ export class MatchService {
         return this.http.get<Match[]>(this.baseUrl + "match/user/" + id);
     }
 
+    getMatchByMatchId(id: number) {
+        return this.http.get<Match>(this.baseUrl + "match/" + id);
+    }
+
     addMatch(match: Match) {
         return this.http.post<Match>(this.baseUrl + "match/", match);
     }
@@ -31,6 +35,10 @@ export class MatchService {
 
     startMatch(id: Number, match: Match) {
         match.matchStatusID = 5;
+        return this.http.put<Match>(this.baseUrl + "match/" + id, match);
+    }
+
+    editMatch(id: number, match: Match) {
         return this.http.put<Match>(this.baseUrl + "match/" + id, match);
     }
 

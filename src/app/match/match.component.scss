@@ -4,8 +4,8 @@
 }
 
 .match-img {
-    width: 7.5rem;
-    height: 7.5rem;
+    max-width: 7.5rem;
+    max-height: 7.5rem;
     // overflow: hidden;
     z-index: 10;
     // margin: 0 1.25rem -1.25rem 0;
@@ -13,7 +13,7 @@
     -webkit-border-radius: 0.25rem;
     -moz-border-radius: 0.25rem;
     border-radius: 0.25rem;
-    background: #000;
+    background: #f8f9fa;
 }
 
 .changeScoreButton{
