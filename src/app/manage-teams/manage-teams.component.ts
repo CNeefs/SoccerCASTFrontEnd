@@ -17,6 +17,7 @@ import { UserTeamService } from '../services/user-team.service';
 export class ManageTeamsComponent implements OnInit, OnDestroy {
 
   teams: Observable<Team[]>;
+  teamsLenght: number = 0;
   userTeams: UserTeam[];
   currentTeam: Team;
 
@@ -64,6 +65,9 @@ export class ManageTeamsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.teams = this._teamService.getTeams();
+    this.teams.subscribe(teams => {
+      this.teamsLenght = teams.length;
+    })
     this.getTeamsSub = this.teams.subscribe(result => this.pageLoaded = true)
   }
   
