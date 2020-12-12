@@ -1,0 +1,203 @@
+<div class="container">
+    <div id="content" class="content p-0">
+        <div class="profile-header" *ngIf="tournamentLoaded">
+            <div class="profile-header-cover"></div>
+            <div class="profile-header-content">
+                <div class="profile-header-info" *ngIf="selectedTournament != null">
+                    <h4 class="m-t-sm">{{selectedTournament.edition}}</h4>
+                    <a *ngIf="selectedTournament.total_Joined < selectedTournament.match_Count "(click)="openJoinTournamentModal(contentJoinTournamentModal)" class="btn btn-xs btn-success mb-2 float-right">Join tournament</a>
+                    <p class="m-b-sm">{{selectedTournament.total_Joined}}/{{selectedTournament.match_Count}} Teams</p>
+                </div>
+            </div>
+    
+            <ul class="profile-header-tab nav nav-tabs">
+                <li class="nav-item"><a (click)="changeTab('tournament-bracket', 'link-bracket')" style="cursor: pointer;" class="nav-link active show" data-toggle="tab" id="link-bracket">BRACKET</a></li>
+                <li class="nav-item"><a (click)="changeTab('tournament-teams', 'link-teams')" style="cursor: pointer;" class="nav-link" data-toggle="tab" id="link-teams">TEAMS</a></li>
+                <li class="nav-item"><a (click)="changeTab('tournament-matches', 'link-matches')" style="cursor: pointer;" class="nav-link" data-toggle="tab" id="link-matches">MATCHES</a></li>
+            </ul>
+        </div>
+    
+        <div class="profile-container" *ngIf="tournamentLoaded">
+            <div class="row row-space-20">
+                <div class="col-md-12">
+                    <div class="tab-content p-0">
+                        <div class="tab-pane fade active show" id="tournament-bracket">
+                            <div class="m-b-10"><b>Bracket</b></div>
+                            <ul class="friend-list clearfix">
+                                <!--BRACKET-->
+                            </ul>
+                        </div>
+                        <div class="tab-pane fade" id="tournament-teams" *ngIf="teamsLoaded">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="card shadow">
+                                        <div class="card-header border-0">
+                                            <h3 class="mb-0 float-left">Teams ({{tournamentTeams.length}})</h3>
+                                        </div>
+                                        <div class="table-responsive" style="overflow-y: hidden;">
+                                            <table class="table align-items-center table-flush">
+                                                <thead class="thead-light">
+                                                    <tr>
+                                                        <th scope="col">Team name</th>
+                                                        <th scope="col">Player 1</th>
+                                                        <th scope="col">Player 2</th>
+                                                        <th scope="col"></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let t of tournamentTeams">
+                                                        <th scope="row">
+                                                            <div class="media align-items-center">
+                                                                <div class="media-body">
+                                                                    <span class="mb-0 text-sm text-truncate">{{t.team.teamName}}</span>
+                                                                </div>
+                                                            </div>
+                                                        </th>
+                                                        <td>
+                                                            {{t.player1.firstName}} {{t.player1.lastName}}
+                                                        </td>
+                                                        <td>
+                                                            {{t.player2.firstName}} {{t.player2.lastName}}
+                                                        </td>
+                                                        <td class="text-right">
+                                                            <div ngbDropdown class="dropdown" style="position:static;overflow: visible;">
+                                                                <a ngbDropdownToggle class="btn btn-sm btn-icon-only text-light"
+                                                                    role="button" aria-expanded="false">
+                                                                    <mat-icon style="color: black;">more_vert</mat-icon>
+                                                                </a>
+                                                                <div ngbDropdownMenu class="dropdown-menu dropdown-menu-left">
+                                                                    <a ngbDropdownItem class="dropdown-item" (click)="goToTeam(t)" style="cursor: pointer;">Team page</a>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="tournament-matches" *ngIf="matchesLoaded">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="card shadow">
+                                        <div class="card-header border-0">
+                                            <h3 class="mb-0 float-left">All Matches ({{allMatches.length}})</h3>
+                                        </div>
+                                        <div class="table-responsive" style="overflow-y: hidden;">
+                                            <table class="table align-items-center table-flush">
+                                                <thead class="thead-light">
+                                                    <tr>
+                                                        <th scope="col">Date</th>
+                                                        <th scope="col">Team 1 name</th>
+                                                        <th scope="col">Team 2 name</th>
+                                                        <th scope="col">Moderator</th>
+                                                        <th scope="col">Status</th>
+                                                        <th scope="col"></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let m of allMatches">
+                                                        <th scope="row">
+                                                            <div class="media align-items-center">
+                                                                <div class="media-body">
+                                                                    <span class="mb-0 text-sm text-truncate">{{m.date}}</span>
+                                                                </div>
+                                                            </div>
+                                                        </th>
+                                                        <td *ngIf="m.team1">
+                                                            {{m.team1.teamName}}
+                                                        </td>
+                                                        <td *ngIf="!m.team1">
+                                                            TBD
+                                                        </td>
+                                                        <td *ngIf="m.team2">
+                                                            {{m.team2.teamName}}
+                                                        </td>
+                                                        <td *ngIf="!m.team2">
+                                                            TBD
+                                                        </td>
+                                                        <td *ngIf="m.player1">
+                                                            {{m.player1.firstName}} {{m.player1.lastName}}
+                                                        </td>
+                                                        <td *ngIf="!m.player1">
+                                                            TBD
+                                                        </td>
+                                                        <td *ngIf="m.matchStatusID == 5">
+                                                            <span class="badge badge-dot mr-4">
+                                                            <i class="bg-success"></i> {{m.matchStatus.statusName}}
+                                                            </span>
+                                                        </td>
+                                                        <td *ngIf="m.matchStatusID == 6">
+                                                            <span class="badge badge-dot mr-4">
+                                                            <i class="bg-primary"></i> {{m.matchStatus.statusName}}
+                                                            </span>
+                                                        </td>
+                                                        <td class="text-right">
+                                                            <div ngbDropdown class="dropdown" style="position:static;overflow: visible;">
+                                                                <a ngbDropdownToggle class="btn btn-sm btn-icon-only text-light"
+                                                                    role="button" aria-expanded="false">
+                                                                    <mat-icon style="color: black;">more_vert</mat-icon>
+                                                                </a>
+                                                                <div ngbDropdownMenu class="dropdown-menu dropdown-menu-left">
+                                                                    <a *ngIf="m.matchStatusID == 6 && currentUser.userID == m.player1ID" ngbDropdownItem class="dropdown-item" (click)="startMatch(m)" style="cursor: pointer;">Start match</a>
+                                                                    <a *ngIf="m.matchStatusID == 6 && currentUser.userID != m.player1ID" ngbDropdownItem class="dropdown-item" style="pointer-events: none;color: red;">Moderator needs to start this match</a>
+                                                                    <a *ngIf="m.matchStatusID == 5" ngbDropdownItem class="dropdown-item" (click)="goToMatch(m)" style="cursor: pointer;">Match page</a>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Model -->
+<ng-template #contentJoinTournamentModal let-modal>
+  <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Join Tournament</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+      </button>
+  </div>
+  <div class="modal-body">
+      <p>You are about to join the tournament <span class="font-weight-bold">'{{selectedTournament.edition}}'</span>, are you sure?</p>
+      <form [formGroup]="joinTournamentForm" (ngSubmit)="joinTournament()">
+        <div class="form-group">
+            <label for="userTeamID">Choose your team</label>
+            <select class="form-control" formControlName="userTeamID" id="userTeamID" (change)="onChangeTeam($event.target.value)">
+                <option *ngFor="let team of userTeams" [value]="team.teamID">{{team.teamName}}</option>
+            </select>
+            <small class="pl-1" *ngIf="!joinTournamentForm.get('userTeamID').valid && joinTournamentForm.get('userTeamID').touched">This team is invalid!</small>
+        </div>
+        <div class="form-group">
+            <label for="usersInTeamID1">First user</label>
+            <select class="form-control" formControlName="usersInTeamID1" id="usersInTeamID1">
+                <option [value]=""></option>
+                <option *ngFor="let user of usersInSelectedTeam" [value]="user.userID">{{user.firstName}} {{user.lastName}}</option>
+            </select>
+            <small class="pl-1" *ngIf="!joinTournamentForm.get('usersInTeamID1').valid && joinTournamentForm.get('usersInTeamID1').touched">This first user is invalid!</small>
+        </div>
+        <div class="form-group">
+            <label for="usersInTeamID2">Second user</label>
+            <select class="form-control" formControlName="usersInTeamID2" id="usersInTeamID2">
+                <option [value]=""></option>
+                <option *ngFor="let user of usersInSelectedTeam" [value]="user.userID">{{user.firstName}} {{user.lastName}}</option>
+            </select>
+            <small class="pl-1" *ngIf="joinTournamentForm.controls['usersInTeamID2'].errors != null && joinTournamentForm.controls['usersInTeamID2'].errors.required && joinTournamentForm.get('usersInTeamID2').touched">This second user is invalid!</small>
+            <small *ngIf="joinTournamentForm.controls['usersInTeamID2'].errors != null && joinTournamentForm.controls['usersInTeamID2'].errors.mustNotMatch">First user and second user can't be the same</small>
+        </div>
+        <button [disabled]="joinTournamentForm.invalid" class="btn btn-success" type="submit">Join</button>
+    </form>
+  </div>
+</ng-template>

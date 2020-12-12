@@ -22,24 +22,32 @@ import { TournamentEditComponent } from './manage-tournaments/tournament-edit/to
 import { TournamentCreateComponent } from './manage-tournaments/tournament-create/tournament-create.component';
 
 import { AuthGuardService } from './auth/guards/auth-guard.service';
+
 import { ManageTeamsComponent } from './manage-teams/manage-teams.component';
 import { TeamCreateComponent } from './manage-teams/team-create/team-create.component';
 import { TeamEditComponent } from './manage-teams/team-edit/team-edit.component';
-import { MyProfileComponent } from './my-profile/my-profile.component';
-import { ViewTeamsComponent } from './view-teams/view-teams.component';
-import { TeamDetailComponent } from './view-teams/team-detail/team-detail.component';
+
 import { ViewRankingsComponent } from './view-rankings/view-rankings.component';
 
-import {DocumentationhomeComponent} from './documentation/documentationhome/documentationhome.component';
-import { UserDocumentationComponent} from './documentation/user-documentation/user-documentation.component';
-import {TeamDocumentationComponent} from './documentation/team-documentation/team-documentation.component';
-import {TableDocumentationComponent} from './documentation/table-documentation/table-documentation.component';
-import {MatchesDocumentationComponent} from './documentation/matches-documentation/matches-documentation.component';
-import{CompetitionsDocumentationComponent} from './documentation/competitions-documentation/competitions-documentation.component';
-import {TournamentsDocumentationComponent} from './documentation/tournaments-documentation/tournaments-documentation.component';
+import { DocumentationhomeComponent } from './documentation/documentationhome/documentationhome.component';
+import { UserDocumentationComponent } from './documentation/user-documentation/user-documentation.component';
+import { TeamDocumentationComponent } from './documentation/team-documentation/team-documentation.component';
+import { TableDocumentationComponent } from './documentation/table-documentation/table-documentation.component';
+import { MatchesDocumentationComponent } from './documentation/matches-documentation/matches-documentation.component';
+import { CompetitionsDocumentationComponent } from './documentation/competitions-documentation/competitions-documentation.component';
+import {TournamentsDocumentationComponent } from './documentation/tournaments-documentation/tournaments-documentation.component';
+
+import { ViewTeamsComponent } from './view-teams/view-teams.component';
 import { ViewTeamCreateComponent } from './view-teams/view-team-create/view-team-create.component';
 import { ViewTeamEditComponent } from './view-teams/view-team-edit/view-team-edit.component';
+import { TeamDetailComponent } from './view-teams/team-detail/team-detail.component';
+
+import { MyProfileComponent } from './my-profile/my-profile.component';
 import { MyProfileEditComponent } from './my-profile/my-profile-edit/my-profile-edit.component';
+
+import { ViewTournamentsComponent } from './view-tournaments/view-tournaments.component';
+import { TournamentDetailComponent } from './view-tournaments/tournament-detail/tournament-detail.component';
+
 import { MatchComponent } from './match/match.component';
 import { GeneralDocumentationComponent } from './documentation/general-documentation/general-documentation.component';
 import { RankingsDocumentationComponent } from './documentation/rankings-documentation/rankings-documentation.component';
@@ -66,7 +74,7 @@ const routes: Routes = [
       {
         path: '',
         pathMatch: 'full',
-        redirectTo: 'profile'
+        redirectTo: 'teams'
       },
       {
         path: 'profile',
@@ -83,6 +91,23 @@ const routes: Routes = [
             canActivate: [AuthGuardService],
             data: { auth: 'PROFILE_EDIT' },
           },
+        ]
+      },
+      {
+        path: 'tournaments',
+        children: [
+          {
+            path: '',
+            component: ViewTournamentsComponent,
+            canActivate: [AuthGuardService],
+            data: { auth: 'TEAM_VIEW' }
+          },
+          {
+            path: 'detail',
+            component: TournamentDetailComponent,
+            canActivate: [AuthGuardService],
+            data: { auth: 'TEAM_VIEW' }
+          }
         ]
       },
       {

@@ -17,7 +17,7 @@ export class TournamentCreateComponent implements OnInit {
   constructor(private _tournamentService: TournamentService, private fb: FormBuilder, private route: ActivatedRoute, private router: Router) { }
 
   onSubmit() {
-    var tournament = new Tournament(0, this.createForm.controls['edition'].value, Number(this.createForm.controls['match_Count'].value), null);
+    var tournament = new Tournament(0, this.createForm.controls['edition'].value, 0, Number(this.createForm.controls['match_Count'].value), false, null);
     this._tournamentService.addTournament(tournament).subscribe(event => {
       if(event.type === HttpEventType.Response) {
         this.router.navigate(['admin/tournaments']);

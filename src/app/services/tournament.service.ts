@@ -31,4 +31,8 @@ export class TournamentService {
     editTournament(id: number, tournament: Tournament) {
         return this.http.put<Tournament>(this.baseUrl + "tournament/" + id, tournament);
     }
+
+    startTournament(tournament: Tournament) {
+        return this.http.post<Tournament>(this.baseUrl + "tournament/start/", tournament, { reportProgress: true, observe: 'events' });
+    }
 }
