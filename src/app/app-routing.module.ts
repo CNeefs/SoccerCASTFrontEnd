@@ -57,18 +57,6 @@ const routes: Routes = [
     {path: 'tournaments', component: TournamentsDocumentationComponent}
   ]},
   {
-    path: 'match',
-    children: [
-      {
-        path: '',
-        pathMatch: 'full',
-        component: MatchComponent,
-        canActivate: [AuthGuardService],
-        data: { auth: 'PLAY_VIEW' }
-      }
-    ]
-  },
-  {
     path: 'user',
     children: [
       {
@@ -91,6 +79,17 @@ const routes: Routes = [
             canActivate: [AuthGuardService],
             data: { auth: 'PROFILE_EDIT' },
           },
+        ]
+      },
+      {
+        path: 'match',
+        children: [
+          {
+            path: '',
+            component: MatchComponent,
+            canActivate: [AuthGuardService],
+            data: { auth: 'PROFILE_EDIT' }
+          }
         ]
       },
       {
