@@ -111,13 +111,12 @@ export class TeamDetailComponent implements OnInit, OnDestroy {
   startMatch(match: Match) {
     match.date = new Date();
     this._matchService.startMatch(match.matchID, match).subscribe(res => {
-      this.getMatches();
-      //navigate to match start page
+      this.goToMatch(match);
     });
   }
 
   goToMatch(match: Match) {
-    //navigate to match start page
+    this.router.navigate(['user/match'], {queryParams: {id: match.matchID}});
   }
 
   onChangeTeam(teamID) {
@@ -269,6 +268,8 @@ export class TeamDetailComponent implements OnInit, OnDestroy {
           });
           this.teamLoaded = true;
           this.getMatches();
+        }, err => {
+          this.router.navigate(['not-found']);
         });
         this._userTeamService.userTeams(user.userID, this.selectedTeamID).subscribe(res => {
           this.userTeam = res;

@@ -14,6 +14,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 export class ManageTablesComponent implements OnInit {
 
   tables: Observable<Table[]>;
+  tablesLength: number = 0;
   currentTable: Table;
 
   pageLoaded: boolean = false;
@@ -34,15 +35,17 @@ export class ManageTablesComponent implements OnInit {
   }
 
   deleteTable(table: Table) {
-    this._tableService.deleteTableById(table.tableID).subscribe();
-    this.tables = this.tables.pipe(
-      map(res => res.filter(t => t.tableID != table.tableID))
-    );
+    this._tableService.deleteTableById(table.tableID).subscribe(res => {
+      this.ngOnInit();
+    });
     this._modalService.dismissAll();
   }
 
   ngOnInit(): void {
     this.tables = this._tableService.getTables();
+    this.tables.subscribe(tables => {
+      this.tablesLength = tables.length;
+    });
     this.tables.subscribe(result => this.pageLoaded = true)
   }
 }

@@ -1,0 +1,131 @@
+<div class="page-wrapper">
+    <!-- ******Header****** -->
+    <header id="header" class="header">
+        <div class="container">
+            <div class="branding">
+                <h1 class="logo">
+                    <a href="index.html">
+                        <span aria-hidden="true" class="icon_documents_alt icon"></span>
+                        <span class="text-highlight">SoccerCAST</span><span class="text-bold"> Documentation</span>
+                    </a>
+                </h1>
+                
+            </div><!--//branding-->
+            
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/documentation">Home</a></li>
+                <li class="breadcrumb-item active">General Information</li>
+            </ol>            
+        </div><!--//container-->
+    </header><!--//header-->
+    <div class="doc-wrapper">
+        <div class="container">
+            <div id="doc-header" class="doc-header text-center">
+                <h1 class="doc-title"><i class="icon fa fa-paper-plane"></i> General Information</h1>
+                <div class="meta"><i class="far fa-clock"></i> Last updated: Dec 12, 2020</div>
+            </div><!--//doc-header-->
+            <div class="doc-body row">
+                <div class="doc-content col-md-9 col-12 order-1">
+                    <div class="content-inner">
+                        <section id="whatis-section" class="doc-section">
+                            <h2 class="section-title">What is SoccerCAST?</h2>
+                            <div class="section-block">
+                                <p>
+                                    SoccerCAST is a web application, made to make organising matches, competitions and tournaments for tablesoccer. <br>
+                                    It has functions for:
+                                </p>
+                                <ul>
+                                    <li>User management</li>
+                                    <li>Team management</li>
+                                    <li>Table management</li>
+                                    <li>Organising matches, competitions and tournaments</li>
+                                    <li>Tracking statistics</li>
+                                </ul>
+                                <p>and more!</p>
+                            </div>
+                        </section><!--//doc-section-->
+                        <section id="whymake-section" class="doc-section">
+                            <h2 class="section-title">Why did you make SoccerCAST?</h2>
+                            <div class="section-block">
+                                <p>
+                                    Each year, the <span><a href="https://grasshoppers-academy.eu/">Grasshoppers Academy</a></span> organises an application challenge for our faculty. <br>
+                                    This year (2020), they asked us to make an application with the subject of tablesoccer. <br>
+                                    The initial pitch said that they wanted to use the application with companies inside their group, but it should be possible for everyone to join.
+                                    The challenge started on Monday Dec 7, 2020. During the first two days, the teams could ask experts from <span><a href="https://www.jstack.eu/">jstack</a></span>
+                                    and <span><a href="https://qframe.be/">Qframe</a></span> questions about best-practices and general tips <br>
+                                    for the front- and back-end of the application.
+                                    
+                                </p>
+                            </div>
+                        </section><!--//doc-section-->
+                        <section id="howmake-section" class="doc-section">
+                            <h2 class="section-title">How did you make SoccerCAST?</h2>
+                            <div class="section-block">
+                                <h3>Introduction</h3>
+                                <p>
+                                    Each web application has front-end software (the pages the user sees), and back-end software (handles information). <br>
+                                    Here you can read which technology we used. <br>
+                                                                    
+                                </p>
+                                <h3>Front-end</h3>
+                                <p>
+                                    Our front-end is made with the <span><a href="https://angular.io/">Angular</a></span> framework, made by Google. <br>
+                                    The lay-out we used was a mix from:
+                                </p>
+                                <ul>
+                                    <li><span><a href="https://getbootstrap.com/">Bootstrap</a></span> </li>
+                                    <li><span><a href="https://material.io/">Material design (icons)</a></span></li>
+                                    <li><span><a href="https://themes.3rdwavemedia.com/">Xiaoying Riley</a></span></li>
+                                    <li>And our own style.</li>
+                                </ul>
+                                <h3>Back-end</h3>
+                                <p>
+
+                                    We made our back-end with the <span><a href="https://dotnet.microsoft.com/">.NET</a></span> framework, made by Microsoft. <br>
+                                    To store data, we used a MySQL database. We used Blob storage to store images. 
+                                </p>
+                                <h3>Hosting</h3>
+                                <p>
+                                    To host our application online, we used two services:
+                                </p>
+                                <ul>
+                                    <li><span><a href="https://firebase.google.com/">Firebase</a></span>: hosting our front-end</li>
+                                    <li><span><a href="https://azure.microsoft.com">Microsoft Azure</a></span>: hosting our back-end and our databases.</li>
+                                </ul>
+                            </div>
+                        </section><!--//doc-section-->
+                        <section id="whomade-section" class="doc-section">
+                            <h2 class="section-title">Who made SoccerCAST?</h2>
+                            <div class="section-block">
+                                <p>
+                                    Our team consists of 4 application developers from the IT Factory @ Thomas More Geel in Belgium. <br>
+                                    Let's introduce ourselves:                                    
+                                </p>
+                                <ul>
+                                    <li>Cody Volz</li>
+                                    <li>Robin Verbist</li>
+                                    <li>Wouter Roothooft</li>
+                                    <li>Christophe Neefs</li>
+                                </ul>
+                                <p>
+                                    Together, we made the application you are using right now!
+                                </p>
+                            </div>
+                        </section><!--//doc-section-->
+                    </div><!--//content-inner-->
+                </div><!--//doc-content-->
+            </div><!--//doc-body-->
+            <div class="text-center">
+                <app-loading-spinner></app-loading-spinner>
+            </div>              
+        </div><!--//container-->
+    </div><!--//doc-wrapper-->    
+</div><!--//page-wrapper-->
+
+<footer id="footer" class="footer text-center">
+    <div class="container">
+        <!--/* This template is free as long as you keep the footer attribution link. If you'd like to use the template without the attribution link, you can buy the commercial license via our website: themes.3rdwavemedia.com Thank you for your support. :) */-->
+        <small class="copyright">Designed with <mat-icon>favorite</mat-icon> by <a href="https://themes.3rdwavemedia.com/" target="_blank">Xiaoying Riley</a> for developers</small>
+        
+    </div><!--//container-->
+</footer><!--//footer-->

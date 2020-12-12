@@ -8,7 +8,7 @@
                         <img [src]="selectedUser.imagePath" class="mb-4 image" alt="" style="width: 100%; height: 100%; object-fit: cover;"/>
                     </div>
                     <div *ngIf="selectedUser.userID == currentUser.userID" class="overlay" (click)="openProfilePictureModal(contentChangeProfilePictureModal)">
-                        <a class="icon" title="Edit Profile Picture" style="cursor: pointer;">
+                        <a class="icon" title="Edit Profile Picture">
                             <mat-icon>create</mat-icon>
                         </a>
                     </div>
@@ -162,6 +162,10 @@
                                                         </td>
                                                     </tr>
                                                 </tbody>
+                                                <!--Nothing found-->
+                                                <div class="card-header border-0 mb-4" *ngIf="requestMatches.length == 0">
+                                                    <h5 class="mb-0 float-left">Nothing found</h5>
+                                                </div>
                                             </table>
                                         </div>
                                     </div>
@@ -223,6 +227,10 @@
                                                     </tr>
                                                 </tbody>
                                             </table>
+                                            <!--Nothing found-->
+                                            <div class="card-header border-0 mb-4" *ngIf="plannedMatches.length == 0">
+                                                <h5 class="mb-0 float-left">Nothing found</h5>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -277,6 +285,10 @@
                                                     </tr>
                                                 </tbody>
                                             </table>
+                                             <!--Nothing found-->
+                                             <div class="card-header border-0 mb-4" *ngIf="competitions.length == 0">
+                                                <h5 class="mb-0 float-left">Nothing found</h5>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -331,6 +343,10 @@
                                                     </tr>
                                                 </tbody>
                                             </table>
+                                             <!--Nothing found-->
+                                             <div class="card-header border-0 mb-4" *ngIf="tournaments.length == 0">
+                                                <h5 class="mb-0 float-left">Nothing found</h5>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

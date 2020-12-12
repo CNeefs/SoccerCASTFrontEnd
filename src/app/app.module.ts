@@ -23,6 +23,7 @@ import { ViewRankingsModule } from './view-rankings/view-rankings.module';
 import { ToastComponent } from './toast/toast.component';
 import { DocumentationModule } from './documentation/documentation.module';
 import { ViewTournamentsModule } from './view-tournaments/view-tournaments.module';
+import { MatchModule } from './match/match.module';
 
 @NgModule({
   declarations: [
@@ -48,8 +49,9 @@ import { ViewTournamentsModule } from './view-tournaments/view-tournaments.modul
     ViewTeamsModule,
     SharedModule,
     DocumentationModule,
-    ViewRankingsModule,
     ViewTournamentsModule
+    MatchModule,
+    ViewRankingsModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

@@ -102,6 +102,8 @@ export class ViewTeamEditComponent implements OnInit {
         location: [team.location, Validators.required]
       });
       this.pageLoaded = true;
+    }, err => {
+      this.router.navigate(['not-found']);
     })
     this.usersTeam = this._userTeamService.getUsersTeamByTeamId(this.selectedTeamID);
     this.usersReview = this._userTeamService.getUsersTeamInReview(this.selectedTeamID);

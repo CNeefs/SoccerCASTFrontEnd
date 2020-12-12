@@ -49,6 +49,8 @@ import { ViewTournamentsComponent } from './view-tournaments/view-tournaments.co
 import { TournamentDetailComponent } from './view-tournaments/tournament-detail/tournament-detail.component';
 
 import { MatchComponent } from './match/match.component';
+import { GeneralDocumentationComponent } from './documentation/general-documentation/general-documentation.component';
+import { RankingsDocumentationComponent } from './documentation/rankings-documentation/rankings-documentation.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -62,20 +64,10 @@ const routes: Routes = [
     {path: 'table', component: TableDocumentationComponent},
     {path: 'matches', component: MatchesDocumentationComponent},
     {path: 'competitions', component: CompetitionsDocumentationComponent},
-    {path: 'tournaments', component: TournamentsDocumentationComponent}
+    {path: 'tournaments', component: TournamentsDocumentationComponent},
+    {path: 'general', component: GeneralDocumentationComponent},
+    {path: 'rankings', component: RankingsDocumentationComponent}
   ]},
-  {
-    path: 'match',
-    children: [
-      {
-        path: '',
-        pathMatch: 'full',
-        component: MatchComponent,
-        canActivate: [AuthGuardService],
-        data: { auth: 'PLAY_VIEW' }
-      }
-    ]
-  },
   {
     path: 'user',
     children: [
@@ -115,6 +107,17 @@ const routes: Routes = [
             component: TournamentDetailComponent,
             canActivate: [AuthGuardService],
             data: { auth: 'TEAM_VIEW' }
+          }
+        ]
+      },
+      {
+        path: 'match',
+        children: [
+          {
+            path: '',
+            component: MatchComponent,
+            canActivate: [AuthGuardService],
+            data: { auth: 'PROFILE_EDIT' }
           }
         ]
       },

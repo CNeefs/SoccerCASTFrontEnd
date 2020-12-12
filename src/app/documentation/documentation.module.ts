@@ -12,11 +12,13 @@ import { TableDocumentationComponent } from './table-documentation/table-documen
 import { MatchesDocumentationComponent } from './matches-documentation/matches-documentation.component';
 import { CompetitionsDocumentationComponent } from './competitions-documentation/competitions-documentation.component';
 import { TournamentsDocumentationComponent } from './tournaments-documentation/tournaments-documentation.component';
+import { RankingsDocumentationComponent } from './rankings-documentation/rankings-documentation.component';
+import { GeneralDocumentationComponent } from './general-documentation/general-documentation.component';
 
 
 
 @NgModule({
-  declarations: [DocumentationhomeComponent, UserDocumentationComponent, TeamDocumentationComponent, TableDocumentationComponent, MatchesDocumentationComponent, CompetitionsDocumentationComponent, TournamentsDocumentationComponent],
+  declarations: [DocumentationhomeComponent, UserDocumentationComponent, TeamDocumentationComponent, TableDocumentationComponent, MatchesDocumentationComponent, CompetitionsDocumentationComponent, TournamentsDocumentationComponent, RankingsDocumentationComponent, GeneralDocumentationComponent],
   imports: [
     CommonModule,
     DirectivesModule,
