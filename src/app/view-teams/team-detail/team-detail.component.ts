@@ -98,8 +98,21 @@ export class TeamDetailComponent implements OnInit, OnDestroy {
   }
 
   declineMatch(match: Match) {
-    this._matchService.deleteMatch(match.matchID).subscribe();
-    this.requestMatches.splice(this.requestMatches.indexOf(match));
+    this._matchService.deleteMatch(match.matchID).subscribe(res => {
+      this.getMatches();
+    });
+  }
+
+  acceptScore(match: Match) {
+    this._matchService.acceptScore(match.matchID, match).subscribe(res => {
+      this.getMatches();
+    });
+  }
+
+  declineScore(match: Match) {
+    this._matchService.startMatch(match.matchID, match).subscribe(res => {
+      this.getMatches();
+    });
   }
 
   cancelMatch(match: Match) {
@@ -292,7 +305,7 @@ export class TeamDetailComponent implements OnInit, OnDestroy {
       this.tournamentIds = [];
       matches.forEach(match => {
         if (match.tournamentID == null && match.competitionID == null && (match.matchStatusID == 6 || match.matchStatusID == 5)) this.plannedMatches.push(match);
-        if (match.tournamentID == null && match.competitionID == null && match.matchStatusID == 2 && this.selectedTeam.teamID != match.team1ID) this.requestMatches.push(match);
+        if (match.tournamentID == null && match.competitionID == null && (match.matchStatusID == 2 || match.matchStatusID == 1)) this.requestMatches.push(match);
         if (match.tournamentID == null && match.competitionID == null && (match.matchStatusID == 4 || match.matchStatusID == 3)) this.friendlyMatches.push(match);
         if (match.tournamentID == null && match.competitionID != null && !this.competitionsIds.some(x => x === match.competitionID)) {
             this.competitions.push(match.competition);

@@ -133,6 +133,7 @@
                                                     <tr>
                                                         <th scope="col">Name user</th>
                                                         <th scope="col">Date</th>
+                                                        <th scope="col">Score</th>
                                                         <th scope="col"></th>
                                                     </tr>
                                                 </thead>
@@ -148,6 +149,12 @@
                                                         <td>
                                                             {{m.date}}
                                                         </td>
+                                                        <td *ngIf="m.matchStatusID == 1">
+                                                            {{m.score1}} - {{m.score2}}
+                                                        </td>
+                                                        <td *ngIf="m.matchStatusID != 1">
+                                                            TBD
+                                                        </td>
                                                         <td class="text-right">
                                                             <div ngbDropdown class="dropdown" style="position:static;overflow: visible;">
                                                                 <a ngbDropdownToggle class="btn btn-sm btn-icon-only text-light"
@@ -155,8 +162,12 @@
                                                                     <mat-icon style="color: black;">more_vert</mat-icon>
                                                                 </a>
                                                                 <div ngbDropdownMenu class="dropdown-menu dropdown-menu-left">
-                                                                    <a ngbDropdownItem class="dropdown-item" (click)="acceptMatch(m)" style="cursor: pointer;">Accept</a>
-                                                                    <a ngbDropdownItem class="dropdown-item" (click)="declineMatch(m)" style="cursor: pointer;">Decline</a>
+                                                                    <a *ngIf="m.matchStatusID == 2 && m.player1ID != selectedUser.userID" ngbDropdownItem class="dropdown-item" (click)="acceptMatch(m)" style="cursor: pointer;">Accept</a>
+                                                                    <a *ngIf="m.matchStatusID == 2 && m.player1ID != selectedUser.userID" ngbDropdownItem class="dropdown-item" (click)="declineMatch(m)" style="cursor: pointer;">Decline</a>
+                                                                    <a *ngIf="m.matchStatusID == 2 && m.player1ID == selectedUser.userID" ngbDropdownItem class="dropdown-item" (click)="declineMatch(m)" style="cursor: pointer;">Delete Request</a>
+                                                                    <a *ngIf="m.matchStatusID == 1 && m.player1ID != selectedUser.userID" ngbDropdownItem class="dropdown-item" (click)="acceptScore(m)" style="cursor: pointer;">Accept Score</a>
+                                                                    <a *ngIf="m.matchStatusID == 1 && m.player1ID != selectedUser.userID" ngbDropdownItem class="dropdown-item" (click)="declineScore(m)" style="cursor: pointer;">Decline Score</a>
+                                                                    <a *ngIf="m.matchStatusID == 1 && m.player1ID == selectedUser.userID" ngbDropdownItem class="dropdown-item" style="pointer-events: none;color: red;">Other player needs to accept the score</a>
                                                                 </div>
                                                             </div>
                                                         </td>
@@ -306,7 +317,7 @@
                                                 <thead class="thead-light">
                                                     <tr>
                                                         <th scope="col">Edition</th>
-                                                        <th scope="col">Max teams</th>
+                                                        <th scope="col">Teams</th>
                                                         <th scope="col">Winner</th>
                                                         <th scope="col"></th>
                                                     </tr>
@@ -321,7 +332,7 @@
                                                             </div>
                                                         </th>
                                                         <td>
-                                                            {{t.match_Count}}
+                                                            {{t.total_Joined}}/{{t.match_Count}}
                                                         </td>
                                                         <td *ngIf="t.winner">
                                                             {{t.winner}}

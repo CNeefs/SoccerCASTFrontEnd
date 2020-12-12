@@ -37,6 +37,11 @@ export class MatchService {
         return this.http.put<Match>(this.baseUrl + "match/" + id, match);
     }
 
+    acceptScore(id: Number, match: Match) {
+        match.matchStatusID = 4;
+        return this.http.put<Match>(this.baseUrl + "match/" + id, match);
+    }
+
     startMatch(id: Number, match: Match) {
         match.matchStatusID = 5;
         return this.http.put<Match>(this.baseUrl + "match/" + id, match);
