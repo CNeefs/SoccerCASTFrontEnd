@@ -16,6 +16,7 @@ import { AuthService } from '../auth/auth.service';
 export class ManageUsersComponent implements OnInit, OnDestroy {
 
   users: Observable<User[]>;
+  usersLength: number = 0;
   currentUser: User;
   loggedInUser: User;
 
@@ -77,6 +78,9 @@ export class ManageUsersComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.users = this._userService.getUsers();
+    this.users.subscribe(users => {
+      this.usersLength = users.length;
+    });
     this.userSub = this.users.subscribe(result => this.pageLoaded = true)
     this.getLoggedInUserSub = this._authService.user.subscribe((user: User) => {
       this.loggedInUser = user;
