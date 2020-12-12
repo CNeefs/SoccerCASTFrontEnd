@@ -10,5 +10,5 @@ export class Match {
         public matchTypeID: number, public matchType: MatchType, public team1ID: number, public team1: Team, public team2ID: number, public team2: Team,
         public player1ID: number, public player1: User, public player2ID: number, public player2: User, public player3ID: number, public player3: User,
         public player4ID: number, public player4: User, public matchStatusID: number, public matchStatus: MatchStatus, public competitionID: number,
-        public competition: Competition, public tournamentID: number, public tournament: Tournament) {}
+        public competition: Competition, public tournamentID: number, public tournament: Tournament, public round?: number, public number?: number, public nextRound?: number) {}
 }

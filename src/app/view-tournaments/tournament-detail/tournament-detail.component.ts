@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -16,13 +16,14 @@ import { UserTeamService } from 'src/app/services/user-team.service';
 import { UserTeam } from 'src/app/models/user-team.model';
 import { TeamService } from 'src/app/services/team.service';
 import { Match } from 'src/app/models/match.model';
+declare var $:any;
 
 @Component({
   selector: 'app-tournament-detail',
   templateUrl: './tournament-detail.component.html',
   styleUrls: ['./tournament-detail.component.scss', '../../styles/table_style.scss',  '../../styles/validation_style.scss']
 })
-export class TournamentDetailComponent implements OnInit, OnDestroy {
+export class TournamentDetailComponent implements OnInit, OnDestroy, AfterViewInit {
 
   joinTournamentForm: FormGroup;
   selectedTournamentID: number = 0;
@@ -134,6 +135,10 @@ export class TournamentDetailComponent implements OnInit, OnDestroy {
     this.userSub.unsubscribe();
   }
 
+  ngAfterViewInit() {
+    
+  }
+
   ngOnInit(): void {
     this.teams = [];
     this.usersInSelectedTeam = [];
@@ -183,6 +188,24 @@ export class TournamentDetailComponent implements OnInit, OnDestroy {
     this._matchService.getMatchesByTournamentId(this.selectedTournamentID).subscribe(matches => {
       this.allMatches = matches;
       this.matchesLoaded = true;
+      var self = this;
+      function onClickMatch(data) {
+        self.router.navigate(['user/match'], {queryParams: {id: data}});
+      }
+      var minimalData = { teams : [], results : [] }
+      var resizeParameters = { teamWidth: 150, scoreWidth: 40, matchMargin: 75, roundMargin: 50, onMatchClick: onClickMatch, init: minimalData };
+      this.allMatches.forEach(match => {
+        if (match.round == 1) minimalData.teams.push([match.team1.teamName, match.team2.teamName])
+        if (minimalData.results[match.round - 1] != null) {
+          if (match.matchStatusID != 4) minimalData.results[match.round - 1].push([null, null, match.matchID]);
+          else minimalData.results[match.round - 1].push([match.score1, match.score2, match.matchID]);
+        } else {
+          minimalData.results[match.round - 1] = [];
+          if (match.matchStatusID != 4) minimalData.results[match.round - 1].push([null, null, match.matchID]);
+          else minimalData.results[match.round - 1].push([match.score1, match.score2, match.matchID]);
+        }
+      });
+      $('#tournament').bracket(resizeParameters);
     });
   }  
 
