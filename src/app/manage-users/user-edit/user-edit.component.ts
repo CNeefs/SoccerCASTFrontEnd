@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { AuthService } from 'src/app/auth/auth.service';
 import { Role } from 'src/app/models/role.model';
 import { User } from 'src/app/models/user.model';
 import { UserService } from 'src/app/services/user.service';
@@ -13,11 +14,15 @@ import { RoleService } from '../../services/role.service';
   templateUrl: './user-edit.component.html',
   styleUrls: ['./user-edit.component.scss', '../../styles/validation_style.scss']
 })
-export class UserEditComponent implements OnInit {
+export class UserEditComponent implements OnInit, OnDestroy {
 
   editForm: FormGroup;
   selectedUser: User = null;
   selectedUserID: number = 0;
+
+  currentUser: User;
+  currentUserLoaded: boolean = false;
+  currentUserSub: Subscription;
 
   roles: Observable<Role[]>
   roleList = [];
@@ -26,12 +31,17 @@ export class UserEditComponent implements OnInit {
   roleSettings = { dataIdProperty: "idValue", dataNameProperty: "nameValue", headerText: "Roles", noneSelectedBtnText: "No roles selected", btnWidth: "200px", 
     showDeselectAllBtn: true, showSelectAllBtn: true, deselectAllBtnText: 'Deselect', selectAllBtnText: 'Select', btnClasses: 'btn btn-primary btn-sm dropdown-toggle', };
 
-  constructor(private route: ActivatedRoute, private _userService: UserService, private fb: FormBuilder, private router: Router, private _roleService: RoleService) { }
+  constructor(private route: ActivatedRoute, private _userService: UserService, private fb: FormBuilder, private router: Router, private _roleService: RoleService, private _authService: AuthService) { }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       this.selectedUserID = params['id'];
     });
+
+    this.currentUserSub = this._authService.user.subscribe((user: User) => {
+      this.currentUser = user;
+      this.currentUserLoaded = true;
+    })
 
     this.roles = this._roleService.getRoles();
     this.roles.pipe(map(res => res.map(role => {
@@ -89,4 +99,7 @@ export class UserEditComponent implements OnInit {
     this.router.navigate(['admin/users']);
   }
 
+  ngOnDestroy(): void {
+    this.currentUserSub.unsubscribe();
+  }
 }
