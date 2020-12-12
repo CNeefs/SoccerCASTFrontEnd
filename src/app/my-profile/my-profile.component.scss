@@ -485,6 +485,7 @@ $degrees: ($degrees*$i);
   opacity: 0;
   transition: .3s ease;
   background-color: rgb(99, 168, 136);
+  cursor: pointer;
 }
 
 /* When you mouse over the container, fade in the overlay icon*/
