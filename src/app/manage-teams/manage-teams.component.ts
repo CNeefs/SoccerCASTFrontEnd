@@ -55,10 +55,9 @@ export class ManageTeamsComponent implements OnInit, OnDestroy {
           this.deleteUserTeamSub = this._userTeamService.deleteUserTeamById(userTeam.userTeamID).subscribe();
         }
       }
-      this.deleteTeamSub = this._teamService.deleteTeamById(team.teamID).subscribe();
-      this.teams = this.teams.pipe(
-        map(res => res.filter(t => t.teamID != team.teamID))
-      );
+      this.deleteTeamSub = this._teamService.deleteTeamById(team.teamID).subscribe(res => {
+        this.ngOnInit()
+      });
       this._modalService.dismissAll();
     })
   }

@@ -35,10 +35,9 @@ export class ManageTablesComponent implements OnInit {
   }
 
   deleteTable(table: Table) {
-    this._tableService.deleteTableById(table.tableID).subscribe();
-    this.tables = this.tables.pipe(
-      map(res => res.filter(t => t.tableID != table.tableID))
-    );
+    this._tableService.deleteTableById(table.tableID).subscribe(res => {
+      this.ngOnInit();
+    });
     this._modalService.dismissAll();
   }
 

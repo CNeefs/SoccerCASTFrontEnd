@@ -14,6 +14,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 export class ManageCompetitionsComponent implements OnInit {
 
   competitions: Observable<Competition[]>;
+  competitionsLength: number = 0;
   currentCompetition: Competition;
 
   pageLoaded: boolean = false;
@@ -34,10 +35,9 @@ export class ManageCompetitionsComponent implements OnInit {
   }
 
   deleteCompetition(competition: Competition) {
-    this._competitionService.deleteCompetitionById(competition.competitionID).subscribe();
-    this.competitions = this.competitions.pipe(
-      map(res => res.filter(c => c.competitionID != competition.competitionID))
-    );
+    this._competitionService.deleteCompetitionById(competition.competitionID).subscribe(res => {
+      this.ngOnInit();
+    });
     this._modalService.dismissAll();
   }
 
@@ -55,6 +55,9 @@ export class ManageCompetitionsComponent implements OnInit {
 
   ngOnInit(): void {
     this.competitions = this._competitionService.getCompetitions();
+    this.competitions.subscribe(competitions => {
+      this.competitionsLength = competitions.length;
+    })
     this.competitions.subscribe(result => this.pageLoaded = true)
   }
 }
