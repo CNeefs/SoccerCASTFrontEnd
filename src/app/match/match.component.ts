@@ -28,14 +28,16 @@ export class MatchComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe(params => {
-      this.currentMatchId = params['id'];
-    });
+      this.route.queryParams.subscribe(params => {
+        this.currentMatchId = params['id'];
+      });
 
     this.getCurrentMatchSub = this._matchService.getMatchByMatchId(this.currentMatchId).subscribe((match: Match) => {
       this.currentMatch = match;
       console.log(this.currentMatch);
       this.matchLoaded = true;
+    }, err => {
+      this.router.navigate(['not-found']);
     });
   }
 
