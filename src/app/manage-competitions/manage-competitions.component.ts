@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Sort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-manage-competitions',
@@ -14,6 +15,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 export class ManageCompetitionsComponent implements OnInit {
 
   competitions: Observable<Competition[]>;
+  sortedCompetitions: Competition[];
   competitionsLength: number = 0;
   currentCompetition: Competition;
 
@@ -56,8 +58,30 @@ export class ManageCompetitionsComponent implements OnInit {
   ngOnInit(): void {
     this.competitions = this._competitionService.getCompetitions();
     this.competitions.subscribe(competitions => {
+      this.sortedCompetitions = competitions;
       this.competitionsLength = competitions.length;
     })
     this.competitions.subscribe(result => this.pageLoaded = true)
+  }
+
+  //sorting
+  sortData(sort: Sort) {
+    const data = this.sortedCompetitions.slice();
+    if (!sort.active || sort.direction === '') {
+      this.sortedCompetitions = data;
+      return;
+    }
+
+    this.sortedCompetitions = data.sort((a, b) => {
+      const isAsc = sort.direction === 'asc';
+      switch (sort.active) {
+        case 'name': return compare(a.name, b.name, isAsc);
+        default: return 0;
+      }
+    });
+
+    function compare(a: number | string, b: number | string, isAsc: boolean) {
+      return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
+    }
   }
 }

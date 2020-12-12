@@ -9,17 +9,17 @@
               <h3 class="mb-0 float-left">Tournaments</h3>
           </div>
           <div class="table-responsive" style="overflow-y: hidden;">
-            <table class="table align-items-center table-flush">
+            <table class="table align-items-center table-flush" matSort (matSortChange)="sortData($event)">
               <thead class="thead-light">
                 <tr>
-                  <th scope="col">Edition</th>
-                  <th scope="col">Teams</th>
-                  <th scope="col">Winner</th>
+                  <th scope="col" mat-sort-header="edition">Edition</th>
+                  <th scope="col" mat-sort-header="total_Joined">Teams</th>
+                  <th scope="col" mat-sort-header="winner">Winner</th>
                   <th scope="col"></th>
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let t of (tournaments | async)">
+                <tr *ngFor="let t of (sortedTournaments)">
                   <th scope="row">
                     <div class="media align-items-center">
                       <div class="media-body">

@@ -7,6 +7,7 @@ import { User } from '../models/user.model';
 import { UserService } from '../services/user.service';
 import { ToastService } from 'src/app/toast/services/toast.service';
 import { AuthService } from '../auth/auth.service';
+import { Sort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-manage-users',
@@ -17,6 +18,7 @@ export class ManageUsersComponent implements OnInit, OnDestroy {
 
   users: Observable<User[]>;
   usersLength: number = 0;
+  sortedUsers: User[];
   currentUser: User;
   loggedInUser: User;
 
@@ -79,6 +81,7 @@ export class ManageUsersComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.users = this._userService.getUsers();
     this.users.subscribe(users => {
+      this.sortedUsers = users;
       this.usersLength = users.length;
     });
     this.userSub = this.users.subscribe(result => this.pageLoaded = true)
@@ -93,6 +96,35 @@ export class ManageUsersComponent implements OnInit, OnDestroy {
     }
     this.userSub.unsubscribe();
     this.getLoggedInUserSub.unsubscribe();
+  }
+
+  //sorting
+  sortData(sort: Sort) {
+    const data = this.sortedUsers.slice();
+    if (!sort.active || sort.direction === '') {
+      this.sortedUsers = data;
+      return;
+    }
+
+    this.sortedUsers = data.sort((a, b) => {
+      const isAsc = sort.direction === 'asc';
+      let birthDateA: Date = new Date(a.birthDate);
+      let birthDateB: Date = new Date(b.birthDate);
+      let birthDateATime: number = birthDateA.getTime();
+      let birthDateBTime: number = birthDateB.getTime();
+      switch (sort.active) {
+        case 'firstName': return compare(a.firstName, b.firstName, isAsc);
+        case 'lastName': return compare(a.lastName, b.lastName, isAsc);
+        case 'email': return compare(a.email, b.email, isAsc);
+        case 'birthDate': return compare(birthDateATime, birthDateBTime, isAsc);
+        case 'roles': return compare(a.roles[0].name, b.roles[0].name, isAsc);
+        default: return 0;
+      }
+    });
+
+    function compare(a: number | string, b: number | string, isAsc: boolean) {
+      return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
+    }
   }
 
 }

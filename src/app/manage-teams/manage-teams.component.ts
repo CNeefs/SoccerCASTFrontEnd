@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Sort } from '@angular/material/sort';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, Subscription } from 'rxjs';
@@ -18,6 +19,7 @@ export class ManageTeamsComponent implements OnInit, OnDestroy {
 
   teams: Observable<Team[]>;
   teamsLenght: number = 0;
+  sortedTeams: Team[];
   userTeams: UserTeam[];
   currentTeam: Team;
 
@@ -65,6 +67,7 @@ export class ManageTeamsComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.teams = this._teamService.getTeams();
     this.teams.subscribe(teams => {
+      this.sortedTeams = teams;
       this.teamsLenght = teams.length;
     })
     this.getTeamsSub = this.teams.subscribe(result => this.pageLoaded = true)
@@ -83,6 +86,30 @@ export class ManageTeamsComponent implements OnInit, OnDestroy {
 
     if(this.deleteUserTeamSub) {
       this.deleteUserTeamSub.unsubscribe();
+    }
+  }
+
+  //sorting
+  sortData(sort: Sort) {
+    const data = this.sortedTeams.slice();
+    if (!sort.active || sort.direction === '') {
+      this.sortedTeams = data;
+      return;
+    }
+
+    this.sortedTeams = data.sort((a, b) => {
+      const isAsc = sort.direction === 'asc';
+      switch (sort.active) {
+        case 'teamName': return compare(a.teamName, b.teamName, isAsc);
+        case 'companyName': return compare(a.companyName, b.companyName, isAsc);
+        case 'location': return compare(a.location, b.location, isAsc);
+        case 'captain': return compare(a.captain.lastName, b.captain.lastName, isAsc);
+        default: return 0;
+      }
+    });
+
+    function compare(a: number | string, b: number | string, isAsc: boolean) {
+      return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
     }
   }
 

@@ -11,18 +11,18 @@
               (click)="goToCreate()">New</button>
           </div>
           <div class="table-responsive" style="overflow-y: hidden;">
-            <table class="table align-items-center table-flush">
+            <table class="table align-items-center table-flush" matSort (matSortChange)="sortData($event)">
               <thead class="thead-light">
                 <tr>
-                  <th scope="col">Name</th>
-                  <th scope="col">Company name</th>
-                  <th scope="col">Location</th>
-                  <th scope="col">Contact user</th>
+                  <th mat-sort-header="tableName" scope="col">Name</th>
+                  <th mat-sort-header="companyName" scope="col">Company name</th>
+                  <th mat-sort-header="location" scope="col">Location</th>
+                  <th mat-sort-header="contactUser" scope="col">Contact user</th>
                   <th scope="col"></th>
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let t of (tables | async)">
+                <tr *ngFor="let t of (sortedTables)">
                   <th scope="row">
                     <div class="media align-items-center">
                       <div class="media-body">
