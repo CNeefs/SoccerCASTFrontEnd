@@ -14,6 +14,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 export class ManageTablesComponent implements OnInit {
 
   tables: Observable<Table[]>;
+  tablesLength: number = 0;
   currentTable: Table;
 
   pageLoaded: boolean = false;
@@ -43,6 +44,9 @@ export class ManageTablesComponent implements OnInit {
 
   ngOnInit(): void {
     this.tables = this._tableService.getTables();
+    this.tables.subscribe(tables => {
+      this.tablesLength = tables.length;
+    });
     this.tables.subscribe(result => this.pageLoaded = true)
   }
 }
