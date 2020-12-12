@@ -214,7 +214,6 @@ export class MyProfileComponent implements OnInit, OnDestroy {
         }
       });
       this.matchesLoaded = true;
-      console.log(this.allMatches);
     });
   }
 

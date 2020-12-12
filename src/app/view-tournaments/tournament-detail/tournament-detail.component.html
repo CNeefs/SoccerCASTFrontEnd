@@ -134,6 +134,16 @@
                                                             <i class="bg-primary"></i> {{m.matchStatus.statusName}}
                                                             </span>
                                                         </td>
+                                                        <td *ngIf="m.matchStatusID == 1">
+                                                            <span class="badge badge-dot mr-4">
+                                                            <i class="bg-warning"></i> {{m.matchStatus.statusName}}
+                                                            </span>
+                                                        </td>
+                                                        <td *ngIf="m.matchStatusID == 4">
+                                                            <span class="badge badge-dot mr-4">
+                                                            <i class="bg-success"></i> {{m.matchStatus.statusName}}
+                                                            </span>
+                                                        </td>
                                                         <td class="text-right">
                                                             <div ngbDropdown class="dropdown" style="position:static;overflow: visible;">
                                                                 <a ngbDropdownToggle class="btn btn-sm btn-icon-only text-light"
@@ -143,7 +153,10 @@
                                                                 <div ngbDropdownMenu class="dropdown-menu dropdown-menu-left">
                                                                     <a *ngIf="m.matchStatusID == 6 && currentUser.userID == m.player1ID" ngbDropdownItem class="dropdown-item" (click)="startMatch(m)" style="cursor: pointer;">Start match</a>
                                                                     <a *ngIf="m.matchStatusID == 6 && currentUser.userID != m.player1ID" ngbDropdownItem class="dropdown-item" style="pointer-events: none;color: red;">Moderator needs to start this match</a>
-                                                                    <a *ngIf="m.matchStatusID == 5" ngbDropdownItem class="dropdown-item" (click)="goToMatch(m)" style="cursor: pointer;">Match page</a>
+                                                                    <a *ngIf="m.matchStatusID == 1 && (currentUser.userID == m.player1ID || currentUser.userID == m.player2ID)" ngbDropdownItem class="dropdown-item" style="pointer-events: none;color: red;">Other team needs to accept the score</a>
+                                                                    <a *ngIf="m.matchStatusID == 1 && (currentUser.userID == m.player3ID || currentUser.userID == m.player4ID)" ngbDropdownItem class="dropdown-item" (click)="acceptScore(m)" style="cursor: pointer;">Accept score</a>
+                                                                    <a *ngIf="m.matchStatusID == 1 && (currentUser.userID == m.player3ID || currentUser.userID == m.player4ID)" ngbDropdownItem class="dropdown-item" (click)="declineScore(m)" style="cursor: pointer;">Decline score</a>
+                                                                    <a *ngIf="m.matchStatusID == 4 || m.matchStatusID == 5" ngbDropdownItem class="dropdown-item" (click)="goToMatch(m)" style="cursor: pointer;">Match page</a>
                                                                 </div>
                                                             </div>
                                                         </td>

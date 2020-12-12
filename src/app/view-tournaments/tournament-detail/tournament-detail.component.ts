@@ -74,6 +74,29 @@ export class TournamentDetailComponent implements OnInit, OnDestroy {
     });
   }
 
+  startMatch(match: Match) {
+    match.date = new Date();
+    this._matchService.startMatch(match.matchID, match).subscribe(res => {
+      this.goToMatch(match);
+    });
+  }
+
+  acceptScore(match: Match) {
+    this._matchService.acceptScore(match.matchID, match).subscribe(res => {
+      this.getMatches();
+    });
+  }
+
+  declineScore(match: Match) {
+    this._matchService.startMatch(match.matchID, match).subscribe(res => {
+      this.getMatches();
+    });
+  }
+
+  goToMatch(match: Match) {
+    this.router.navigate(['user/match'], {queryParams: {id: match.matchID}});
+  }
+
   changeTab(id: string, linkid: string) {
     let currentLink: HTMLElement = document.getElementById(this.currentLink) as HTMLElement;
     currentLink.classList.remove('active');
