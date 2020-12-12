@@ -7,7 +7,6 @@
         <div class="card shadow">
           <div class="card-header border-0">
               <h3 class="mb-0 float-left">Tournaments</h3>
-              <button type="button" class="btn btn-success btn-arrow-right float-right" (click)="goToCreate()">New</button>
           </div>
           <div class="table-responsive" style="overflow-y: hidden;">
             <table class="table align-items-center table-flush">
@@ -43,9 +42,7 @@
                         <mat-icon style="color: black;">more_vert</mat-icon>
                       </a>
                       <div ngbDropdownMenu class="dropdown-menu dropdown-menu-left">
-                        <a *ngIf="!t.isStart" ngbDropdownItem class="dropdown-item" (click)="startTournament(t)" style="cursor: pointer;">Start tournament</a>
-                        <a ngbDropdownItem class="dropdown-item" (click)="goToEdit(t)" style="cursor: pointer;">Edit tournament</a>
-                        <a ngbDropdownItem class="dropdown-item" (click)="openDeleteTournament(t, contentDeleteModel)" style="cursor: pointer;">Delete tournament</a>
+                        <a ngbDropdownItem class="dropdown-item" (click)="goToDetail(t)" style="cursor: pointer;">Tournament page</a>
                       </div>
                     </div>
                   </td>
@@ -61,20 +58,3 @@
     </div>
   </div>
 </div>
-
-<!-- Model -->
-<ng-template #contentDeleteModel let-modal>
-  <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title">Delete Tournament</h4>
-      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-          <span aria-hidden="true">&times;</span>
-      </button>
-  </div>
-  <div class="modal-body">
-      <p>You are about to delete <span class="font-weight-bold">'{{currentTournament.edition}}'</span>, are you sure?</p>
-  </div>
-  <div class="modal-footer">
-      <button class="btn btn-outline-primary" (click)="modal.dismiss()">Cancel</button>
-      <button type="button" class="btn btn-danger white" (click)="deleteTournament(currentTournament)">Delete</button>
-  </div>
-</ng-template>

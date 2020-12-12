@@ -20,6 +20,10 @@ export class MatchService {
         return this.http.get<Match[]>(this.baseUrl + "match/user/" + id);
     }
 
+    getMatchesByTournamentId(id: Number) {
+        return this.http.get<Match[]>(this.baseUrl + "match/tournament/" + id);
+    }
+
     addMatch(match: Match) {
         return this.http.post<Match>(this.baseUrl + "match/", match);
     }

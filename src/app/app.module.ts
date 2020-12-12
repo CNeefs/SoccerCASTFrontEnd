@@ -21,7 +21,8 @@ import { MyProfileModule } from './my-profile/my-profile.module';
 import { ViewTeamsModule } from './view-teams/view-teams.module';
 import { ViewRankingsModule } from './view-rankings/view-rankings.module';
 import { ToastComponent } from './toast/toast.component';
-import { DocumentationModule } from './documentation/documentation.module'
+import { DocumentationModule } from './documentation/documentation.module';
+import { ViewTournamentsModule } from './view-tournaments/view-tournaments.module';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { DocumentationModule } from './documentation/documentation.module'
     ViewTeamsModule,
     SharedModule,
     DocumentationModule,
-    ViewRankingsModule
+    ViewRankingsModule,
+    ViewTournamentsModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,
