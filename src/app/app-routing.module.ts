@@ -41,6 +41,8 @@ import { ViewTeamCreateComponent } from './view-teams/view-team-create/view-team
 import { ViewTeamEditComponent } from './view-teams/view-team-edit/view-team-edit.component';
 import { MyProfileEditComponent } from './my-profile/my-profile-edit/my-profile-edit.component';
 import { MatchComponent } from './match/match.component';
+import { GeneralDocumentationComponent } from './documentation/general-documentation/general-documentation.component';
+import { RankingsDocumentationComponent } from './documentation/rankings-documentation/rankings-documentation.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -54,7 +56,9 @@ const routes: Routes = [
     {path: 'table', component: TableDocumentationComponent},
     {path: 'matches', component: MatchesDocumentationComponent},
     {path: 'competitions', component: CompetitionsDocumentationComponent},
-    {path: 'tournaments', component: TournamentsDocumentationComponent}
+    {path: 'tournaments', component: TournamentsDocumentationComponent},
+    {path: 'general', component: GeneralDocumentationComponent},
+    {path: 'rankings', component: RankingsDocumentationComponent}
   ]},
   {
     path: 'match',
