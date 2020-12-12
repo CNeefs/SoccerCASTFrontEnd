@@ -268,6 +268,8 @@ export class TeamDetailComponent implements OnInit, OnDestroy {
           });
           this.teamLoaded = true;
           this.getMatches();
+        }, err => {
+          this.router.navigate(['not-found']);
         });
         this._userTeamService.userTeams(user.userID, this.selectedTeamID).subscribe(res => {
           this.userTeam = res;

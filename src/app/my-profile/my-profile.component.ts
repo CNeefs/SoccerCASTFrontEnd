@@ -163,6 +163,8 @@ export class MyProfileComponent implements OnInit, OnDestroy {
           this.calculateStatistics();
           this.userLoaded = true;
           this.getMatches();
+        }, err => {
+          this.router.navigate(['not-found']);
         });
         this._userTeamService.getUserTeamsByUserId(this.selectedUserID).subscribe((teams: Team[]) => {
           this.userTeams = teams;

@@ -88,6 +88,8 @@ export class TeamEditComponent implements OnInit {
         location: [team.location, Validators.required]
       });
       this.pageLoaded = true;
+    }, error => {
+      this.router.navigate(['admin/teams']);
     })
     this.usersTeam = this._userTeamService.getUsersTeamByTeamId(this.selectedTeamID);
     this.usersReview = this._userTeamService.getUsersTeamInReview(this.selectedTeamID);
