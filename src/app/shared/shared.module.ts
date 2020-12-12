@@ -6,6 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 
 import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
 import { ShortenPipe } from './shorten.pipe';
+import {MatSortModule} from '@angular/material/sort';
 
 @NgModule({
   declarations: [
@@ -15,13 +16,15 @@ import { ShortenPipe } from './shorten.pipe';
   imports: [
     CommonModule,
     NgbModule,
-    MatIconModule
+    MatIconModule,
+    MatSortModule
   ],
   exports: [
     NgbModule,
     MatIconModule,
     LoadingSpinnerComponent,
-    ShortenPipe
+    ShortenPipe,
+    MatSortModule
   ]
 })
 export class SharedModule { }

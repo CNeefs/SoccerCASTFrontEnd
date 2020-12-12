@@ -10,16 +10,16 @@
               <button type="button" class="btn btn-success btn-arrow-right float-right" (click)="goToCreate()">New</button>
           </div>
           <div class="table-responsive" style="overflow-y: hidden;">
-            <table class="table align-items-center table-flush">
+            <table class="table align-items-center table-flush" matSort (matSortChange)="sortData($event)">
               <thead class="thead-light">
                 <tr>
-                  <th scope="col">Name</th>
+                  <th mat-sort-header="name" scope="col">Name</th>
                   <th scope="col">Status</th>
                   <th scope="col"></th>
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let c of (competitions | async)">
+                <tr *ngFor="let c of (sortedCompetitions)">
                   <th scope="row">
                     <div class="media align-items-center">
                       <div class="media-body">

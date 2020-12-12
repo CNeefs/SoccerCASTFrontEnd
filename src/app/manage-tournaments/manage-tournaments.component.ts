@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastService } from '../toast/services/toast.service';
+import { Sort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-manage-tournaments',
@@ -16,6 +17,7 @@ export class ManageTournamentsComponent implements OnInit {
 
   tournaments: Observable<Tournament[]>;
   tournamentsLength: number = 0;
+  sortedTournaments: Tournament[];
   currentTournament: Tournament;
   totalTeams: number = 0;
 
@@ -60,8 +62,32 @@ export class ManageTournamentsComponent implements OnInit {
   ngOnInit(): void {
     this.tournaments = this._tournamentService.getTournaments();
     this.tournaments.subscribe(tournaments => {
+      this.sortedTournaments = tournaments;
       this.tournamentsLength = tournaments.length;
     })
     this.tournaments.subscribe(result => this.pageLoaded = true)
+  }
+
+  //sorting
+  sortData(sort: Sort) {
+    const data = this.sortedTournaments.slice();
+    if (!sort.active || sort.direction === '') {
+      this.sortedTournaments = data;
+      return;
+    }
+
+    this.sortedTournaments = data.sort((a, b) => {
+      const isAsc = sort.direction === 'asc';
+      switch (sort.active) {
+        case 'edition': return compare(a.edition, b.edition, isAsc);
+        case 'total_Joined': return compare(a.total_Joined, b.total_Joined, isAsc);
+        case 'winner': return compare(a.winner, b.winner, isAsc);
+        default: return 0;
+      }
+    });
+
+    function compare(a: number | string, b: number | string, isAsc: boolean) {
+      return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
+    }
   }
 }

@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Sort } from '@angular/material/sort';
 import { Observable, Subscription } from 'rxjs';
 import { User } from '../models/user.model';
 import { UserService } from '../services/user.service';
@@ -60,5 +61,4 @@ export class ViewRankingsComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.userSub.unsubscribe();
   }
-
 }

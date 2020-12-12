@@ -49,7 +49,7 @@ import { MatchModule } from './match/match.module';
     ViewTeamsModule,
     SharedModule,
     DocumentationModule,
-    ViewTournamentsModule
+    ViewTournamentsModule,
     MatchModule,
     ViewRankingsModule
   ],
