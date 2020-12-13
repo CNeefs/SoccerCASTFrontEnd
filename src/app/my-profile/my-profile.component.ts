@@ -196,6 +196,7 @@ export class MyProfileComponent implements OnInit, OnDestroy {
         });
       }
     });
+    this.userSub.unsubscribe();
   }
 
   getMatches() {

@@ -303,6 +303,7 @@ export class TeamDetailComponent implements OnInit, OnDestroy {
         });
       }
     });
+    this.userSub.unsubscribe();
   }
 
   getMatches() {
