@@ -36,8 +36,8 @@
                 <li class="nav-item" *ngIf="selectedTeam.captainID == currentUser.userID"><a (click)="changeTab('profile-request-matches', 'link-request-matches')" style="cursor: pointer;" class="nav-link" data-toggle="tab" id="link-request-matches">REQUESTS</a></li>
                 <li class="nav-item" *ngIf="selectedTeam.captainID == currentUser.userID"><a (click)="changeTab('profile-planned-matches', 'link-planned-matches')" style="cursor: pointer;" class="nav-link" data-toggle="tab" id="link-planned-matches">PLANNED</a></li>
                 <li class="nav-item"><a (click)="changeTab('profile-history', 'link-history')" style="cursor: pointer;" class="nav-link" data-toggle="tab" id="link-history">HISTORY</a></li>
-                <li class="nav-item"><a (click)="changeTab('profile-competitions', 'link-competitions')" style="cursor: pointer;" class="nav-link" data-toggle="tab" id="link-competitions">COMPETITIONS</a></li>
                 <li class="nav-item"><a (click)="changeTab('profile-tournaments', 'link-tournaments')" style="cursor: pointer;" class="nav-link" data-toggle="tab" id="link-tournaments">TOURNAMENTS</a></li>
+                <li class="nav-item"><a (click)="changeTab('profile-competitions', 'link-competitions')" style="cursor: pointer;" class="nav-link" data-toggle="tab" id="link-competitions">COMPETITIONS (coming soon)</a></li>
             </ul>
         </div>
     
@@ -253,8 +253,12 @@
                                                 </tbody>
                                             </table>
                                             <!--Nothing found-->
-                                            <div class="card-header border-0 mb-4" *ngIf="competitions.length == 0">
+                                            <!-- <div class="card-header border-0 mb-4" *ngIf="competitions.length == 0">
                                                 <h5 class="mb-0 float-left">Nothing found</h5>
+                                            </div> -->
+                                            <div class="card-header border-0 mb-4 text-center">
+                                                <h4>Work in progress ...</h4>
+                                                <img src="https://media.giphy.com/media/iIAYEKtLy0yG7TacbC/giphy.gif" alt="Work in progress">
                                             </div>
                                         </div>
                                     </div>
@@ -303,7 +307,7 @@
                                                                     <mat-icon style="color: black;">more_vert</mat-icon>
                                                                 </a>
                                                                 <div ngbDropdownMenu class="dropdown-menu dropdown-menu-left">
-                                                                    <a ngbDropdownItem class="dropdown-item" (click)="goToTournamentDetails(t)" style="cursor: pointer;">Tournament details</a>
+                                                                    <a ngbDropdownItem class="dropdown-item" (click)="goToTournamentDetails(t)" style="cursor: pointer;">Tournament page</a>
                                                                 </div>
                                                             </div>
                                                         </td>
