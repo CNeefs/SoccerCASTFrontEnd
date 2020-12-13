@@ -17,6 +17,7 @@ export class MatchComponent implements OnInit, OnDestroy {
   currentUser: User;
   currentMatchId: number;
   matchLoaded: boolean;
+  teamNameTBD: string = "";
 
   userSub: Subscription;
 
@@ -32,6 +33,15 @@ export class MatchComponent implements OnInit, OnDestroy {
         this._matchService.getMatchByMatchId(this.currentMatchId).subscribe((match: Match) => {
           console.log(match);
           this.currentMatch = match;
+          if (this.currentMatch.tournamentID != null) {
+            if (this.currentMatch.team1ID == null) {
+              this.teamNameTBD = "TBD";
+            }
+
+            if (this.currentMatch.team2ID == null) {
+              this.teamNameTBD = "TBD";
+            }
+          }
           this.matchLoaded = true;
         }, err => {
           this.router.navigate(['not-found']);

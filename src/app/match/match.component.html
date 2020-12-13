@@ -9,6 +9,7 @@
                         <div class="col-4 text-center mx-auto">
                             <div class="match-img mx-auto border border-secondary">
                                 <img *ngIf="currentMatch.team1" [src]="currentMatch.team1.imagePath" class="image img-fluid" alt="team1">
+                                <img *ngIf="!currentMatch.team1 && !currentMatch.player1" src="https://soccercastpictures.blob.core.windows.net/firstcontainer/blank-profile-picture.webp" class="image img-fluid" alt="team2">
                                 <img *ngIf="!currentMatch.team1 && currentMatch.player1" [src]="currentMatch.player1.imagePath" class="image" alt="player1">
                             </div>
                         </div>
@@ -18,13 +19,15 @@
                         <div class="col-4 text-center">
                             <div class="match-img mx-auto border border-secondary">
                                 <img *ngIf="currentMatch.team2" [src]="currentMatch.team2.imagePath" class="image img-fluid" alt="team2">
+                                <img *ngIf="!currentMatch.team2 && !currentMatch.player3" src="https://soccercastpictures.blob.core.windows.net/firstcontainer/blank-profile-picture.webp" class="image img-fluid" alt="team2">
                                 <img *ngIf="!currentMatch.team2 && currentMatch.player3" [src]="currentMatch.player3.imagePath" class="image" alt="player2">
                             </div>
                         </div>
                     </div>
                     <div class="row mb-4">
                         <div class="col-4 text-center">
-                            <p *ngIf="currentMatch.team1">{{currentMatch.team1.teamName}}</p>
+                            <p *ngIf="currentMatch.team1 != null" class="font-weight-bold">{{currentMatch.team1.teamName}}</p>
+                            <p *ngIf="currentMatch.team1 == null" class="font-weight-bold">{{teamNameTBD}}</p>
                             <p *ngIf="!currentMatch.team1 && currentMatch.player1">{{currentMatch.player1.firstName}} {{currentMatch.player1.lastName}}</p>
                             <div *ngIf="(currentMatch.player1ID == currentUser.userID || currentMatch.player2ID == currentUser.userID) && currentMatch.matchStatusID == 5">
                                 <button type="button" class="btn btn-success changeScoreButton" (click)="changeScore('1', 'add')">+</button>
@@ -37,7 +40,8 @@
                             </div>
                         </div>
                         <div class="col-4 text-center">
-                            <p *ngIf="currentMatch.team2">{{currentMatch.team2.teamName}}</p>
+                            <p *ngIf="currentMatch.team2 != null" class="font-weight-bold">{{currentMatch.team2.teamName}}</p>
+                            <p *ngIf="currentMatch.team2 == null" class="font-weight-bold">{{teamNameTBD}}</p>
                             <p *ngIf="!currentMatch.team2 && currentMatch.player3">{{currentMatch.player3.firstName}} {{currentMatch.player3.lastName}}</p>
                             <div *ngIf="(currentMatch.player3ID == currentUser.userID || currentMatch.player4ID == currentUser.userID)  && currentMatch.matchStatusID == 5">
                                 <button type="button" class="btn btn-success changeScoreButton" (click)="changeScore('2', 'add')">+</button>
