@@ -8,7 +8,7 @@ import { TeamStatus } from '../models/team-status.model';
 })
 export class TeamStatusService {
 
-    baseUrl: string = "https://localhost:44388/api/";
+    baseUrl: string = "https://soccercastbackend.azurewebsites.net/api/";
 
     constructor(private http: HttpClient) {}
 

@@ -9,7 +9,7 @@ import { Team } from '../models/team.model';
 })
 export class UserTeamService {
 
-    baseUrl: string = "https://localhost:44388/api/";
+    baseUrl: string = "https://soccercastbackend.azurewebsites.net/api/";
 
     constructor(private http: HttpClient) {}
 
