@@ -12,7 +12,7 @@ import { ToastService } from '../toast/services/toast.service';
 @Injectable({ providedIn: 'root' })
 export class AuthService {
     user = new BehaviorSubject(null);
-    baseUrl: string = "https://soccercastbackend.azurewebsites.net/api/";
+    baseUrl: string = "https://localhost:44388/api/";
 
     constructor(private _authorizationService: AuthorizationService, private _userService: UserService, private http: HttpClient, private router: Router, private toastService: ToastService) { }
 

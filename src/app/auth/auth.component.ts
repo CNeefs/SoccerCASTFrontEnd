@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { UserLogin } from './models/user-login.model';
 import { AuthService } from './auth.service';
 import { Router } from '@angular/router';
+import { User } from '../models/user.model';
 
 @Component({
   selector: 'app-auth',
@@ -13,9 +14,17 @@ import { Router } from '@angular/router';
 export class AuthComponent implements OnInit {
   userLogin: UserLogin;
 
+  userSub: Subscription;
+
   constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
+    this.userSub = this.authService.user.subscribe((user: User) => { 
+      if (user) {
+        this.router.navigate(['/home']);
+        if (this.userSub) this.userSub.unsubscribe();
+      }
+    });
   }
 
   onSubmit(loginForm: NgForm) {

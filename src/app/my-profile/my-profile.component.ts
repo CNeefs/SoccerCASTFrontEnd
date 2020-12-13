@@ -21,7 +21,7 @@ import { ToastService } from '../toast/services/toast.service';
   templateUrl: './my-profile.component.html',
   styleUrls: ['./my-profile.component.scss', '../styles/table_style.scss', '../styles/validation_style.scss']
 })
-export class MyProfileComponent implements OnInit, OnDestroy {
+export class MyProfileComponent implements OnInit {
 
   challengeUserForm: FormGroup;
   selectedUserID: number = 0;
@@ -157,10 +157,6 @@ export class MyProfileComponent implements OnInit, OnDestroy {
     this.currentLink = linkid;
   }
 
-  ngOnDestroy(): void {
-    this.userSub.unsubscribe();
-  }
-
   ngOnInit(): void {
     this.currentTab = "profile-personal-statistics";
     this.currentLink = "link-personal-statistics";
@@ -194,9 +190,9 @@ export class MyProfileComponent implements OnInit, OnDestroy {
           this.userTeams = teams;
           this.userTeamsLoaded = true;
         });
+        if (this.userSub) this.userSub.unsubscribe();
       }
     });
-    this.userSub.unsubscribe();
   }
 
   getMatches() {

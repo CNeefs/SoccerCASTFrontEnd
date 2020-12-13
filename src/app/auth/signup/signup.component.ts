@@ -8,6 +8,7 @@ import { User } from '../../models/user.model';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { Role } from 'src/app/models/role.model';
 import { RoleService } from 'src/app/services/role.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-signup',
@@ -23,12 +24,20 @@ export class SignupComponent implements OnInit {
 
   userSignupSub: Subscription;
   getUserRoleSub: Subscription;
+  userSub: Subscription;
 
   constructor(
     private authService: AuthService,
-    private _roleService: RoleService) { }
+    private _roleService: RoleService,
+    private router: Router) { }
 
   ngOnInit(): void {
+    this.userSub = this.authService.user.subscribe((user: User) => { 
+      if (user) {
+        this.router.navigate(['/home']);
+        if (this.userSub) this.userSub.unsubscribe();
+      }
+    });
     let minDateYear = this.currentDate.getFullYear() - 90;
     let maxDateYear = this.currentDate.getFullYear() - 18;
     this.minDate = {year: minDateYear, month: 1, day: 1};
