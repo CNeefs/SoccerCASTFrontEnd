@@ -4,7 +4,7 @@
         <div class="container">
             <div class="branding">
                 <h1 class="logo">
-                    <a href="index.html">
+                    <a routerLink="/documentation">
                         <span aria-hidden="true" class="icon_documents_alt icon"></span>
                         <span class="text-highlight">SoccerCAST</span><span class="text-bold"> Documentation</span>
                     </a>
@@ -21,8 +21,8 @@
     <div class="doc-wrapper">
         <div class="container">
             <div id="doc-header" class="doc-header text-center">
-                <h1 class="doc-title"><i class="icon fa fa-paper-plane"></i> Team functionalities</h1>
-                <div class="meta"><i class="far fa-clock"></i> Last updated: Dec 10, 2020</div>
+                <h1 class="doc-title"><i class="icon fa fa-paper-plane"></i> Team Functionalities</h1>
+                <div class="meta"><i class="far fa-clock"></i> Last updated: Dec 13, 2020</div>
             </div><!--//doc-header-->
             <div class="callout-block callout-danger">
                 <div class="content">
@@ -90,23 +90,7 @@
                                     
                                 </div><!--//content-->
                             </div><!--//callout-block-->
-                        </section><!--//doc-section-->
-                        <section id="createteam-section" class="doc-section">
-                            <h2 class="section-title">Create team</h2>
-                            <div class="section-block">
-                                <p>
-                                    Every user can make as much teams as they want. To do this, follow these steps:
-                                </p>
-                                <ol>
-                                    <li>You start on the teams overview page (see above).</li>
-                                    <li>On the top-right of the list, you see a green arrow with the text: 'New'. Click on it.</li>
-                                    <li>On the page that follows, fill in the team details.</li>
-                                    <li>Click save.</li>
-                                    <li>Congratulations! You are now the captain of your very own team!</li>
-                                </ol>
-                            </div>
-                        </section><!--//doc-section-->
-                        
+                        </section><!--//doc-section-->                        
                         <section id="jointeam-section" class="doc-section">
                             <h2 class="section-title">Join team</h2>
                             <div class="section-block">
@@ -138,6 +122,91 @@
                                     <li>There you go! You just left that team! Easy right?</li>
                                 </ol>
                             </div>
+                        </section><!--//doc-section-->
+                        <section id="createteam-section" class="doc-section">
+                            <h2 class="section-title">Create team</h2>
+                            <div class="section-block">
+                                <p>
+                                    Every user can make as much teams as they want. To do this, follow these steps:
+                                </p>
+                                <ol>
+                                    <li>You start on the teams overview page (see above).</li>
+                                    <li>On the top-right of the list, you see a green arrow with the text: 'New'. Click on it.</li>
+                                    <li>On the page that follows, fill in the team details.</li>
+                                    <li>Click save.</li>
+                                    <li>Congratulations! You are now the captain of your very own team!</li>
+                                </ol>
+                            </div>
+                        </section><!--//doc-section-->
+                        <section id="editteam-section" class="doc-section">
+                            <h2 class="section-title">Edit team</h2>
+                            <div class="section-block">
+                                <p>
+                                    As a team captain, you can edit the information of your team. To do this, follow these steps:
+                                </p>
+                                <ol>
+                                    <li>You start on the teams overview page (see above).</li>
+                                    <li>Next to the team picture, you'll see a green button 'edit team'. Click it.</li>
+                                    <li>Here you can manage the team's information and approve or decline requests.</li>
+                                    <li>Click save.</li>
+                                    <li>Your team has now been edited!</li>
+                                </ol>
+                            </div>
+                            <div class="callout-block callout-danger">
+                                <div class="content">
+                                    <h4 class="callout-title">Important</h4>
+                                       <p>Only the team captain can access this feature!</p> 
+                                </div><!--//content-->
+                            </div><!--//callout-block-->
+                        </section><!--//doc-section-->
+                        <section id="disbandteam-section" class="doc-section">
+                            <h2 class="section-title">Disband team</h2>
+                            <div class="section-block">
+                                <p>
+                                    As a team captain, you decide to disband your team. To do this, follow these steps:
+                                </p>
+                                <ol>
+                                    <li>You start on the teams overview page (see above).</li>
+                                    <li>Click the red button saying 'disband team'.</li>
+                                    <li>Confirm your choice.</li>
+                                    <li>Your team has now been disbanded! See ya!</li>
+                                </ol>
+                            </div>
+                            <div class="callout-block callout-danger">
+                                <div class="content">
+                                    <h4 class="callout-title">Important</h4>
+                                       <p>Only the team captain can access this feature!</p> 
+                                </div><!--//content-->
+                            </div><!--//callout-block-->
+                        </section><!--//doc-section-->
+                        <section id="disbandteam-section" class="doc-section">
+                            <h2 class="section-title">Change team status</h2>
+                            <div class="section-block">
+                                <p>
+                                    As a team captain, change your team's status. 
+                                    First, let's explain these statuses:
+                                </p>
+                                <ul>
+                                    <li>Open: any user can join your team, without sending a request.</li>
+                                    <li>Review: the captain decides who joins the team. Requests are necessary to approve joining users.</li>
+                                    <li>Closed: the team doesn't accept new users. Incoming requests are disabled.</li>
+                                </ul>
+                                <p>
+                                    To change your team's status, follow these steps:
+                                </p>
+                                <ol>
+                                    <li>You start on the teams overview page (see above).</li>
+                                    <li>Click the green button saying 'change status'.</li>
+                                    <li>Select your choice and confirm.</li>
+                                    <li>Your team's status has now been updated.</li>
+                                </ol>
+                            </div>
+                            <div class="callout-block callout-danger">
+                                <div class="content">
+                                    <h4 class="callout-title">Important</h4>
+                                       <p>Only the team captain can access this feature!</p> 
+                                </div><!--//content-->
+                            </div><!--//callout-block-->
                         </section><!--//doc-section-->
                     </div><!--//content-inner-->
                 </div><!--//doc-content-->
