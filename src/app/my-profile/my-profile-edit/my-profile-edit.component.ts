@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { User } from 'src/app/models/user.model';
 import { UserService } from 'src/app/services/user.service';
+import { ToastService } from 'src/app/toast/services/toast.service';
 
 @Component({
   selector: 'app-my-profile-edit',
@@ -15,7 +16,7 @@ export class MyProfileEditComponent implements OnInit {
   selectedUser: User = null;
   selectedUserID: number = 0;
 
-  constructor(private route: ActivatedRoute, private router: Router, private _userService: UserService, private fb: FormBuilder) { }
+  constructor(private route: ActivatedRoute, private router: Router, private _userService: UserService, private fb: FormBuilder, private _toastService: ToastService) { }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
@@ -39,7 +40,7 @@ export class MyProfileEditComponent implements OnInit {
         birthDate: [convertedBirthDate, [Validators.required]],
       });
     }, error => {
-      this.router.navigate(['admin/users']);
+      this.router.navigate(['user/profile']);
     });
   }
 
@@ -64,8 +65,12 @@ export class MyProfileEditComponent implements OnInit {
           id: this.selectedUserID
         }
       });
-    }
-    );
+    }, error => {
+        this._toastService.show("This email is already taken", {
+            classname: 'bg-danger text-light',
+            delay: 3000,
+            autohide: true
+        });
+    });
   }
-
 }
