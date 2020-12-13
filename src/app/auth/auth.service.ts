@@ -1,8 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { BehaviorSubject } from 'rxjs';
 import { User } from '../models/user.model';
 import { UserLogin } from './models/user-login.model';
 import { AuthorizationService } from '../services/authorization.service';
@@ -19,7 +18,18 @@ export class AuthService {
 
     signup(newUser: User) {
         this.http.post<User>(this.baseUrl + "user", newUser).subscribe(userData => {
-            this.authenticationHandler(userData);
+            this._toastService.show("Account has been created", {
+                classname: 'bg-success text-light',
+                delay: 3000,
+                autohide: true
+            });
+            this.router.navigate(['/login']);
+        }, error => {
+            this._toastService.show("This email is already taken", {
+                classname: 'bg-danger text-light',
+                delay: 3000,
+                autohide: true
+            });
         });
     }
 

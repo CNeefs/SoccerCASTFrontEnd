@@ -4,7 +4,7 @@
         <div class="container">
             <div class="branding">
                 <h1 class="logo">
-                    <a href="index.html">
+                    <a routerLink="/documentation">
                         <span aria-hidden="true" class="icon_documents_alt icon"></span>
                         <span class="text-highlight">SoccerCAST</span><span class="text-bold"> Documentation</span>
                     </a>
@@ -22,51 +22,149 @@
         <div class="container">
             <div id="doc-header" class="doc-header text-center">
                 <h1 class="doc-title"><i class="icon fa fa-paper-plane"></i> Matches functionalities</h1>
-                <div class="meta"><i class="far fa-clock"></i> Last updated: Dec 10, 2020</div>
+                <div class="meta"><i class="far fa-clock"></i> Last updated: Dec 13, 2020</div>
             </div><!--//doc-header-->
             <div class="doc-body row">
                 <div class="doc-content col-md-9 col-12 order-1">
                     <div class="content-inner">
-                        <section id="matchesoverview-section" class="doc-section">
-                            <h2 class="section-title">Matches Overview</h2>
+                        <div class="callout-block callout-danger">
+                            <div class="content">
+                                <h4 class="callout-title">Important</h4>
+                                
+                                <ul>
+                                    <li>You must be logged in to use this feature!</li>
+                                    <li>These features only work with singe matches, not tournament matches!</li>
+                                </ul>
+                                    
+                                
+                            </div><!--//content-->
+                        </div><!--//callout-block-->
+                        <div id="planmatch-section" class="doc-section">
+                            <h2 class="section-title">Challenge a user or team</h2>
                             <div class="section-block">
                                 <p>
-                                </p>
-                            </div>
-                        </section><!--//doc-section-->
-                        <div id="matchdetails-section" class="doc-section">
-                            <h2 class="section-title">Match detail page</h2>
-                            <div class="section-block">
-                                <p>
-                                </p>
-                            </div>
-                        </div><!--//doc-section-->
-                        <section id="creatematch-section" class="doc-section">
-                            <h2 class="section-title">Create match</h2>
-                            <div class="section-block">
-                                <p>
-                                    When you want to register a new match, please follow these steps:
+                                    When you want to plan a match, please follow these steps:
                                 </p>
                                 <ol>
-                                    <li>You start on the matches overview page (see above).</li>
-                                    <li>On the top-right of the list, you see a green arrow with the text: 'New'. Click on it.</li>
-                                    <li>On the page that follows, fill in the match details.</li>
-                                    <li>Click save.</li>
+                                    <li>You start on a user's/team's detail page.</li>
+                                    <li></li>
+                                    <li>
+                                        A modal appears, fill in the match details.
+                                        <h3>Challenge a team</h3>
+                                        <ul>
+                                            
+                                            <li>Select a soccer table</li>
+                                            <li>Select your team</li>
+                                            <li>Select player/user 1 of your team</li>
+                                            <li>Select player/user 2 of your team</li>
+                                            <li>Click challenge</li>
+                                        </ul>
+                                        <br>
+                                        <h3>Challenge a user</h3>
+                                        <ul>
+                                            <li>Select a soccer table</li>
+                                            <li>Click challenge</li>
+                                        </ul>
+                                    </li>
                                     <li>That's it!</li>
                                 </ol>
                             </div>
+                        </div><!--//doc-section-->
+                        <section id="matchrequest-section" class="doc-section">
+                            <h2 class="section-title">Matchrequests</h2>
+                            <div class="section-block">
+                                <p>
+                                    When you want to accept or decline a challenge, please follow these steps:
+                                </p>
+                                <ol>
+                                    <li>You start on your user's/team's detail page.</li>
+                                    <li>Click on 'REQUESTS'.</li>
+                                    <li>On the row of the specific challenge you want to handle, click this icon: <mat-icon>more_vert</mat-icon></li>
+                                    <li>Click accept or decline</li>
+                                    <li>Your answer has now been handled.</li>
+                                </ol>
+                            </div>
+                        </section><!--//doc-section-->
+                        <section id="startmatch-section" class="doc-section">
+                            <h2 class="section-title">Start a match</h2>
+                            <div class="section-block">
+                                <p>
+                                    If your challenge was accepted and you want to start a match, please follow these steps:
+                                </p>
+                                <ol>
+                                    <li>You start on your user's/team's detail page.</li>
+                                    <li>Click on 'PLANNED'.</li>
+                                    <li>On the row of the specific match you want to play, click this icon: <mat-icon>more_vert</mat-icon></li>
+                                    <li>Click start match.</li>
+                                </ol>
+                            </div>
+                            <div class="callout-block callout-danger">
+                                <div class="content">
+                                    <h4 class="callout-title">Important</h4>
+                                        <p>You must be the challenger to update scores!</p>                                    
+                                </div><!--//content-->
+                            </div><!--//callout-block-->
                         </section><!--//doc-section-->
                         <section id="deletematch-section" class="doc-section">
-                            <h2 class="section-title">Delete match</h2>
+                            <h2 class="section-title">Cancel match</h2>
                             <div class="section-block">
-                                <p></p>
+                                <p>
+                                    To cancel a match, there are two options:
+                                </p>
+                                <ol>
+                                    <li>You decline the request.</li>
+                                    <li>You cancel the match after you accept. Follow these steps:
+                                        <ul>
+                                            <li>You start on your user's page.</li>
+                                            <li>Click on 'PLANNED'.</li>
+                                            <li>On the row of the specific match you want to cancel, click this icon: <mat-icon>more_vert</mat-icon></li>
+                                            <li>Click cancel match.</li>
+                                        </ul>
+                                    </li>
+                                </ol>
+                                <p>
+                                    You have now cancelled a match!
+                                </p>
                             </div>
                         </section><!--//doc-section-->
-                        <section id="editmatch-section" class="doc-section">
-                            <h2 class="section-title">Edit match</h2>
+                        <section id="matchscores-section" class="doc-section">
+                            <h2 class="section-title">Match scores</h2>
                             <div class="section-block">
-                                <p></p>
+                                <p>
+                                    While you play a match, the challenger can update the scores, use these methods:
+                                </p>
+                                <ul>
+                                    <li>Click the green '+' button to add 1 point to a score.</li>
+                                    <li>Click the red '-' button to subtract 1 point from a score.</li>
+                                </ul> 
+                                
                             </div>
+                            <div class="callout-block callout-danger">
+                                <div class="content">
+                                    <h4 class="callout-title">Important</h4>
+                                        <p>You must be the challenger to update scores!</p>                                    
+                                </div><!--//content-->
+                            </div><!--//callout-block-->
+                        </section><!--//doc-section-->
+                        <section id="stopmatch-section" class="doc-section">
+                            <h2 class="section-title">Stop a match</h2>
+                            <div class="section-block">
+                                <p>
+                                    While you play a match, or if you've had enough use this method to end a match:
+                                </p>
+                                <ul>
+                                    <li>Click the red 'Stop match' button to stop the match</li>
+                                </ul> 
+                            </div>
+                            <div class="callout-block callout-danger">
+                                <div class="content">
+                                    <h4 class="callout-title">Important</h4>
+                                        <ul>
+                                            <li>Only the challenger/cretor of the match can end the match!</li>
+                                            <li>After you've stopped a match, there is no way of restarting it!</li>
+                                        </ul>                                    
+                                </div><!--//content-->
+                            </div><!--//callout-block-->
                         </section><!--//doc-section-->
                     </div><!--//content-inner-->
                 </div><!--//doc-content-->
