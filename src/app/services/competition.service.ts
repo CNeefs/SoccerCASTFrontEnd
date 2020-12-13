@@ -8,7 +8,7 @@ import { Competition } from '../models/competition.model';
 })
 export class CompetitionService {
 
-    baseUrl: string = "https://localhost:44388/api/";
+    baseUrl: string = "https://soccercastbackend.azurewebsites.net/api/";
 
     constructor(private http: HttpClient) { }
 
