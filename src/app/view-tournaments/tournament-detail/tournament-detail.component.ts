@@ -178,6 +178,8 @@ export class TournamentDetailComponent implements OnInit, OnDestroy, AfterViewIn
           this.selectedTournament = tournament;
           this.tournamentLoaded = true;
           this.getMatches();
+        }, err => {
+          this.router.navigate(['not-found'])
         });
       }
     });

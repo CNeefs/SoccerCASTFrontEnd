@@ -209,7 +209,11 @@ export class TeamDetailComponent implements OnInit, OnDestroy {
   }
 
   goToTournamentDetails(tournament: Tournament) {
-    this.router.navigate(['user/teams']);
+    this.router.navigate(['user/tournaments/detail'], {
+      queryParams: {
+        id: tournament.tournamentID
+      }
+    });
   }
 
   changeTab(id: string, linkid: string) {
