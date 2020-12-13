@@ -31,10 +31,10 @@
                 <li class="nav-item"><a (click)="changeTab('profile-personal-statistics', 'link-personal-statistics')"
                         style="cursor: pointer;" class="nav-link active show" data-toggle="tab"
                         id="link-personal-statistics">PERSONAL STATISTICS</a></li>
-                <li class="nav-item" *ngIf="selectedUser.userID == currentUser.userID"><a
+                <li class="nav-item"><a
                         (click)="changeTab('profile-request-matches', 'link-request-matches')" style="cursor: pointer;"
                         class="nav-link" data-toggle="tab" id="link-request-matches">REQUESTS</a></li>
-                <li class="nav-item" *ngIf="selectedUser.userID == currentUser.userID"><a
+                <li class="nav-item"><a
                         (click)="changeTab('profile-planned-matches', 'link-planned-matches')" style="cursor: pointer;"
                         class="nav-link" data-toggle="tab" id="link-planned-matches">PLANNED</a></li>
                 <li class="nav-item"><a (click)="changeTab('profile-history', 'link-history')" style="cursor: pointer;"
@@ -138,7 +138,7 @@
                             </div>
                         </div>
                         <div class="tab-pane fade" id="profile-request-matches"
-                            *ngIf="matchesLoaded && selectedUser.userID == currentUser.userID">
+                            *ngIf="matchesLoaded">
                             <div class="row">
                                 <div class="col">
                                     <div class="card shadow">
@@ -176,7 +176,7 @@
                                                             TBD
                                                         </td>
                                                         <td class="text-right">
-                                                            <div ngbDropdown class="dropdown"
+                                                            <div *ngIf="selectedUser.userID == currentUser.userID" ngbDropdown class="dropdown"
                                                                 style="position:static;overflow: visible;">
                                                                 <a ngbDropdownToggle
                                                                     class="btn btn-sm btn-icon-only text-light"
@@ -226,7 +226,7 @@
                             </div>
                         </div>
                         <div class="tab-pane fade" id="profile-planned-matches"
-                            *ngIf="matchesLoaded && selectedUser.userID == currentUser.userID">
+                            *ngIf="matchesLoaded">
                             <div class="row">
                                 <div class="col">
                                     <div class="card shadow">
@@ -268,7 +268,7 @@
                                                             </span>
                                                         </td>
                                                         <td class="text-right">
-                                                            <div ngbDropdown class="dropdown"
+                                                            <div *ngIf="selectedUser.userID == currentUser.userID" ngbDropdown class="dropdown"
                                                                 style="position:static;overflow: visible;">
                                                                 <a ngbDropdownToggle
                                                                     class="btn btn-sm btn-icon-only text-light"

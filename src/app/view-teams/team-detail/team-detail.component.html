@@ -33,8 +33,8 @@
     
             <ul class="profile-header-tab nav nav-tabs">
                 <li class="nav-item"><a (click)="changeTab('profile-users', 'link-users')" style="cursor: pointer;" class="nav-link active show" data-toggle="tab" id="link-users">USERS</a></li>
-                <li class="nav-item" *ngIf="selectedTeam.captainID == currentUser.userID"><a (click)="changeTab('profile-request-matches', 'link-request-matches')" style="cursor: pointer;" class="nav-link" data-toggle="tab" id="link-request-matches">REQUESTS</a></li>
-                <li class="nav-item" *ngIf="selectedTeam.captainID == currentUser.userID"><a (click)="changeTab('profile-planned-matches', 'link-planned-matches')" style="cursor: pointer;" class="nav-link" data-toggle="tab" id="link-planned-matches">PLANNED</a></li>
+                <li class="nav-item"><a (click)="changeTab('profile-request-matches', 'link-request-matches')" style="cursor: pointer;" class="nav-link" data-toggle="tab" id="link-request-matches">REQUESTS</a></li>
+                <li class="nav-item"><a (click)="changeTab('profile-planned-matches', 'link-planned-matches')" style="cursor: pointer;" class="nav-link" data-toggle="tab" id="link-planned-matches">PLANNED</a></li>
                 <li class="nav-item"><a (click)="changeTab('profile-history', 'link-history')" style="cursor: pointer;" class="nav-link" data-toggle="tab" id="link-history">HISTORY</a></li>
                 <li class="nav-item"><a (click)="changeTab('profile-tournaments', 'link-tournaments')" style="cursor: pointer;" class="nav-link" data-toggle="tab" id="link-tournaments">TOURNAMENTS</a></li>
                 <li class="nav-item"><a (click)="changeTab('profile-competitions', 'link-competitions')" style="cursor: pointer;" class="nav-link" data-toggle="tab" id="link-competitions">COMPETITIONS (coming soon)</a></li>
@@ -76,7 +76,7 @@
                                 <div class="col text-right">{{m.matchStatus.statusName}}</div>
                             </div>
                         </div>
-                        <div class="tab-pane fade" id="profile-request-matches" *ngIf="matchesLoaded && selectedTeam.captainID == currentUser.userID">
+                        <div class="tab-pane fade" id="profile-request-matches" *ngIf="matchesLoaded">
                             <div class="row">
                                 <div class="col">
                                     <div class="card shadow">
@@ -112,7 +112,7 @@
                                                             TBD
                                                         </td>
                                                         <td class="text-right">
-                                                            <div ngbDropdown class="dropdown" style="position:static;overflow: visible;">
+                                                            <div *ngIf="selectedTeam.captainID == currentUser.userID" ngbDropdown class="dropdown" style="position:static;overflow: visible;">
                                                                 <a ngbDropdownToggle class="btn btn-sm btn-icon-only text-light"
                                                                     role="button" aria-expanded="false">
                                                                     <mat-icon style="color: black;">more_vert</mat-icon>
@@ -139,7 +139,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="tab-pane fade" id="profile-planned-matches" *ngIf="matchesLoaded && selectedTeam.captainID == currentUser.userID">
+                        <div class="tab-pane fade" id="profile-planned-matches" *ngIf="matchesLoaded">
                             <div class="row">
                                 <div class="col">
                                     <div class="card shadow">
@@ -179,7 +179,8 @@
                                                           </span>
                                                         </td>
                                                         <td class="text-right">
-                                                            <div ngbDropdown class="dropdown" style="position:static;overflow: visible;">
+                                                            <div *ngIf="selectedTeam.captainID == currentUser.userID || ((m.team1ID == selectedTeam.teamID && m.player1ID == currentUser.userID) || (m.team1ID == selectedTeam.teamID && m.player2ID == currentUser.userID)) ||
+                                                            ((m.team2ID == selectedTeam.teamID && m.player3ID == currentUser.userID) || (m.team2ID == selectedTeam.teamID && m.player4ID == currentUser.userID))" ngbDropdown class="dropdown" style="position:static;overflow: visible;">
                                                                 <a ngbDropdownToggle class="btn btn-sm btn-icon-only text-light"
                                                                     role="button" aria-expanded="false">
                                                                     <mat-icon style="color: black;">more_vert</mat-icon>

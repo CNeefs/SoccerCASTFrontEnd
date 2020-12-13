@@ -193,7 +193,7 @@ export class TournamentDetailComponent implements OnInit, OnDestroy {
           self.router.navigate(['user/match'], {queryParams: {id: data}});
         }
         var minimalData = { teams : [], results : [] }
-        var resizeParameters = { teamWidth: 150, scoreWidth: 40, matchMargin: 75, roundMargin: 50, onMatchClick: onClickMatch, init: minimalData };
+        var resizeParameters = { teamWidth: 150, scoreWidth: 40, matchMargin: 75, roundMargin: 50, skipConsolationRound: true, onMatchClick: onClickMatch, init: minimalData };
         this.allMatches = this.allMatches.sort(function(a, b) {
           if(a.round < b.round) return -1;
           if(a.round > b.round) return 1;
