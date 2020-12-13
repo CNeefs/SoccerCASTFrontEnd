@@ -7,6 +7,13 @@
             <small class="pl-1" *ngIf="!createForm.get('edition').valid && createForm.get('edition').touched">This edition is invalid!</small>
         </div>
         <div class="form-group">
+            <label for="table">Table</label>
+            <select class="form-control" id="table" placeholder="Table" formControlName="table">
+                <option *ngFor="let table of tables" [value]="table.tableID">{{table.tableName}}</option>
+              </select>
+            <small class="pl-1" *ngIf="!createForm.get('table').valid && createForm.get('table').touched">This table is invalid!</small>
+        </div>
+        <div class="form-group">
             <label for="match_Count">Max teams</label>
             <select class="form-control" id="match_Count" placeholder="Max teams" formControlName="match_Count">
                 <option *ngFor="let numberTeams of numberOfTeams" [value]="numberTeams">{{numberTeams}}</option>
