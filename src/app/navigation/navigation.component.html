@@ -18,10 +18,10 @@
         <a class="nav-link" routerLink="/user/tournaments" routerLinkActive="active">Tournaments</a>
       </li>
       <li [appHideIfUnauthorized]="'TEAM_VIEW'">
-        <a class="nav-link" routerLink="user/teams" routerLinkActive="active">Teams</a>
+        <a class="nav-link" routerLink="/user/teams" routerLinkActive="active">Teams</a>
       </li>
       <li [appHideIfUnauthorized]="'RANKING_VIEW'">
-        <a class="nav-link" routerLink="user/rankings" routerLinkActive="active">Rankings</a>
+        <a class="nav-link" routerLink="/user/rankings" routerLinkActive="active">Rankings</a>
       </li>
       <li ngbDropdown class="nav-item dropdown" [appHideIfUnauthorized]="'USER_MANAGE'">
         <a class="nav-link dropdown-toggle" id="dropdownBasic1" ngbDropdownToggle>Manage items</a>

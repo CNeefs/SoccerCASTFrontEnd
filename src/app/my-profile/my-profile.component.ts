@@ -68,6 +68,14 @@ export class MyProfileComponent implements OnInit, OnDestroy {
     this.router.navigate(['user/teams/detail'], { queryParams: { id: team.teamID } });
   }
 
+  goToTournamentDetails(tournament: Tournament) {
+    this.router.navigate(['user/tournaments/detail'], {
+      queryParams: {
+        id: tournament.tournamentID
+      }
+    });
+  }
+
   openChallengeUserModal(contentChallengeUserModal) {
     this._modalService.open(contentChallengeUserModal);
   }

@@ -19,6 +19,7 @@
                                         <th scope="col">Lost</th>
                                         <th scope="col">Points</th>
                                         <th scope="col">Ranking</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -44,6 +45,16 @@
                                         </td>
                                         <td>
                                             {{i + 1}}
+                                        </td>
+                                        <td class="text-right">
+                                            <div ngbDropdown class="dropdown" style="position:static;overflow: visible;">
+                                                <a ngbDropdownToggle class="btn btn-sm btn-icon-only text-light" role="button" aria-expanded="false">
+                                                    <mat-icon style="color: black;">more_vert</mat-icon>
+                                                </a>
+                                                <div ngbDropdownMenu class="dropdown-menu dropdown-menu-left">
+                                                    <a ngbDropdownItem class="dropdown-item" (click)="goToProfile(u)" style="cursor: pointer;">Profile page</a>
+                                                </div>
+                                            </div>
                                         </td>
                                     </tr>
                                 </tbody>

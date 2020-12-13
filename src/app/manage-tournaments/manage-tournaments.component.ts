@@ -7,6 +7,7 @@ import { map } from 'rxjs/operators';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastService } from '../toast/services/toast.service';
 import { Sort } from '@angular/material/sort';
+import { HttpEventType } from '@angular/common/http';
 
 @Component({
   selector: 'app-manage-tournaments',
@@ -33,8 +34,15 @@ export class ManageTournamentsComponent implements OnInit {
         autohide: true
       });
     } else {
-      this._tournamentService.startTournament(tournament).subscribe(res => {
-        this.router.navigate(['user/tournaments/detail'], { queryParams: { id: tournament.tournamentID }});
+      this._tournamentService.startTournament(tournament).subscribe(event => {
+        if(event.type === HttpEventType.Response) {
+          this._toastService.show("Tournament started", {
+            classname: 'bg-success text-light',
+            delay: 3000,
+            autohide: true
+          });
+          this.router.navigate(['user/tournaments/detail'], { queryParams: { id: tournament.tournamentID }});
+        }
       });
     }
   }

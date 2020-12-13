@@ -22,6 +22,7 @@
                 <div class="col-md-12">
                     <div class="tab-content p-0">
                         <div class="tab-pane fade active show" id="tournament-bracket">
+                            <h4 *ngIf="!selectedTournament.isStart && selectedTournament.winner == null">Bracket will be generated as soon as the tournament starts</h4>
                             <div id="tournament"></div>
                         </div>
                         <div class="tab-pane fade" id="tournament-teams" *ngIf="teamsLoaded">
@@ -148,8 +149,9 @@
                                                                     <mat-icon style="color: black;">more_vert</mat-icon>
                                                                 </a>
                                                                 <div ngbDropdownMenu class="dropdown-menu dropdown-menu-left">
-                                                                    <a *ngIf="m.matchStatusID == 6 && currentUser.userID == m.player1ID" ngbDropdownItem class="dropdown-item" (click)="startMatch(m)" style="cursor: pointer;">Start match</a>
-                                                                    <a *ngIf="m.matchStatusID == 6 && currentUser.userID != m.player1ID" ngbDropdownItem class="dropdown-item" style="pointer-events: none;color: red;">Moderator needs to start this match</a>
+                                                                    <a *ngIf="m.matchStatusID == 6 && currentUser.userID == m.player1ID && m.team1 != null && m.team2 != null" ngbDropdownItem class="dropdown-item" (click)="startMatch(m)" style="cursor: pointer;">Start match</a>
+                                                                    <a *ngIf="m.matchStatusID == 6 && currentUser.userID != m.player1ID && m.team1 != null && m.team2 != null" ngbDropdownItem class="dropdown-item" style="pointer-events: none;color: red;">Moderator needs to start this match</a>
+                                                                    <a *ngIf="m.team1 == null || m.team2 == null" ngbDropdownItem class="dropdown-item" style="pointer-events: none;color: red;">TBD</a>
                                                                     <a *ngIf="m.matchStatusID == 1 && (currentUser.userID == m.player1ID || currentUser.userID == m.player2ID)" ngbDropdownItem class="dropdown-item" style="pointer-events: none;color: red;">Other team needs to accept the score</a>
                                                                     <a *ngIf="m.matchStatusID == 1 && (currentUser.userID == m.player3ID || currentUser.userID == m.player4ID)" ngbDropdownItem class="dropdown-item" (click)="acceptScore(m)" style="cursor: pointer;">Accept score</a>
                                                                     <a *ngIf="m.matchStatusID == 1 && (currentUser.userID == m.player3ID || currentUser.userID == m.player4ID)" ngbDropdownItem class="dropdown-item" (click)="declineScore(m)" style="cursor: pointer;">Decline score</a>
