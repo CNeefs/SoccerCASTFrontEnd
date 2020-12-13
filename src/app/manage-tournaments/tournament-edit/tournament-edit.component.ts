@@ -19,7 +19,6 @@ export class TournamentEditComponent implements OnInit {
 
   onSubmit() {
     this.selectedTournament.edition = this.editForm.controls['edition'].value;
-    this.selectedTournament.match_Count = this.editForm.controls['match_Count'].value;
     this._tournamentService.editTournament(this.selectedTournamentID, this.selectedTournament).subscribe();
     this.router.navigate(['admin/tournaments']);
   }
@@ -32,8 +31,7 @@ export class TournamentEditComponent implements OnInit {
     this._tournamentService.getTournamentById(this.selectedTournamentID).subscribe(res => {
       this.selectedTournament = res;
       this.editForm = this.fb.group({
-        edition: [res.edition, Validators.required],
-        match_Count: [res.match_Count, Validators.required]
+        edition: [res.edition, Validators.required]
       });
     }, error => {
       this.router.navigate(['admin/tournaments']);

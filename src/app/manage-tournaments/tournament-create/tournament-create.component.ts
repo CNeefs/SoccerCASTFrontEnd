@@ -13,6 +13,7 @@ import { HttpEventType } from '@angular/common/http';
 export class TournamentCreateComponent implements OnInit {
 
   createForm: FormGroup;
+  numberOfTeams: number[] = [4,8,16,32];
 
   constructor(private _tournamentService: TournamentService, private fb: FormBuilder, private route: ActivatedRoute, private router: Router) { }
 
@@ -28,7 +29,7 @@ export class TournamentCreateComponent implements OnInit {
   ngOnInit(): void {
     this.createForm = this.fb.group({
       edition: ['', Validators.required],
-      match_Count: ['', Validators.required]
+      match_Count: [4, Validators.required]
     });
   }
 }
