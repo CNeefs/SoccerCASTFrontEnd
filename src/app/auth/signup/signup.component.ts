@@ -45,10 +45,6 @@ export class SignupComponent implements OnInit {
     const month = +value.birthdate.month;
     const day = +value.birthdate.day;
 
-    // console.log(year);
-    // console.log(month);
-    // console.log(day);
-
     // Date month is zero based --> min 1 
     const convertedBirthdate = new Date(year, month-1, day+1, 0, 0, 0, 0)
     // const convertedBirthdate: string = year+'-'+month+'-'+day+'T00:00:00'
