@@ -17,6 +17,7 @@ export class MatchComponent implements OnInit, OnDestroy {
   currentUser: User;
   currentMatchId: number;
   matchLoaded: boolean;
+  teamNameTBD: string = "";
 
   userSub: Subscription;
 
@@ -30,7 +31,17 @@ export class MatchComponent implements OnInit, OnDestroy {
       if (user) {
         this.currentUser = user;
         this._matchService.getMatchByMatchId(this.currentMatchId).subscribe((match: Match) => {
+          console.log(match);
           this.currentMatch = match;
+          if (this.currentMatch.tournamentID != null) {
+            if (this.currentMatch.team1ID == null) {
+              this.teamNameTBD = "TBD";
+            }
+
+            if (this.currentMatch.team2ID == null) {
+              this.teamNameTBD = "TBD";
+            }
+          }
           this.matchLoaded = true;
         }, err => {
           this.router.navigate(['not-found']);
@@ -47,7 +58,16 @@ export class MatchComponent implements OnInit, OnDestroy {
     if (this.currentMatch.score1 != this.currentMatch.score2) {
       this.currentMatch.matchStatusID = 1;
       this._matchService.editMatch(this.currentMatch.matchID, this.currentMatch).subscribe(() => {
-        this.router.navigate(['user/teams']);
+        if (this.currentMatch.tournamentID != null) {
+          this.router.navigate(['user/tournaments/detail'], {queryParams: {id: this.currentMatch.tournamentID}});
+        }
+        else if (this.currentMatch.team1ID != null){
+          this.router.navigate(['user/teams/detail'], {queryParams: {id: this.currentMatch.team1ID}});
+        }
+        else if (this.currentMatch.player1ID != null) {
+          this.router.navigate(['/user/profile'], {queryParams: {id: this.currentUser.userID}});
+        }
+        // this.router.navigate(['user/teams']);
         this._toastService.show("Score review has been send", {
           classname: 'bg-success text-light',
           delay: 2000,
