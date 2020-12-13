@@ -1,5 +1,5 @@
 import { Role } from "./role.model";
-
+import { UserStatus } from "./user-status.model";
 export class User {
     constructor(
         public userID: number,
@@ -13,6 +13,8 @@ export class User {
         public timesLost: number,
         public roles: Role[],
         public permissions: string[],
+        public userStatusID: number, 
+        public userStatus: UserStatus,
         public points?: number,
         public imagePath?: string
     ) {}

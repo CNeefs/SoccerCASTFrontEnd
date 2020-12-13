@@ -20,8 +20,9 @@ export class TournamentEditComponent implements OnInit {
   onSubmit() {
     this.selectedTournament.edition = this.editForm.controls['edition'].value;
     this.selectedTournament.match_Count = this.editForm.controls['match_Count'].value;
-    this._tournamentService.editTournament(this.selectedTournamentID, this.selectedTournament).subscribe();
-    this.router.navigate(['admin/tournaments']);
+    this._tournamentService.editTournament(this.selectedTournamentID, this.selectedTournament).subscribe(res => {
+      this.router.navigate(['admin/tournaments']);
+    });
   }
 
   ngOnInit(): void {

@@ -37,8 +37,12 @@ export class ViewTeamsComponent implements OnInit {
     });
     this.teams = this._teamService.getTeams();
     this.teams.subscribe(result => {
-      this.sortedTeams = result;
-      this.pageLoaded = true});
+      this.sortedTeams = [];
+      result.map(team => {
+        if (team.teamStatusID != 4) this.sortedTeams.push(team);
+      })
+      this.pageLoaded = true
+    });
   }
 
   //sorting

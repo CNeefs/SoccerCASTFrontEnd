@@ -62,16 +62,19 @@ export class ManageTournamentsComponent implements OnInit {
 
   deleteTournament(tournament: Tournament) {
     this._tournamentService.deleteCTournamentById(tournament.tournamentID).subscribe(res => {
+      this._modalService.dismissAll();
       this.ngOnInit();
     });
-    this._modalService.dismissAll();
   }
 
   ngOnInit(): void {
     this.tournaments = this._tournamentService.getTournaments();
     this.tournaments.subscribe(tournaments => {
-      this.sortedTournaments = tournaments;
-      this.tournamentsLength = tournaments.length;
+      this.sortedTournaments = [];
+      tournaments.map(tournament => {
+        if (tournament.tournamentStatusID != 2) this.sortedTournaments.push(tournament);
+      })
+      this.tournamentsLength = this.sortedTournaments.length;
     })
     this.tournaments.subscribe(result => this.pageLoaded = true)
   }

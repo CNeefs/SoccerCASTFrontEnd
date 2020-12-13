@@ -172,7 +172,10 @@ export class MyProfileComponent implements OnInit, OnDestroy {
           this.selectedUserID = params['id'];
         });
         this._tableService.getTables().subscribe(res => {
-          this.tables = res;
+          this.tables = [];
+          res.map(table => {
+            if (table.tableStatusID != 2) this.tables.push(table);
+          })
           this.challengeUserForm = this.fb.group({
             tableID: ['', Validators.required],
           });

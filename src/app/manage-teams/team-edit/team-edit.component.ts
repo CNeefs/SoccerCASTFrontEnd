@@ -35,8 +35,9 @@ export class TeamEditComponent implements OnInit {
     this.selectedTeam.teamName = this.editForm.controls['teamName'].value;
     this.selectedTeam.companyName = this.editForm.controls['companyName'].value;
     this.selectedTeam.location = this.editForm.controls['location'].value;
-    this._teamService.editTeam(this.selectedTeamID, this.selectedTeam).subscribe();
-    this.router.navigate(['admin/teams']);
+    this._teamService.editTeam(this.selectedTeamID, this.selectedTeam).subscribe(res => {
+      this.router.navigate(['admin/teams']);
+    });
   }
 
   promoteToCaptain(user: User) {

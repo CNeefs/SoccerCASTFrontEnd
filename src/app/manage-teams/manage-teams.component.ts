@@ -19,7 +19,7 @@ export class ManageTeamsComponent implements OnInit, OnDestroy {
 
   teams: Observable<Team[]>;
   teamsLenght: number = 0;
-  sortedTeams: Team[];
+  sortedTeams: Team[] = [];
   userTeams: UserTeam[];
   currentTeam: Team;
 
@@ -67,8 +67,11 @@ export class ManageTeamsComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.teams = this._teamService.getTeams();
     this.teams.subscribe(teams => {
-      this.sortedTeams = teams;
-      this.teamsLenght = teams.length;
+      this.sortedTeams = [];
+      teams.map(team => {
+        if (team.teamStatusID != 4) this.sortedTeams.push(team);
+      })
+      this.teamsLenght = this.sortedTeams.length;
     })
     this.getTeamsSub = this.teams.subscribe(result => this.pageLoaded = true)
   }

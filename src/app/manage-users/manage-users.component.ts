@@ -54,20 +54,17 @@ export class ManageUsersComponent implements OnInit, OnDestroy {
 
   deleteUser(user: User) {
     if (user.userID != this.loggedInUser.userID) {
-      this.deleteUserSub = this._userService.deleteUserById(user.userID).subscribe();
-      this.users = this.users.pipe(
-        map(res => res.filter(u => u.userID != user.userID))
-      );
-      this._modalService.dismissAll();
-      this.toastService.show('Deleted user ' + user.firstName + ' ' + user.lastName, {
-        classname: 'bg-success text-light',
-        delay: 2000,
-        autohide: true
+      this.deleteUserSub = this._userService.deleteUserById(user.userID).subscribe(res => {
+        this._modalService.dismissAll();
+        this.toastService.show('Deleted user ' + user.firstName + ' ' + user.lastName, {
+          classname: 'bg-success text-light',
+          delay: 2000,
+          autohide: true
+        });
+        this.ngOnInit();
       });
     }
     else {
-      console.log('deletedUser:', user);
-      console.log('loggedInUser:', this.loggedInUser);
       this._modalService.dismissAll();
       this.toastService.show("You can't delete yourself!", {
         classname: 'bg-danger text-light',
@@ -82,7 +79,11 @@ export class ManageUsersComponent implements OnInit, OnDestroy {
     this.users = this._userService.getUsers();
     this.users.subscribe(users => {
       this.sortedUsers = users;
-      this.usersLength = users.length;
+      this.sortedUsers = [];
+      users.map(user => {
+        if (user.userStatusID != 2) this.sortedUsers.push(user);
+      })
+      this.usersLength = this.sortedUsers.length;
     });
     this.userSub = this.users.subscribe(result => this.pageLoaded = true)
     this.getLoggedInUserSub = this._authService.user.subscribe((user: User) => {

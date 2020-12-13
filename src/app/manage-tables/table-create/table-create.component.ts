@@ -22,7 +22,7 @@ export class TableCreateComponent implements OnInit {
 
   onSubmit() {
     var table = new Table(0, this.createForm.controls['tableName'].value, this.createForm.controls['companyName'].value,
-      this.createForm.controls['location'].value, Number(this.createForm.controls['contactUserID'].value), null);
+      this.createForm.controls['location'].value, Number(this.createForm.controls['contactUserID'].value), null, 1, null);
     this._tableService.addTable(table).subscribe(event => {
       if(event.type === HttpEventType.Response) {
         this.router.navigate(['admin/tables']);

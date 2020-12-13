@@ -8,13 +8,14 @@ import { UserLogin } from './models/user-login.model';
 import { AuthorizationService } from '../services/authorization.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { UserService } from '../services/user.service';
+import { ToastService } from '../toast/services/toast.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
     user = new BehaviorSubject(null);
     baseUrl: string = "https://localhost:44388/api/";
 
-    constructor(private _authorizationService: AuthorizationService, private _userService: UserService, private http: HttpClient, private router: Router) { }
+    constructor(private _authorizationService: AuthorizationService, private _userService: UserService, private http: HttpClient, private router: Router, private toastService: ToastService) { }
 
     signup(newUser: User) {
         this.http.post<User>(this.baseUrl + "user", newUser).subscribe(userData => {
@@ -25,6 +26,12 @@ export class AuthService {
     login(userLogin: UserLogin) {
         this.http.post<User>(this.baseUrl + "user/authenticate", userLogin).subscribe(userData => {
             this.authenticationHandler(userData);
+        }, error => {
+            this.toastService.show("Email or password is incorrect", {
+                classname: 'bg-danger text-light',
+                delay: 2000,
+                autohide: true
+            });
         });
     }
 

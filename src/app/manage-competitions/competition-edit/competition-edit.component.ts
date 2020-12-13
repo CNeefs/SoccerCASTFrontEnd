@@ -19,8 +19,9 @@ export class CompetitionEditComponent implements OnInit {
 
   onSubmit() {
     this.selectedCompetition.name = this.editForm.controls['name'].value;
-    this._competitionService.editCompetition(this.selectedCompetitionID, this.selectedCompetition).subscribe();
-    this.router.navigate(['admin/competitions']);
+    this._competitionService.editCompetition(this.selectedCompetitionID, this.selectedCompetition).subscribe(res => {
+      this.router.navigate(['admin/competitions']);
+    });
   }
 
   ngOnInit(): void {

@@ -7,6 +7,7 @@ import { AuthService } from 'src/app/auth/auth.service';
 import { Role } from 'src/app/models/role.model';
 import { User } from 'src/app/models/user.model';
 import { UserService } from 'src/app/services/user.service';
+import { ToastService } from 'src/app/toast/services/toast.service';
 import { RoleService } from '../../services/role.service';
 
 @Component({
@@ -31,7 +32,7 @@ export class UserEditComponent implements OnInit, OnDestroy {
   roleSettings = { dataIdProperty: "idValue", dataNameProperty: "nameValue", headerText: "Roles", noneSelectedBtnText: "No roles selected", btnWidth: "200px", 
     showDeselectAllBtn: true, showSelectAllBtn: true, deselectAllBtnText: 'Deselect', selectAllBtnText: 'Select', btnClasses: 'btn btn-primary btn-sm dropdown-toggle', };
 
-  constructor(private route: ActivatedRoute, private _userService: UserService, private fb: FormBuilder, private router: Router, private _roleService: RoleService, private _authService: AuthService) { }
+  constructor(private route: ActivatedRoute, private _userService: UserService, private fb: FormBuilder, private router: Router, private _roleService: RoleService, private _authService: AuthService, private toastService: ToastService) { }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
@@ -95,8 +96,15 @@ export class UserEditComponent implements OnInit, OnDestroy {
     });
 
     //kan zijn dat dit nog unsubscribed moet worden
-    this._userService.editUser(this.selectedUserID, this.selectedUser).subscribe();
-    this.router.navigate(['admin/users']);
+    this._userService.editUser(this.selectedUserID, this.selectedUser).subscribe(res => {
+      this.router.navigate(['admin/users']);
+    }, error => {
+      this.toastService.show('This email adres is already in use', {
+        classname: 'bg-danger text-light',
+        delay: 2000,
+        autohide: true
+      });
+    });
   }
 
   ngOnDestroy(): void {
