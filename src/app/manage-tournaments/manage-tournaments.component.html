@@ -43,7 +43,7 @@
                         <mat-icon style="color: black;">more_vert</mat-icon>
                       </a>
                       <div ngbDropdownMenu class="dropdown-menu dropdown-menu-left">
-                        <a *ngIf="!t.isStart" ngbDropdownItem class="dropdown-item" (click)="startTournament(t)" style="cursor: pointer;">Start tournament</a>
+                        <a *ngIf="!t.isStart && t.total_Joined == t.match_Count && t.winner == null" ngbDropdownItem class="dropdown-item" (click)="startTournament(t)" style="cursor: pointer;">Start tournament</a>
                         <a ngbDropdownItem class="dropdown-item" (click)="goToEdit(t)" style="cursor: pointer;">Edit tournament</a>
                         <a ngbDropdownItem class="dropdown-item" (click)="openDeleteTournament(t, contentDeleteModel)" style="cursor: pointer;">Delete tournament</a>
                       </div>
