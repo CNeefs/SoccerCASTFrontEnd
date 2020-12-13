@@ -30,6 +30,7 @@ export class MatchComponent implements OnInit, OnDestroy {
       if (user) {
         this.currentUser = user;
         this._matchService.getMatchByMatchId(this.currentMatchId).subscribe((match: Match) => {
+          console.log(match);
           this.currentMatch = match;
           this.matchLoaded = true;
         }, err => {

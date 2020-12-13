@@ -6,7 +6,7 @@
             <div class="col">
                 <div class="card shadow col" *ngIf="matchLoaded">
                     <div class="row mt-4">
-                        <div class="col-4 text-center">
+                        <div class="col-4 text-center mx-auto">
                             <div class="match-img mx-auto border border-secondary">
                                 <img *ngIf="currentMatch.team1" [src]="currentMatch.team1.imagePath" class="image img-fluid" alt="team1">
                                 <img *ngIf="!currentMatch.team1 && currentMatch.player1" [src]="currentMatch.player1.imagePath" class="image" alt="player1">
@@ -26,8 +26,10 @@
                         <div class="col-4 text-center">
                             <p *ngIf="currentMatch.team1">{{currentMatch.team1.teamName}}</p>
                             <p *ngIf="!currentMatch.team1 && currentMatch.player1">{{currentMatch.player1.firstName}} {{currentMatch.player1.lastName}}</p>
-                            <button *ngIf="currentMatch.player1ID == currentUser.userID && currentMatch.matchStatusID != 1" type="button" class="btn btn-success changeScoreButton" (click)="changeScore('1', 'add')">+</button>
-                            <button *ngIf="currentMatch.player1ID == currentUser.userID && this.currentMatch.score1 > 0 && currentMatch.matchStatusID != 1" type="button" class="btn btn-danger changeScoreButton" (click)="changeScore('1', 'remove')">-</button>
+                            <div *ngIf="(currentMatch.player1ID == currentUser.userID || currentMatch.player2ID == currentUser.userID) && currentMatch.matchStatusID == 5">
+                                <button type="button" class="btn btn-success changeScoreButton" (click)="changeScore('1', 'add')">+</button>
+                                <button *ngIf="this.currentMatch.score1 > 0" type="button" class="btn btn-danger changeScoreButton" (click)="changeScore('1', 'remove')">-</button>
+                            </div>
                         </div>
                         <div class="col-4 mt-5 mt-md-0">
                             <div class="text-center">
@@ -37,11 +39,13 @@
                         <div class="col-4 text-center">
                             <p *ngIf="currentMatch.team2">{{currentMatch.team2.teamName}}</p>
                             <p *ngIf="!currentMatch.team2 && currentMatch.player3">{{currentMatch.player3.firstName}} {{currentMatch.player3.lastName}}</p>
-                            <button *ngIf="currentMatch.player1ID == currentUser.userID && currentMatch.matchStatusID != 1" type="button" class="btn btn-success changeScoreButton" (click)="changeScore('2', 'add')">+</button>
-                            <button *ngIf="currentMatch.player1ID == currentUser.userID && this.currentMatch.score2 > 0 && currentMatch.matchStatusID != 1" type="button" class="btn btn-danger changeScoreButton" (click)="changeScore('2', 'remove')">-</button>
+                            <div *ngIf="(currentMatch.player3ID == currentUser.userID || currentMatch.player4ID == currentUser.userID)  && currentMatch.matchStatusID == 5">
+                                <button type="button" class="btn btn-success changeScoreButton" (click)="changeScore('2', 'add')">+</button>
+                                <button *ngIf="this.currentMatch.score2 > 0" type="button" class="btn btn-danger changeScoreButton" (click)="changeScore('2', 'remove')">-</button>
+                            </div>
                         </div>
                     </div>
-                    <div class="row mb-4" *ngIf="currentMatch.player1ID == currentUser.userID && currentMatch.matchStatusID != 1">
+                    <div class="row mb-4" *ngIf="currentMatch.player1ID == currentUser.userID && currentMatch.matchStatusID == 5">
                         <div class="col-4"></div>
                         <div class="col-4 text-center"><button type="button" class="btn btn-danger" (click)="stopMatch()">Stop match</button>
                         </div>
