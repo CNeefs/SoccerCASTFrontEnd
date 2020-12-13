@@ -38,9 +38,9 @@ export class ManageCompetitionsComponent implements OnInit {
 
   deleteCompetition(competition: Competition) {
     this._competitionService.deleteCompetitionById(competition.competitionID).subscribe(res => {
+      this._modalService.dismissAll();
       this.ngOnInit();
     });
-    this._modalService.dismissAll();
   }
 
   setActive(competition: Competition) {

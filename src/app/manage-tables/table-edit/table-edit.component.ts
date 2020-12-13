@@ -26,8 +26,9 @@ export class TableEditComponent implements OnInit {
     this.selectedTable.companyName = this.editForm.controls['companyName'].value;
     this.selectedTable.location = this.editForm.controls['location'].value;
     this.selectedTable.contactUserID = Number(this.editForm.controls['contactUserID'].value);
-    this._tableService.editTable(this.selectedTableID, this.selectedTable).subscribe();
-    this.router.navigate(['admin/tables']);
+    this._tableService.editTable(this.selectedTableID, this.selectedTable).subscribe(res => {
+      this.router.navigate(['admin/tables']);
+    });
   }
   
   ngOnInit(): void {

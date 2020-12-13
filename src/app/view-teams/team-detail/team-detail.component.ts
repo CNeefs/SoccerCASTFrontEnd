@@ -170,14 +170,15 @@ export class TeamDetailComponent implements OnInit, OnDestroy {
     const value = this.changeStatusForm.value;
     const teamStatusID = value.teamStatusID;
     this.selectedTeam.teamStatusID = +teamStatusID;
-    this._teamService.editTeam(this.selectedTeam.teamID, this.selectedTeam).subscribe();
-    this._modalService.dismissAll();
-    this._toastService.show("Team status changed", {
-      classname: 'bg-success text-light',
-      delay: 2000,
-      autohide: true
+    this._teamService.editTeam(this.selectedTeam.teamID, this.selectedTeam).subscribe(res => {
+      this._modalService.dismissAll();
+      this._toastService.show("Team status changed", {
+        classname: 'bg-success text-light',
+        delay: 2000,
+        autohide: true
+      });
+      this.ngOnInit();
     });
-    this.ngOnInit();
   }
 
   goToUserPage(user: User) {
@@ -185,23 +186,27 @@ export class TeamDetailComponent implements OnInit, OnDestroy {
   }
 
   joinTeam(team: Team) {
-    this._teamService.joinTeam(this.currentUser.userID, team).subscribe();
-    this.ngOnInit();
+    this._teamService.joinTeam(this.currentUser.userID, team).subscribe(res => {
+      this.ngOnInit();
+    });
   }
 
   leaveTeam(team: Team) {
-    this._userTeamService.leaveTeam(this.userTeam.userTeamID).subscribe();
-    this.ngOnInit();
+    this._userTeamService.leaveTeam(this.userTeam.userTeamID).subscribe(res => {
+      this.ngOnInit();
+    });
   }
 
   askJoinTeam(team: Team) {
-    this._teamService.joinReviewTeam(this.currentUser.userID, team).subscribe();
-    this.ngOnInit();
+    this._teamService.joinReviewTeam(this.currentUser.userID, team).subscribe(res => {
+      this.ngOnInit();
+    });
   }
 
   disbandTeam(team: Team) {
-    this._teamService.deleteTeamById(this.selectedTeamID).subscribe();
-    this.router.navigate(['user/teams']);
+    this._teamService.deleteTeamById(this.selectedTeamID).subscribe(res => {
+      this.router.navigate(['user/teams']);
+    });
   }
 
   goToCompetitionDetails(competition: Competition) {
@@ -254,7 +259,10 @@ export class TeamDetailComponent implements OnInit, OnDestroy {
           this.teams = res;
         });
         this._tableService.getTables().subscribe(res => {
-          this.tables = res;
+          this.tables = [];
+          res.map(table => {
+            if (table.tableStatusID != 2) this.tables.push(table);
+          })
         });
         this._userTeamService.getUserTeamsByUserId(this.currentUser.userID).subscribe(res => { 
           res.map(team => {
@@ -283,6 +291,7 @@ export class TeamDetailComponent implements OnInit, OnDestroy {
           this.changeStatusForm = this.fb.group({
             teamStatusID: [this.selectedTeam.teamStatusID, Validators.required]
           });
+          if (this.selectedTeam.teamStatusID == 4) this.router.navigate(['not-found']);
           this.teamLoaded = true;
           this.getMatches();
         }, err => {

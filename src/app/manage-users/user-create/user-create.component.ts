@@ -45,7 +45,7 @@ export class UserCreateComponent implements OnInit {
     });
 
     var user = new User(0, this.createForm.controls['firstName'].value, this.createForm.controls['lastName'].value, this.createForm.controls['email'].value,
-      this.createForm.controls['password'].value, null, convertedBirthdate, 0, 0, userRoles, null);
+      this.createForm.controls['password'].value, null, convertedBirthdate, 0, 0, userRoles, null, 1, null);
     this._userService.addUser(user).subscribe(event => {
       if(event.type === HttpEventType.Response) {
         this.router.navigate(['admin/users']);

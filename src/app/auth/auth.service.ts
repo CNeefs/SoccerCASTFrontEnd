@@ -14,7 +14,7 @@ export class AuthService {
     user = new BehaviorSubject(null);
     baseUrl: string = "https://localhost:44388/api/";
 
-    constructor(private _authorizationService: AuthorizationService, private _userService: UserService, private http: HttpClient, private router: Router, private _toastService: ToastService) { }
+    constructor(private _authorizationService: AuthorizationService, private _userService: UserService, private http: HttpClient, private router: Router, private toastService: ToastService) { }
 
     signup(newUser: User) {
         this.http.post<User>(this.baseUrl + "user", newUser).subscribe(userData => {
@@ -36,6 +36,12 @@ export class AuthService {
     login(userLogin: UserLogin) {
         this.http.post<User>(this.baseUrl + "user/authenticate", userLogin).subscribe(userData => {
             this.authenticationHandler(userData);
+        }, error => {
+            this.toastService.show("Email or password is incorrect", {
+                classname: 'bg-danger text-light',
+                delay: 2000,
+                autohide: true
+            });
         });
     }
 
