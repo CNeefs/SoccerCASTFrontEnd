@@ -4,7 +4,7 @@
         <div class="container">
             <div class="branding">
                 <h1 class="logo">
-                    <a href="index.html">
+                    <a routerLink="/documentation">
                         <span aria-hidden="true" class="icon_documents_alt icon"></span>
                         <span class="text-highlight">SoccerCAST</span><span class="text-bold"> Documentation</span>
                     </a>
@@ -34,8 +34,9 @@
                                     Each user's individual wins and losses are tracked.<br>
                                     To give everyone an overview which players are the best (or worst), <br>
                                     we made a ranking mechanism. <br>
-                                    Each user has points, which are calculated base on their wins and losses, using this formula: <br>
-                                    <b>score = ((total wins/total matches) * 100) * total wins</b> <br>
+                                    Each user has points, which are calculated base on their win/lose ration and how much games they played.
+                                    Putting all these parameters together, we used this formula: <br>
+                                    <b>Score = ((total wins/total matches) * 100) * total wins</b> <br>
                                     You can view user rankings by clicking on the link in the navigation tab (or click <span><a routerLink="/user/rankings">here</a></span>).
                                 </p>
                             </div>

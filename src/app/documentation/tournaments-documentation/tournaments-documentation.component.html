@@ -4,7 +4,7 @@
         <div class="container">
             <div class="branding">
                 <h1 class="logo">
-                    <a href="index.html">
+                    <a routerLink="/documentation">
                         <span aria-hidden="true" class="icon_documents_alt icon"></span>
                         <span class="text-highlight">SoccerCAST</span><span class="text-bold"> Documentation</span>
                     </a>
@@ -22,15 +22,23 @@
         <div class="container">
             <div id="doc-header" class="doc-header text-center">
                 <h1 class="doc-title"><i class="icon fa fa-paper-plane"></i> Tournaments functionalities</h1>
-                <div class="meta"><i class="far fa-clock"></i> Last updated: Dec 10, 2020</div>
+                <div class="meta"><i class="far fa-clock"></i> Last updated: Dec 13, 2020</div>
+                <div class="callout-block callout-danger">
+                    <div class="content">
+                        <h4 class="callout-title">Important</h4>
+                           <p>You must be logged in to access these functionalities!</p> 
+                    </div><!--//content-->
+                </div><!--//callout-block-->
             </div><!--//doc-header-->
             <div class="doc-body row">
                 <div class="doc-content col-md-9 col-12 order-1">
+                    
                     <div class="content-inner">
                         <section id="tournamentesoverview-section" class="doc-section">
                             <h2 class="section-title">Tournaments Overview</h2>
                             <div class="section-block">
                                 <p>
+                                    In the navigation tab (top left of your screen), you click 'Tournaments' to go to the overview page.
                                 </p>
                             </div>
                         </section><!--//doc-section-->
@@ -38,6 +46,15 @@
                             <h2 class="section-title">Tournament detail page</h2>
                             <div class="section-block">
                                 <p>
+                                    Follow these steps to go to a tournament's detail page.
+                                </p>
+                                <ul>
+                                    <li>Start on the tournaments overview page.</li>
+                                    <li>At the end of the row of the tournament you want to inspect, click this icon: <mat-icon>more_vert</mat-icon></li>
+                                    <li>Click on tournament page.</li>
+                                </ul>
+                                <p>
+                                    You now see the tournament's detail page.
                                 </p>
                             </div>
                         </div><!--//doc-section-->
@@ -48,24 +65,91 @@
                                     When you want to register a new tournament, please follow these steps:
                                 </p>
                                 <ol>
-                                    <li>You start on the tournaments overview page (see above).</li>
+                                    <li>On the navigation tab, click 'Manage items' and select tournaments.</li>
                                     <li>On the top-right of the list, you see a green arrow with the text: 'New'. Click on it.</li>
                                     <li>On the page that follows, fill in the tournament details.</li>
                                     <li>Click save.</li>
                                     <li>That's it!</li>
                                 </ol>
                             </div>
+                            <div class="callout-block callout-danger">
+                                <div class="content">
+                                    <h4 class="callout-title">Important</h4>
+                                       <p>You must be an admin to access these functionalities!</p> 
+                                </div><!--//content-->
+                            </div><!--//callout-block-->
                         </section><!--//doc-section-->
                         <section id="deletetournament-section" class="doc-section">
                             <h2 class="section-title">Delete tournament</h2>
                             <div class="section-block">
-                                <p></p>
+                                <p>
+                                    When you want to delete a tournament, please follow these steps:
+                                </p>
+                                <ol>
+                                    <li>On the navigation tab, click 'Manage items' and select tournaments.</li>
+                                    <li>On the row of the tournament you want to delete, click: <mat-icon>more_vert</mat-icon></li>
+                                    <li>Click 'delete tournament'.</li>
+                                    <li>Confirm.</li>
+                                    <li>You have now deleted a tournament.</li>
+                                </ol>
                             </div>
+                            <div class="callout-block callout-danger">
+                                <div class="content">
+                                    <h4 class="callout-title">Important</h4>
+                                       <p>You must be an admin to access these functionalities!</p> 
+                                </div><!--//content-->
+                            </div><!--//callout-block-->
                         </section><!--//doc-section-->
                         <section id="edittournament-section" class="doc-section">
                             <h2 class="section-title">Edit tournament</h2>
                             <div class="section-block">
-                                <p></p>
+                                <p>
+                                    When you want to edit a tournament's information, please follow these steps:
+                                </p>
+                                <ol>
+                                    <li>On the navigation tab, click 'Manage items' and select tournaments.</li>
+                                    <li>On the row of the tournament you want to edit, click: <mat-icon>more_vert</mat-icon></li>
+                                    <li>Click 'edit tournament'.</li>
+                                    <li>Confirm.</li>
+                                    <li>You have now edited a tournament.</li>
+                                </ol>
+                            </div>
+                            <div class="callout-block callout-danger">
+                                <div class="content">
+                                    <h4 class="callout-title">Important</h4>
+                                       <p>You must be an admin to access these functionalities!</p> 
+                                </div><!--//content-->
+                            </div><!--//callout-block-->
+                        </section><!--//doc-section-->
+                        <section id="starttournament-section" class="doc-section">
+                            <h2 class="section-title">Start tournament</h2>
+                            <div class="section-block">
+                                <p>
+                                    When you want to start a tournament, please follow these steps:
+                                </p>
+                                <ol>
+                                    <li>On the navigation tab, click 'Manage items' and select tournaments.</li>
+                                    <li>On the row of the tournament you want to start, click: <mat-icon>more_vert</mat-icon></li>
+                                    <li>Click 'start tournament'.</li>
+                                    <li>You have now started a tournament.</li>
+                                </ol>
+                            </div>
+                            <div class="callout-block callout-danger">
+                                <div class="content">
+                                    <h4 class="callout-title">Important</h4>
+                                       <p>You must be an admin to access these functionalities!</p> 
+                                </div><!--//content-->
+                            </div><!--//callout-block-->
+                        </section><!--//doc-section-->
+                        <section id="tournamentmatches-section" class="doc-section">
+                            <h2 class="section-title">Tournament matches</h2>
+                            <div class="section-block">
+                                <p>
+                                    Tournament matches are a bit different than single matches. <br>
+                                    Within a tournament, only a moderator can start matches, edit their scores and stop them. <br>
+                                    The steps of these features remain the same, but only the moderator can execute them. <br>
+                                    What a bummer...
+                                </p>
                             </div>
                         </section><!--//doc-section-->
                     </div><!--//content-inner-->
