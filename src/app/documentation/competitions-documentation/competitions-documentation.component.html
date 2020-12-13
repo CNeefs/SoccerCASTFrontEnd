@@ -21,8 +21,14 @@
     <div class="doc-wrapper">
         <div class="container">
             <div id="doc-header" class="doc-header text-center">
-                <h1 class="doc-title"><i class="icon fa fa-paper-plane"></i> Competitions functionalities</h1>
-                <div class="meta"><i class="far fa-clock"></i> Last updated: Dec 10, 2020</div>
+                <h1 class="doc-title"><i class="icon fa fa-paper-plane"></i> Competitions functionalities (WORK IN PROGRESS)</h1>
+                <div class="meta"><i class="far fa-clock"></i> Last updated: Dec 13, 2020</div>
+                <div class="callout-block callout-danger">
+                    <div class="content">
+                        <h4 class="callout-title">Important</h4>
+                        <p>You must be logged in as an admin to access table functionalities!</p>
+                    </div><!--//content-->
+                </div><!--//callout-block-->
             </div><!--//doc-header-->
             <div class="doc-body row">
                 <div class="doc-content col-md-9 col-12 order-1">
@@ -31,21 +37,18 @@
                             <h2 class="section-title">Competitions Overview</h2>
                             <div class="section-block">
                                 <p>
+                                    To get an overview of all the tables, click on 'Manage items' in the navigation tab, and click on 'Competitions' (or click <span><a routerLink="/admin/competitions">here</a></span>). <br>
+                                    The navigation tab is located top-left of your screen. <br>
+                                    This will show you each competition, with its name.
                                 </p>
                             </div>
                         </section><!--//doc-section-->
-                        <div id="competitiondetails-section" class="doc-section">
-                            <h2 class="section-title">Competition detail page</h2>
-                            <div class="section-block">
-                                <p>
-                                </p>
-                            </div>
-                        </div><!--//doc-section-->
+                        
                         <section id="createcompetition-section" class="doc-section">
                             <h2 class="section-title">Create competition</h2>
                             <div class="section-block">
                                 <p>
-                                    When you want to register a new competition, please follow these steps:
+                                    When you want to create a new competition, please follow these steps:
                                 </p>
                                 <ol>
                                     <li>You start on the competitions overview page (see above).</li>
@@ -56,18 +59,54 @@
                                 </ol>
                             </div>
                         </section><!--//doc-section-->
+                        <section id="competitionedit-section" class="doc-section">
+                            <h2 class="section-title">Edit competition</h2>
+                            <div class="section-block">
+                                <p>
+                                    Editing a competition is easy if you follow these steps:
+                                </p>
+                                <ol>
+                                    <li>
+                                        At the end of a row, you will see this icon: <mat-icon>more_vert</mat-icon>. Click on it.
+                                    </li>
+                                    <li>
+                                        A pop-up will show with the following text: 'Edit competition'. Click on it.
+                                    </li>
+                                    <li>
+                                        You are now on the selected competition's edit page!
+                                    </li>
+                                    <li>
+                                        Edit the fields as you like, and click save.
+                                    </li>
+                                    <li>
+                                        You're done!
+                                    </li>
+                                </ol>
+                            </div>
+                        </section><!--//doc-section-->
                         <section id="deletecompetition-section" class="doc-section">
                             <h2 class="section-title">Delete competition</h2>
                             <div class="section-block">
-                                <p></p>
+                                <p>
+                                    Deleteing a competition is easy if you follow these steps:
+                                </p>
+                                <ol>
+                                    <li>
+                                        At the end of a row, you will see this icon: <mat-icon>more_vert</mat-icon>. Click on it.
+                                    </li>
+                                    <li>
+                                        A pop-up will show with the following text: 'Delete competition'. Click on it.
+                                    </li>
+                                    <li>
+                                        Click confirm
+                                    </li>
+                                    <li>
+                                        You're done!
+                                    </li>
+                                </ol>
                             </div>
                         </section><!--//doc-section-->
-                        <section id="editcompetition-section" class="doc-section">
-                            <h2 class="section-title">Edit competition</h2>
-                            <div class="section-block">
-                                <p></p>
-                            </div>
-                        </section><!--//doc-section-->
+                        
                     </div><!--//content-inner-->
                 </div><!--//doc-content-->
             </div><!--//doc-body-->              
