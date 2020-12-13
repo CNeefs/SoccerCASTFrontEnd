@@ -91,6 +91,7 @@ export class ManageTournamentsComponent implements OnInit {
       const isAsc = sort.direction === 'asc';
       switch (sort.active) {
         case 'edition': return compare(a.edition, b.edition, isAsc);
+        case 'table': return compare(a.table.tableName, b.table.tableName, isAsc);
         case 'total_Joined': return compare(a.total_Joined, b.total_Joined, isAsc);
         case 'winner': return compare(a.winner, b.winner, isAsc);
         default: return 0;
