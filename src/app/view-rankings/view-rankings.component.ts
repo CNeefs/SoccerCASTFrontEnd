@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Sort } from '@angular/material/sort';
+import { Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { User } from '../models/user.model';
 import { UserService } from '../services/user.service';
@@ -18,7 +19,7 @@ export class ViewRankingsComponent implements OnInit, OnDestroy {
 
   userSub: Subscription;
 
-  constructor(private _userService: UserService) { }
+  constructor(private _userService: UserService, private router: Router) { }
 
   ngOnInit(): void {
     this.users = this._userService.getUsers();
@@ -56,6 +57,14 @@ export class ViewRankingsComponent implements OnInit, OnDestroy {
     user.points = pointsRounded;
 
     return user;
+  }
+
+  goToProfile(user: User) {
+    this.router.navigate(['user/profile'], {
+      queryParams: {
+        id: user.userID
+      }
+    })
   }
 
   ngOnDestroy(): void {
