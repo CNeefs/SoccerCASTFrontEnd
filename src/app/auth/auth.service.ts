@@ -18,14 +18,14 @@ export class AuthService {
 
     signup(newUser: User) {
         this.http.post<User>(this.baseUrl + "user", newUser).subscribe(userData => {
-            this._toastService.show("Account has been created", {
+            this.toastService.show("Account has been created", {
                 classname: 'bg-success text-light',
                 delay: 3000,
                 autohide: true
             });
             this.router.navigate(['/login']);
         }, error => {
-            this._toastService.show("This email is already taken", {
+            this.toastService.show("This email is already taken", {
                 classname: 'bg-danger text-light',
                 delay: 3000,
                 autohide: true
