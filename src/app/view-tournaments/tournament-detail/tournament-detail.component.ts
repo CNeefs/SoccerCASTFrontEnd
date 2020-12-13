@@ -23,7 +23,7 @@ declare var $:any;
   templateUrl: './tournament-detail.component.html',
   styleUrls: ['./tournament-detail.component.scss', '../../styles/table_style.scss',  '../../styles/validation_style.scss']
 })
-export class TournamentDetailComponent implements OnInit, OnDestroy {
+export class TournamentDetailComponent implements OnInit {
 
   joinTournamentForm: FormGroup;
   selectedTournamentID: number = 0;
@@ -131,10 +131,6 @@ export class TournamentDetailComponent implements OnInit, OnDestroy {
     this.joinTournamentForm.controls["usersInTeamID2"].setValue("");
   }
 
-  ngOnDestroy(): void {
-    this.userSub.unsubscribe();
-  }
-
   ngOnInit(): void {
     this.teams = [];
     this.usersInSelectedTeam = [];
@@ -177,9 +173,9 @@ export class TournamentDetailComponent implements OnInit, OnDestroy {
         }, err => {
           this.router.navigate(['not-found'])
         });
+        this.userSub.unsubscribe();
       }
     });
-    this.userSub.unsubscribe();
   }
 
   getMatches() {

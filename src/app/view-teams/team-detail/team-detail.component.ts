@@ -24,7 +24,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './team-detail.component.html',
   styleUrls: ['./team-detail.component.scss', '../../styles/table_style.scss',  '../../styles/validation_style.scss']
 })
-export class TeamDetailComponent implements OnInit, OnDestroy {
+export class TeamDetailComponent implements OnInit {
  
   challengeTeamForm: FormGroup;
   changeStatusForm: FormGroup;
@@ -241,10 +241,6 @@ export class TeamDetailComponent implements OnInit, OnDestroy {
     this.currentLink = linkid;
   }
 
-  ngOnDestroy(): void {
-    this.userSub.unsubscribe();
-  }
-
   ngOnInit(): void {
     this.currentTab = "profile-users";
     this.currentLink = "link-users";
@@ -301,9 +297,9 @@ export class TeamDetailComponent implements OnInit, OnDestroy {
           this.userTeam = res;
           this.userTeamsLoaded = true;
         });
+        this.userSub.unsubscribe();
       }
     });
-    this.userSub.unsubscribe();
   }
 
   getMatches() {
