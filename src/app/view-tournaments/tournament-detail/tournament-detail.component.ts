@@ -194,6 +194,16 @@ export class TournamentDetailComponent implements OnInit, OnDestroy, AfterViewIn
       }
       var minimalData = { teams : [], results : [] }
       var resizeParameters = { teamWidth: 150, scoreWidth: 40, matchMargin: 75, roundMargin: 50, onMatchClick: onClickMatch, init: minimalData };
+      this.allMatches = this.allMatches.sort(function(a, b) {
+        if(a.round < b.round) return -1;
+        if(a.round > b.round) return 1;
+        if(a.number < b.number) return -1;
+        if(a.number > b.number) return 1;
+        if(a.nextRound < b.nextRound) return -1;
+        if(a.nextRound > b.nextRound) return 1;
+        return 0;
+      });
+      console.log(this.allMatches)
       this.allMatches.forEach(match => {
         if (match.round == 1) minimalData.teams.push([match.team1.teamName, match.team2.teamName])
         if (minimalData.results[match.round - 1] != null) {
